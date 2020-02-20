@@ -19,6 +19,16 @@ public class Project extends BaseEntity {
     */
     private String projectName;
 
+    /**
+     * 项目开始时间
+     */
+    private Date startDate;
+
+    /**
+     * 项目结束时间
+     */
+    private Date endDate;
+
     public Long getProjectId() {
         return projectId;
     }
@@ -35,6 +45,22 @@ public class Project extends BaseEntity {
         this.projectName = projectName;
     }
 
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
@@ -47,6 +73,9 @@ public class Project extends BaseEntity {
         .append("updateBy", getUpdateBy())
         .append("updateTime", getUpdateTime())
         .append("remark", getRemark())
+                .append("startDate", getStartDate())
+                .append("endDate", getEndDate())
         .toString();
     }
+
 }
