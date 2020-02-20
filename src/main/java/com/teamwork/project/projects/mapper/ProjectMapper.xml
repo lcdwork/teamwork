@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.teamwork.project.projects.mapper.ProjectMapper">
-  <resultMap id="ProjectResultMap" type="Project">
+  <resultMap id="BaseResultMap" type="com.teamwork.project.projects.domain.Project">
     <!--@mbg.generated-->
     <!--@Table project_info-->
     <id column="project_id" jdbcType="BIGINT" property="projectId" />
     <result column="project_name" jdbcType="VARCHAR" property="projectName" />
-    <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime" />
-    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="start_date" jdbcType="DATE" property="startDate" />
+    <result column="end_date" jdbcType="DATE" property="endDate" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
@@ -16,31 +16,29 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    project_id, project_name, begin_time, end_time, create_by, create_time, update_by,
+    project_id, project_name, start_date, end_date, create_by, create_time, update_by,
     update_time, remark
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ProjectResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     <!--@mbg.generated-->
     select
     <include refid="Base_Column_List" />
     from project_info
     where project_id = #{projectId,jdbcType=BIGINT}
   </select>
-
-  <select id="selectProjectList" parameterType="Project" resultMap="ProjectResultMap">
+  <select id="selectProjectList" parameterType="com.teamwork.project.projects.domain.Project" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from project_info
     <where>
       <if test="projectId != null">
-        AND projectId = #{projectName}
+        AND project_id = #{projectId}
       </if>
       <if test="projectName != null">
         AND project_name like concat('%', #{projectName}, '%')
       </if>
     </where>
   </select>
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     <!--@mbg.generated-->
     delete from project_info
@@ -48,10 +46,10 @@
   </delete>
   <insert id="insert" keyColumn="project_id" keyProperty="projectId" parameterType="com.teamwork.project.projects.domain.Project" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into project_info (project_name, begin_time, end_time,
+    insert into project_info (project_name, start_date, end_date,
       create_by, create_time, update_by,
       update_time, remark)
-    values (#{projectName,jdbcType=VARCHAR}, #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP},
+    values (#{projectName,jdbcType=VARCHAR}, #{startDate,jdbcType=DATE}, #{endDate,jdbcType=DATE},
       #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
       #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
   </insert>
@@ -62,11 +60,11 @@
       <if test="projectName != null">
         project_name,
       </if>
-      <if test="beginTime != null">
-        begin_time,
+      <if test="startDate != null">
+        start_date,
       </if>
-      <if test="endTime != null">
-        end_time,
+      <if test="endDate != null">
+        end_date,
       </if>
       <if test="createBy != null">
         create_by,
@@ -88,11 +86,11 @@
       <if test="projectName != null">
         #{projectName,jdbcType=VARCHAR},
       </if>
-      <if test="beginTime != null">
-        #{beginTime,jdbcType=TIMESTAMP},
+      <if test="startDate != null">
+        #{startDate,jdbcType=DATE},
       </if>
-      <if test="endTime != null">
-        #{endTime,jdbcType=TIMESTAMP},
+      <if test="endDate != null">
+        #{endDate,jdbcType=DATE},
       </if>
       <if test="createBy != null">
         #{createBy,jdbcType=VARCHAR},
@@ -118,11 +116,11 @@
       <if test="projectName != null">
         project_name = #{projectName,jdbcType=VARCHAR},
       </if>
-      <if test="beginTime != null">
-        begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      <if test="startDate != null">
+        start_date = #{startDate,jdbcType=DATE},
       </if>
-      <if test="endTime != null">
-        end_time = #{endTime,jdbcType=TIMESTAMP},
+      <if test="endDate != null">
+        end_date = #{endDate,jdbcType=DATE},
       </if>
       <if test="createBy != null">
         create_by = #{createBy,jdbcType=VARCHAR},
@@ -146,8 +144,8 @@
     <!--@mbg.generated-->
     update project_info
     set project_name = #{projectName,jdbcType=VARCHAR},
-      begin_time = #{beginTime,jdbcType=TIMESTAMP},
-      end_time = #{endTime,jdbcType=TIMESTAMP},
+      start_date = #{startDate,jdbcType=DATE},
+      end_date = #{endDate,jdbcType=DATE},
       create_by = #{createBy,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_by = #{updateBy,jdbcType=VARCHAR},

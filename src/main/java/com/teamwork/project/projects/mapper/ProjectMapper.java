@@ -1,23 +1,22 @@
 package com.teamwork.project.projects.mapper;
 
 import com.teamwork.project.projects.domain.Project;
-import com.teamwork.project.system.domain.SysConfig;
 
 import java.util.List;
 
 public interface ProjectMapper {
 
-    public List<Project> selectProjectList(Project project);
+    List<Project> selectProjectList(Project record);
 
-    public int deleteByPrimaryKey(Long projectId);
+    int deleteByPrimaryKey(Long projectId);
 
-    public int insert(Project record);
+    int insert(Project record);
 
-    public int insertSelective(Project record);
+    int insertSelective(Project record);
 
-    public Project selectByPrimaryKey(Long projectId);
+    Project selectByPrimaryKey(Long projectId);
 
-    public int updateByPrimaryKeySelective(Project record);
+    int updateByPrimaryKeySelective(Project record);
 
-    public int updateByPrimaryKey(Project record);
+    int updateByPrimaryKey(Project record);
 }

@@ -1,6 +1,5 @@
 package com.teamwork.project.projects.service.impl;
 
-import com.teamwork.project.system.domain.SysUser;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import com.teamwork.project.projects.domain.Project;

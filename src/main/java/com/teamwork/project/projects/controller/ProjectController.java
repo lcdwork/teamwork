@@ -1,6 +1,5 @@
 package com.teamwork.project.projects.controller;
 
-import com.teamwork.common.constant.UserConstants;
 import com.teamwork.common.utils.SecurityUtils;
 import com.teamwork.framework.aspectj.lang.annotation.Log;
 import com.teamwork.framework.aspectj.lang.enums.BusinessType;
@@ -9,8 +8,6 @@ import com.teamwork.framework.web.domain.Result;
 import com.teamwork.framework.web.page.TableDataInfo;
 import com.teamwork.project.projects.domain.Project;
 import com.teamwork.project.projects.service.ProjectService;
-import com.teamwork.project.system.domain.SysMenu;
-import com.teamwork.project.system.domain.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -41,9 +38,9 @@ public class ProjectController extends BaseController {
         return getDataTable(list);
     }
 
-    @PreAuthorize("@ss.hasPermi('system:project:add')")
-    @Log(title = "项目管理", businessType = BusinessType.INSERT)
-    @PostMapping("/addProject")
+//    @PreAuthorize("@ss.hasPermi('system:project:add')")
+//    @Log(title = "项目管理", businessType = BusinessType.INSERT)
+    @PostMapping()
     public Result add(@Validated @RequestBody Project project) {
         return toAjax(projectService.insert(project));
     }
@@ -63,8 +60,8 @@ public class ProjectController extends BaseController {
     /**
      * 删除菜单
      */
-    @PreAuthorize("@ss.hasPermi('system:project:remove')")
-    @Log(title = "项目管理", businessType = BusinessType.DELETE)
+//    @PreAuthorize("@ss.hasPermi('system:project:remove')")
+//    @Log(title = "项目管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{projectId}")
     public Result remove(@PathVariable("projectId") Long projectId)
     {
