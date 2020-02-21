@@ -1,7 +1,8 @@
 package com.teamwork.project.projects.service;
 
 import com.teamwork.project.projects.domain.Task;
-public interface TaskService{
+
+public interface TaskService {
 
 
     int deleteByPrimaryKey(Integer taskId);
@@ -17,3 +18,4 @@ public interface TaskService{
     int updateByPrimaryKey(Task record);
 
 }
+

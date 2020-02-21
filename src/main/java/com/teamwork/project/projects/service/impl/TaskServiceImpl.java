@@ -5,8 +5,9 @@ import javax.annotation.Resource;
 import com.teamwork.project.projects.mapper.TaskMapper;
 import com.teamwork.project.projects.domain.Task;
 import com.teamwork.project.projects.service.TaskService;
+
 @Service
-public class TaskServiceImpl implements TaskService{
+public class TaskServiceImpl implements TaskService {
 
     @Resource
     private TaskMapper taskMapper;
@@ -42,3 +43,4 @@ public class TaskServiceImpl implements TaskService{
     }
 
 }
+
