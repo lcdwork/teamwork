@@ -5,50 +5,50 @@ import java.util.Date;
 
 public class Task extends BaseEntity {
     /**
-     * 任务id
-     */
-    private Integer taskId;
+    * 任务id
+    */
+    private Long taskId;
 
     /**
-     * 所属项目
-     */
+    * 所属项目
+    */
     private Long projectid;
 
     /**
-     * 任务名称
-     */
+    * 任务名称
+    */
     private String taskName;
 
     /**
-     * 任务标签
-     */
+    * 任务标签
+    */
     private Short taskTag;
 
     /**
-     * 参与人员
-     */
+    * 参与人员
+    */
     private String usersGroup;
 
     /**
-     * 开始时间
-     */
+    * 开始时间
+    */
     private Date startTime;
 
     /**
-     * 结束时间
-     */
+    * 结束时间
+    */
     private Date stopTime;
 
     /**
-     * 任务状态
-     */
+    * 任务状态
+    */
     private Short status;
 
-    public Integer getTaskId() {
+    public Long getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(Integer taskId) {
+    public void setTaskId(Long taskId) {
         this.taskId = taskId;
     }
 

@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.teamwork.project.projects.domain.Task">
     <!--@mbg.generated-->
     <!--@Table task_info-->
-    <id column="task_id" jdbcType="INTEGER" property="taskId" />
+    <id column="task_id" jdbcType="BIGINT" property="taskId" />
     <result column="projectId" jdbcType="BIGINT" property="projectid" />
     <result column="task_name" jdbcType="VARCHAR" property="taskName" />
     <result column="task_tag" jdbcType="SMALLINT" property="taskTag" />
@@ -23,17 +23,17 @@
     task_id, projectId, task_name, task_tag, users_group, start_time, stop_time, `status`, 
     create_by, create_time, update_by, update_time, remark
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     <!--@mbg.generated-->
     select 
     <include refid="Base_Column_List" />
     from task_info
-    where task_id = #{taskId,jdbcType=INTEGER}
+    where task_id = #{taskId,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     <!--@mbg.generated-->
     delete from task_info
-    where task_id = #{taskId,jdbcType=INTEGER}
+    where task_id = #{taskId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" keyColumn="task_id" keyProperty="taskId" parameterType="com.teamwork.project.projects.domain.Task" useGeneratedKeys="true">
     <!--@mbg.generated-->
@@ -169,7 +169,7 @@
         remark = #{remark,jdbcType=VARCHAR},
       </if>
     </set>
-    where task_id = #{taskId,jdbcType=INTEGER}
+    where task_id = #{taskId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.teamwork.project.projects.domain.Task">
     <!--@mbg.generated-->
@@ -186,6 +186,6 @@
       update_by = #{updateBy,jdbcType=VARCHAR},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       remark = #{remark,jdbcType=VARCHAR}
-    where task_id = #{taskId,jdbcType=INTEGER}
+    where task_id = #{taskId,jdbcType=BIGINT}
   </update>
 </mapper>

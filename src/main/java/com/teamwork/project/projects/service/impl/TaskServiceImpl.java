@@ -5,15 +5,14 @@ import javax.annotation.Resource;
 import com.teamwork.project.projects.mapper.TaskMapper;
 import com.teamwork.project.projects.domain.Task;
 import com.teamwork.project.projects.service.TaskService;
-
 @Service
-public class TaskServiceImpl implements TaskService {
+public class TaskServiceImpl implements TaskService{
 
     @Resource
     private TaskMapper taskMapper;
 
     @Override
-    public int deleteByPrimaryKey(Integer taskId) {
+    public int deleteByPrimaryKey(Long taskId) {
         return taskMapper.deleteByPrimaryKey(taskId);
     }
 
@@ -28,7 +27,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task selectByPrimaryKey(Integer taskId) {
+    public Task selectByPrimaryKey(Long taskId) {
         return taskMapper.selectByPrimaryKey(taskId);
     }
 
@@ -43,4 +42,3 @@ public class TaskServiceImpl implements TaskService {
     }
 
 }
-
