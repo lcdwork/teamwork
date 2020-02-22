@@ -7,6 +7,7 @@
     <id column="task_id" jdbcType="BIGINT" property="taskId" />
     <result column="project_id" jdbcType="BIGINT" property="projectId" />
     <result column="task_name" jdbcType="VARCHAR" property="taskName" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
     <result column="task_tag" jdbcType="SMALLINT" property="taskTag" />
     <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
     <result column="stop_time" jdbcType="TIMESTAMP" property="stopTime" />
