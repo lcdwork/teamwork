@@ -15,7 +15,7 @@
         <!--@mbg.generated-->
         id, project_id, user_id, operateTime, content, status, remark
     </sql>
-    <select id="getProjectLog" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="getProjectLog" parameterType="java.lang.Long" resultMap="ProjectInfoLogMap">
         select
         <include refid="Base_Column_List" />
         from project_info_log

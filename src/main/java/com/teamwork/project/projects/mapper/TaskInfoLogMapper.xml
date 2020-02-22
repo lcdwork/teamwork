@@ -16,7 +16,7 @@
         <!--@mbg.generated-->
         id, task_id, user_id, operateTime, content, status, remark
     </sql>
-    <select id="getTaskLog" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="getTaskLog" parameterType="java.lang.Long" resultMap="TaskInfoLogMap">
         select
         <include refid="Base_Column_List" />
         from task_info_log

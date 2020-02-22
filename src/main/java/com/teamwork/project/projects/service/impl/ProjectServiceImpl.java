@@ -43,6 +43,7 @@ public class ProjectServiceImpl implements ProjectService{
     @Override
     public int deleteByPrimaryKey(Long projectId) {
         insertProjectInfoLog(projectId, 3);
+        sysUserProjectMapper.deleteByProjectId(projectId);
         return projectMapper.deleteByPrimaryKey(projectId);
     }
 
@@ -68,6 +69,9 @@ public class ProjectServiceImpl implements ProjectService{
     @Override
     public int updateByPrimaryKeySelective(Project record) {
         insertProjectInfoLog(record.getProjectId(), 2);
+        List<SysUserProject> list = userProjectList(record);
+        sysUserProjectMapper.deleteByProjectId(record.getProjectId());
+        sysUserProjectMapper.insertList(list);
         return projectMapper.updateByPrimaryKeySelective(record);
     }
 
