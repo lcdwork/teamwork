@@ -50,6 +50,7 @@ public class ProjectServiceImpl implements ProjectService{
     public int insert(Project record) {
         insertProjectInfoLog(record.getProjectId(), 1);
         List<SysUserProject> list = userProjectList(record);
+        sysUserProjectMapper.deleteByProjectId(record.getProjectId());
         sysUserProjectMapper.insertList(list);
         return projectMapper.insert(record);
     }

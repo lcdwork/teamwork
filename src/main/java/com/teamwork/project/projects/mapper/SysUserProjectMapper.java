@@ -63,4 +63,6 @@ public interface SysUserProjectMapper {
     int deleteById(Long id);
 
     int insertList(List<SysUserProject> list);
+
+    void deleteByProjectId(Long projectId);
 }
