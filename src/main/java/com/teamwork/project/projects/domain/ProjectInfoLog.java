@@ -1,5 +1,7 @@
 package com.teamwork.project.projects.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Date;
 import java.io.Serializable;
 
@@ -9,6 +11,8 @@ import java.io.Serializable;
  * @author makejava
  * @since 2020-02-21 20:25:40
  */
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProjectInfoLog implements Serializable {
     private static final long serialVersionUID = -92015033458003627L;
     

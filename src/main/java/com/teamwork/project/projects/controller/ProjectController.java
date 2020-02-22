@@ -80,7 +80,7 @@ public class ProjectController extends BaseController {
     public Result remove(@PathVariable("projectId") Long projectId)
     {
         Task task = new Task();
-        task.setProjectid(projectId);
+        task.setProjectId(projectId);
         List<Task> list = taskService.selectTaskList(task);
         if (list.size() > 0) {
             return Result.error("此项目下有任务，无法删除！");

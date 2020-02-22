@@ -34,10 +34,11 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public int insert(Task record) {
+        int i = taskMapper.insert(record);
         insertTaskInfoLog(record.getTaskId(), 1);
         List<SysUserTask> list = userTaskList(record);
         sysUserTaskMapper.insertList(list);
-        return taskMapper.insert(record);
+        return i;
     }
 
     @Override
@@ -87,11 +88,11 @@ public class TaskServiceImpl implements TaskService{
 
     public List userTaskList(Task task) {
         List<SysUserTask> list = new ArrayList<>();
-        List<Long> users = task.getUsers();
+        List<SysUser> users = task.getUserList();
         users.forEach(u -> {
             SysUserTask sysUserTask = new SysUserTask();
             sysUserTask.setTaskId(task.getTaskId());
-            sysUserTask.setUserId(u);
+            sysUserTask.setUserId(u.getUserId());
             list.add(sysUserTask);
         });
         return list;

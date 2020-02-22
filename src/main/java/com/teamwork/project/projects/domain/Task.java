@@ -1,11 +1,13 @@
 package com.teamwork.project.projects.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.teamwork.framework.web.domain.BaseEntity;
 import com.teamwork.project.system.domain.SysUser;
 
 import java.util.Date;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Task extends BaseEntity {
     /**
     * 任务id
@@ -47,7 +49,7 @@ public class Task extends BaseEntity {
     */
     private Byte status;
 
-    private List<Long> users;
+    private List<SysUser> userList;
 
     public Long getTaskId() {
         return taskId;
@@ -61,8 +63,8 @@ public class Task extends BaseEntity {
         return projectId;
     }
 
-    public void setProjectid(Long projectid) {
-        this.projectId = projectid;
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
     }
 
     public String getTaskName() {
@@ -113,11 +115,11 @@ public class Task extends BaseEntity {
         this.status = status;
     }
 
-    public List<Long> getUsers() {
-        return users;
+    public List<SysUser> getUserList() {
+        return userList;
     }
 
-    public void setUsers(List<Long> users) {
-        this.users = users;
+    public void setUserList(List<SysUser> userList) {
+        this.userList = userList;
     }
 }

@@ -49,11 +49,12 @@ public class ProjectServiceImpl implements ProjectService{
 
     @Override
     public int insert(Project record) {
+        int i = projectMapper.insert(record);
         insertProjectInfoLog(record.getProjectId(), 1);
         List<SysUserProject> list = userProjectList(record);
         sysUserProjectMapper.deleteByProjectId(record.getProjectId());
         sysUserProjectMapper.insertList(list);
-        return projectMapper.insert(record);
+        return i;
     }
 
     @Override
@@ -96,11 +97,11 @@ public class ProjectServiceImpl implements ProjectService{
 
     public List userProjectList(Project project) {
         List<SysUserProject> list = new ArrayList<>();
-        List<Long> users = project.getUsers();
+        List<SysUser> users = project.getUserList();
         users.forEach(u -> {
             SysUserProject sysUserProject = new SysUserProject();
             sysUserProject.setProjectId(project.getProjectId());
-            sysUserProject.setUserId(u);
+            sysUserProject.setUserId(u.getUserId());
             list.add(sysUserProject);
         });
         return list;

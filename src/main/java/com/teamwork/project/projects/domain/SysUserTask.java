@@ -1,5 +1,7 @@
 package com.teamwork.project.projects.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 
 /**
@@ -8,6 +10,8 @@ import java.io.Serializable;
  * @author makejava
  * @since 2020-02-21 22:05:25
  */
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SysUserTask implements Serializable {
     private static final long serialVersionUID = -30447064077908622L;
     
