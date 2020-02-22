@@ -30,11 +30,6 @@ public class Task extends BaseEntity {
     private Short taskTag;
 
     /**
-    * 参与人员
-    */
-    private String usersGroup;
-
-    /**
     * 开始时间
     */
     private Date startTime;
@@ -81,14 +76,6 @@ public class Task extends BaseEntity {
 
     public void setTaskTag(Short taskTag) {
         this.taskTag = taskTag;
-    }
-
-    public String getUsersGroup() {
-        return usersGroup;
-    }
-
-    public void setUsersGroup(String usersGroup) {
-        this.usersGroup = usersGroup;
     }
 
     public Date getStartTime() {

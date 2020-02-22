@@ -28,16 +28,22 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public int deleteByPrimaryKey(Long taskId) {
-        insertTaskInfoLog(taskId, 3);
+        taskInfoLogMapper.insert(insertTaskInfoLog(taskId, 3));
+        sysUserTaskMapper.deleteByTaskId(taskId);
         return taskMapper.deleteByPrimaryKey(taskId);
     }
 
     @Override
     public int insert(Task record) {
+        record.setCreateBy(SecurityUtils.getUsername());
+        record.setCreateTime(new Date());
         int i = taskMapper.insert(record);
-        insertTaskInfoLog(record.getTaskId(), 1);
-        List<SysUserTask> list = userTaskList(record);
-        sysUserTaskMapper.insertList(list);
+        taskInfoLogMapper.insert(insertTaskInfoLog(record.getTaskId(), 1));
+        sysUserTaskMapper.deleteByTaskId(record.getTaskId());
+        if (record.getUserList() != null &&record.getUserList().size() > 0) {
+            List<SysUserTask> list = userTaskList(record);
+            sysUserTaskMapper.insertList(list);
+        }
         return i;
     }
 
@@ -53,8 +59,16 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public int updateByPrimaryKeySelective(Task record) {
-        insertTaskInfoLog(record.getTaskId(), 2);
-        return taskMapper.updateByPrimaryKeySelective(record);
+        taskInfoLogMapper.insert(insertTaskInfoLog(record.getTaskId(), 2));
+        record.setUpdateBy(SecurityUtils.getUsername());
+        record.setUpdateTime(new Date());
+        int i = taskMapper.updateByPrimaryKeySelective(record);
+        sysUserTaskMapper.deleteByTaskId(record.getTaskId());
+        if (record.getUserList() != null &&record.getUserList().size() > 0) {
+            List<SysUserTask> list = userTaskList(record);
+            sysUserTaskMapper.insertList(list);
+        }
+        return i;
     }
 
     @Override
@@ -77,13 +91,13 @@ public class TaskServiceImpl implements TaskService{
         return taskMapper.selectTaskUsers(taskId);
     }
 
-    public int insertTaskInfoLog(Long taskId, int status) {
+    public TaskInfoLog insertTaskInfoLog(Long taskId, int status) {
         TaskInfoLog t = new TaskInfoLog();
         t.setTaskId(taskId);
         t.setOperatetime(new Date());
         t.setUserId(SecurityUtils.getLoginUser().getUser().getUserId());
         t.setStatus((byte) status);
-        return taskInfoLogMapper.insert(t);
+        return t;
     }
 
     public List userTaskList(Task task) {

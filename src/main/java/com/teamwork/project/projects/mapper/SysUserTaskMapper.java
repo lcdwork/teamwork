@@ -63,4 +63,6 @@ public interface SysUserTaskMapper {
     int deleteById(Long id);
 
     void insertList(List<SysUserTask> list);
+
+    void deleteByTaskId(Long taskId);
 }

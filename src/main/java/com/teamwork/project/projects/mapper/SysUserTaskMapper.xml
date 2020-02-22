@@ -75,4 +75,8 @@
         delete from sys_user_task where id = #{id}
     </delete>
 
+    <delete id="deleteByTaskId" parameterType="java.lang.Long">
+        delete from sys_user_task where task_id = #{taskId}
+    </delete>
+
 </mapper>

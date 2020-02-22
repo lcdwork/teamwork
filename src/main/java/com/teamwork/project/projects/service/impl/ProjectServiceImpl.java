@@ -42,18 +42,22 @@ public class ProjectServiceImpl implements ProjectService{
 
     @Override
     public int deleteByPrimaryKey(Long projectId) {
-        insertProjectInfoLog(projectId, 3);
+        projectInfoLogMapper.insert(insertProjectInfoLog(projectId, 3));
         sysUserProjectMapper.deleteByProjectId(projectId);
         return projectMapper.deleteByPrimaryKey(projectId);
     }
 
     @Override
     public int insert(Project record) {
+        record.setCreateBy(SecurityUtils.getUsername());
+        record.setCreateTime(new Date());
         int i = projectMapper.insert(record);
-        insertProjectInfoLog(record.getProjectId(), 1);
-        List<SysUserProject> list = userProjectList(record);
+        projectInfoLogMapper.insert(insertProjectInfoLog(record.getProjectId(), 1));
         sysUserProjectMapper.deleteByProjectId(record.getProjectId());
-        sysUserProjectMapper.insertList(list);
+        if (record.getUserList() != null && record.getUserList().size() > 0) {
+            List<SysUserProject> list = userProjectList(record);
+            sysUserProjectMapper.insertList(list);
+        }
         return i;
     }
 
@@ -69,11 +73,16 @@ public class ProjectServiceImpl implements ProjectService{
 
     @Override
     public int updateByPrimaryKeySelective(Project record) {
-        insertProjectInfoLog(record.getProjectId(), 2);
-        List<SysUserProject> list = userProjectList(record);
+        record.setUpdateBy(SecurityUtils.getUsername());
+        record.setUpdateTime(new Date());
+        int i = projectMapper.updateByPrimaryKeySelective(record);
+        projectInfoLogMapper.insert(insertProjectInfoLog(record.getProjectId(), 2));
         sysUserProjectMapper.deleteByProjectId(record.getProjectId());
-        sysUserProjectMapper.insertList(list);
-        return projectMapper.updateByPrimaryKeySelective(record);
+        if (record.getUserList() != null && record.getUserList().size() > 0) {
+            List<SysUserProject> list = userProjectList(record);
+            sysUserProjectMapper.insertList(list);
+        }
+        return i;
     }
 
     @Override
@@ -86,13 +95,13 @@ public class ProjectServiceImpl implements ProjectService{
         return projectMapper.selectProjectUsers(projectId);
     }
 
-    public int insertProjectInfoLog(Long projectId, int status) {
+    public ProjectInfoLog insertProjectInfoLog(Long projectId, int status) {
         ProjectInfoLog t = new ProjectInfoLog();
         t.setProjectId(projectId);
         t.setOperatetime(new Date());
         t.setUserId(SecurityUtils.getLoginUser().getUser().getUserId());
         t.setStatus((byte) status);
-        return projectInfoLogMapper.insert(t);
+        return t;
     }
 
     public List userProjectList(Project project) {
