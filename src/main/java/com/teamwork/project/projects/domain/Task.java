@@ -15,7 +15,7 @@ public class Task extends BaseEntity {
     /**
     * 所属项目
     */
-    private Long projectid;
+    private Long projectId;
 
     /**
     * 任务名称
@@ -57,12 +57,12 @@ public class Task extends BaseEntity {
         this.taskId = taskId;
     }
 
-    public Long getProjectid() {
-        return projectid;
+    public Long getProjectId() {
+        return projectId;
     }
 
     public void setProjectid(Long projectid) {
-        this.projectid = projectid;
+        this.projectId = projectid;
     }
 
     public String getTaskName() {

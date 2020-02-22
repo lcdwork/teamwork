@@ -5,7 +5,7 @@
     <!--@mbg.generated-->
     <!--@Table task_info-->
     <id column="task_id" jdbcType="BIGINT" property="taskId" />
-    <result column="projectId" jdbcType="BIGINT" property="projectid" />
+    <result column="project_id" jdbcType="BIGINT" property="projectId" />
     <result column="task_name" jdbcType="VARCHAR" property="taskName" />
     <result column="task_tag" jdbcType="SMALLINT" property="taskTag" />
     <result column="users_group" jdbcType="VARCHAR" property="usersGroup" />
@@ -20,12 +20,12 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    task_id, projectId, task_name, task_tag, users_group, start_time, stop_time, `status`, 
+    task_id, project_id, task_name, task_tag, users_group, start_time, stop_time, `status`,
     create_by, create_time, update_by, update_time, remark
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     <!--@mbg.generated-->
-    select 
+    select
     <include refid="Base_Column_List" />
     from task_info
     where task_id = #{taskId,jdbcType=BIGINT}
@@ -106,14 +106,14 @@
   </delete>
   <insert id="insert" keyColumn="task_id" keyProperty="taskId" parameterType="com.teamwork.project.projects.domain.Task" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into task_info (projectId, task_name, task_tag, 
-      users_group, start_time, stop_time, 
-      `status`, create_by, create_time, 
+    insert into task_info (project_id, task_name, task_tag,
+      users_group, start_time, stop_time,
+      `status`, create_by, create_time,
       update_by, update_time, remark
       )
-    values (#{projectid,jdbcType=BIGINT}, #{taskName,jdbcType=VARCHAR}, #{taskTag,jdbcType=SMALLINT}, 
-      #{usersGroup,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{stopTime,jdbcType=TIMESTAMP}, 
-      #{status,jdbcType=SMALLINT}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+    values (#{projectId,jdbcType=BIGINT}, #{taskName,jdbcType=VARCHAR}, #{taskTag,jdbcType=SMALLINT},
+      #{usersGroup,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{stopTime,jdbcType=TIMESTAMP},
+      #{status,jdbcType=SMALLINT}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
       #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
@@ -121,8 +121,8 @@
     <!--@mbg.generated-->
     insert into task_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="projectid != null">
-        projectId,
+      <if test="projectId != null">
+        project_id,
       </if>
       <if test="taskName != null">
         task_name,
@@ -159,8 +159,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="projectid != null">
-        #{projectid,jdbcType=BIGINT},
+      <if test="projectId != null">
+        #{projectId,jdbcType=BIGINT},
       </if>
       <if test="taskName != null">
         #{taskName,jdbcType=VARCHAR},
@@ -201,8 +201,8 @@
     <!--@mbg.generated-->
     update task_info
     <set>
-      <if test="projectid != null">
-        projectId = #{projectid,jdbcType=BIGINT},
+      <if test="projectId != null">
+        project_id = #{projectId,jdbcType=BIGINT},
       </if>
       <if test="taskName != null">
         task_name = #{taskName,jdbcType=VARCHAR},
@@ -243,7 +243,7 @@
   <update id="updateByPrimaryKey" parameterType="com.teamwork.project.projects.domain.Task">
     <!--@mbg.generated-->
     update task_info
-    set projectId = #{projectid,jdbcType=BIGINT},
+    set project_id = #{projectId,jdbcType=BIGINT},
       task_name = #{taskName,jdbcType=VARCHAR},
       task_tag = #{taskTag,jdbcType=SMALLINT},
       users_group = #{usersGroup,jdbcType=VARCHAR},
