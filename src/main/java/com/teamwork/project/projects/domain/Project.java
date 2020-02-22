@@ -1,5 +1,6 @@
 package com.teamwork.project.projects.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.teamwork.framework.web.domain.BaseEntity;
 import com.teamwork.project.system.domain.SysUser;
@@ -22,11 +23,13 @@ public class Project extends BaseEntity {
     /**
     * 开始时间
     */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date startDate;
 
     /**
     * 结束时间
     */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date endDate;
 
     private Byte status;

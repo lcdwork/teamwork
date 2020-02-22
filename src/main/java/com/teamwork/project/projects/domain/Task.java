@@ -1,5 +1,6 @@
 package com.teamwork.project.projects.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.teamwork.framework.web.domain.BaseEntity;
 import com.teamwork.project.system.domain.SysUser;
@@ -32,11 +33,13 @@ public class Task extends BaseEntity {
     /**
     * 开始时间
     */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date startTime;
 
     /**
     * 结束时间
     */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date stopTime;
 
     /**
@@ -45,6 +48,8 @@ public class Task extends BaseEntity {
     private Byte status;
 
     private List<SysUser> userList;
+
+    private String projectName;
 
     public Long getTaskId() {
         return taskId;
@@ -108,5 +113,13 @@ public class Task extends BaseEntity {
 
     public void setUserList(List<SysUser> userList) {
         this.userList = userList;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 }
