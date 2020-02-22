@@ -26,7 +26,7 @@
     <select id="queryById" resultMap="ProjectInfoLogMap">
         select
         <include refid="Base_Column_List" />
-        from test.project_info_log
+        from project_info_log
         where id = #{id}
     </select>
 
@@ -34,7 +34,7 @@
     <select id="queryAllByLimit" resultMap="ProjectInfoLogMap">
         select
         <include refid="Base_Column_List" />
-        from test.project_info_log
+        from project_info_log
         limit #{offset}, #{limit}
     </select>
 
@@ -42,7 +42,7 @@
     <select id="queryAll" resultMap="ProjectInfoLogMap">
         select
         <include refid="Base_Column_List" />
-        from test.project_info_log
+        from project_info_log
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -70,13 +70,13 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into test.project_info_log(project_id, user_id, operateTime, content, status, remark)
+        insert into project_info_log(project_id, user_id, operateTime, content, status, remark)
         values (#{projectId}, #{userId}, #{operatetime}, #{content}, #{status}, #{remark})
     </insert>
 
     <!--通过主键修改数据-->
     <update id="update">
-        update test.project_info_log
+        update project_info_log
         <set>
             <if test="projectId != null">
                 project_id = #{projectId},
@@ -102,7 +102,7 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from test.project_info_log where id = #{id}
+        delete from project_info_log where id = #{id}
     </delete>
 
 </mapper>
