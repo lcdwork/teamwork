@@ -40,6 +40,7 @@
     select
     t.*, p.project_name
     from task_info t
+    left join project_info p on t.project_id = p.project_id
     <where>
       <if test="taskId != null">
         AND task_id = #{taskId}
@@ -75,10 +76,9 @@
         AND remark = #{remark}
       </if>
       <if test="projectId != null">
-        AND project_id = #{projectId}
+        AND t.project_id = #{projectId}
       </if>
     </where>
-    left join project_info p on t.project_id = p.project_id
     order by status asc
   </select>
   <select id="selectTaskRepeat" parameterType="com.teamwork.project.projects.domain.Task" resultMap="BaseResultMap">
