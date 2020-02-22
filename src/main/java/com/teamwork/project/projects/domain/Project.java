@@ -1,7 +1,10 @@
 package com.teamwork.project.projects.domain;
 
 import com.teamwork.framework.web.domain.BaseEntity;
+import com.teamwork.project.system.domain.SysUser;
+
 import java.util.Date;
+import java.util.List;
 
 public class Project extends BaseEntity {
     /**
@@ -23,6 +26,10 @@ public class Project extends BaseEntity {
     * 结束时间
     */
     private Date endDate;
+
+    private Byte status;
+
+    private List<Long> users;
 
     public Long getProjectId() {
         return projectId;
@@ -54,5 +61,21 @@ public class Project extends BaseEntity {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
+
+    public List<Long> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<Long> users) {
+        this.users = users;
     }
 }

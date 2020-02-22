@@ -13,11 +13,12 @@
     <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="status" jdbcType="SMALLINT" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     project_id, project_name, start_date, end_date, create_by, create_time, update_by,
-    update_time, remark
+    update_time, remark, status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -25,6 +26,12 @@
     <include refid="Base_Column_List" />
     from project_info
     where project_id = #{projectId,jdbcType=BIGINT}
+  </select>
+  <select id="selectProjectUsers" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select su.user_id, su.dept_id, su.user_name, su.nick_name, su.user_type, su.email, su.phonenumber, su.sex, su.avatar
+    from sys_user_project sup
+    where project_id = #{projectId,jdbcType=BIGINT}
+    left join sys_user su on sup.user_id = su.user_id
   </select>
   <select id="selectProjectList" parameterType="com.teamwork.project.projects.domain.Project" resultMap="BaseResultMap">
     select
@@ -37,6 +44,44 @@
       <if test="projectName != null">
         AND project_name like concat('%', #{projectName}, '%')
       </if>
+      <if test="startDate != null">
+        AND start_date = #{startDate}
+      </if>
+      <if test="endDate != null">
+        AND end_date = #{endDate}
+      </if>
+      <if test="createBy != null">
+        AND create_by = #{createBy}
+      </if>
+      <if test="createTime != null">
+        AND create_time = #{createTime}
+      </if>
+      <if test="updateBy != null">
+        AND update_by = #{updateBy}
+      </if>
+      <if test="updateTime != null">
+        AND update_time = #{updateTime}
+      </if>
+      <if test="remark != null">
+        AND remark = #{remark}
+      </if>
+      <if test="status != null">
+        AND status = #{status}
+      </if>
+    </where>
+    order by status asc
+  </select>
+  <select id="selectProjectRepeat" parameterType="com.teamwork.project.projects.domain.Project" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from project_info
+    <where>
+      <if test="projectId != null">
+        AND project_id != #{projectId}
+      </if>
+      <if test="projectName != null">
+        AND project_name = #{projectName}
+      </if>
     </where>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -48,10 +93,10 @@
     <!--@mbg.generated-->
     insert into project_info (project_name, start_date, end_date,
       create_by, create_time, update_by,
-      update_time, remark)
+      update_time, remark, status)
     values (#{projectName,jdbcType=VARCHAR}, #{startDate,jdbcType=DATE}, #{endDate,jdbcType=DATE},
       #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
-      #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
+      #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT})
   </insert>
   <insert id="insertSelective" keyColumn="project_id" keyProperty="projectId" parameterType="com.teamwork.project.projects.domain.Project" useGeneratedKeys="true">
     <!--@mbg.generated-->
@@ -81,6 +126,9 @@
       <if test="remark != null">
         remark,
       </if>
+      <if test="status != null">
+        status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="projectName != null">
@@ -106,6 +154,9 @@
       </if>
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
       </if>
     </trim>
   </insert>
@@ -137,6 +188,9 @@
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
       </if>
+      <if test="status != null">
+        status = #{status,jdbcType=SMALLINT},
+      </if>
     </set>
     where project_id = #{projectId,jdbcType=BIGINT}
   </update>
@@ -150,7 +204,8 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_by = #{updateBy,jdbcType=VARCHAR},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      remark = #{remark,jdbcType=VARCHAR}
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=SMALLINT}
     where project_id = #{projectId,jdbcType=BIGINT}
   </update>
 </mapper>

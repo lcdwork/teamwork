@@ -1,7 +1,10 @@
 package com.teamwork.project.projects.domain;
 
 import com.teamwork.framework.web.domain.BaseEntity;
+import com.teamwork.project.system.domain.SysUser;
+
 import java.util.Date;
+import java.util.List;
 
 public class Task extends BaseEntity {
     /**
@@ -42,7 +45,9 @@ public class Task extends BaseEntity {
     /**
     * 任务状态
     */
-    private Short status;
+    private Byte status;
+
+    private List<Long> users;
 
     public Long getTaskId() {
         return taskId;
@@ -100,11 +105,19 @@ public class Task extends BaseEntity {
         this.stopTime = stopTime;
     }
 
-    public Short getStatus() {
+    public Byte getStatus() {
         return status;
     }
 
-    public void setStatus(Short status) {
+    public void setStatus(Byte status) {
         this.status = status;
+    }
+
+    public List<Long> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<Long> users) {
+        this.users = users;
     }
 }

@@ -1,11 +1,14 @@
 package com.teamwork.project.projects.service;
 
 import com.teamwork.project.projects.domain.Project;
+import com.teamwork.project.system.domain.SysUser;
 
 import java.util.List;
 
 public interface ProjectService{
 
+
+    List<Project> selectProjectRepeat(Project project);
 
     int deleteByPrimaryKey(Long projectId);
 
@@ -21,4 +24,5 @@ public interface ProjectService{
 
     int updateByPrimaryKey(Project record);
 
+    List<SysUser> selectProjectUsers(Long projectId);
 }

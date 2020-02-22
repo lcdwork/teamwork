@@ -1,6 +1,10 @@
 package com.teamwork.project.projects.service;
 
 import com.teamwork.project.projects.domain.Task;
+import com.teamwork.project.system.domain.SysUser;
+
+import java.util.List;
+
 public interface TaskService{
 
 
@@ -16,4 +20,9 @@ public interface TaskService{
 
     int updateByPrimaryKey(Task record);
 
+    List<Task> selectTaskList(Task task);
+
+    List<Task> selectTaskRepeat(Task task);
+
+    List<SysUser> selectTaskUsers(Long taskId);
 }

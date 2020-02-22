@@ -30,6 +30,75 @@
     from task_info
     where task_id = #{taskId,jdbcType=BIGINT}
   </select>
+  <select id="selectTaskUsers" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select su.user_id, su.dept_id, su.user_name, su.nick_name, su.user_type, su.email, su.phonenumber, su.sex, su.avatar
+    from sys_user_task sut
+    where task_id = #{taskId,jdbcType=BIGINT}
+    left join sys_user su on sup.user_id = su.user_id
+  </select>
+  <select id="selectTaskList" parameterType="com.teamwork.project.projects.domain.Task" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from task_info
+    <where>
+      <if test="taskId != null">
+        AND task_id = #{taskId}
+      </if>
+      <if test="taskName != null">
+        AND task_name like concat('%', #{taskName}, '%')
+      </if>
+      <if test="taskTag != null">
+        AND task_tag = #{taskTag}
+      </if>
+      <if test="usersGroup != null">
+        AND users_group = #{usersGroup}
+      </if>
+      <if test="startTime != null">
+        AND start_time = #{startTime}
+      </if>
+      <if test="stopTime != null">
+        AND stop_time = #{stopTime}
+      </if>
+      <if test="status != null">
+        AND status = #{status}
+      </if>
+      <if test="createBy != null">
+        AND create_by = #{createBy}
+      </if>
+      <if test="createTime != null">
+        AND create_time = #{createTime}
+      </if>
+      <if test="updateBy != null">
+        AND update_by = #{updateBy}
+      </if>
+      <if test="updateTime != null">
+        AND update_time = #{updateTime}
+      </if>
+      <if test="remark != null">
+        AND remark = #{remark}
+      </if>
+      <if test="projectId != null">
+        AND project_id = #{projectId}
+      </if>
+    </where>
+    order by status asc
+  </select>
+  <select id="selectTaskRepeat" parameterType="com.teamwork.project.projects.domain.Task" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from task_info
+    <where>
+      <if test="taskId != null">
+        AND task_id != #{taskId}
+      </if>
+      <if test="projectId != null">
+        AND project_id = #{projectId}
+      </if>
+      <if test="taskName != null">
+        AND task_name = #{taskName}
+      </if>
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     <!--@mbg.generated-->
     delete from task_info
