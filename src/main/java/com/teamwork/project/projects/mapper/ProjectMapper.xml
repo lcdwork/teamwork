@@ -69,7 +69,6 @@
         AND status = #{status}
       </if>
     </where>
-    order by status asc
   </select>
   <select id="selectProjectRepeat" parameterType="com.teamwork.project.projects.domain.Project" resultMap="BaseResultMap">
     select

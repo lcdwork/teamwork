@@ -51,10 +51,13 @@ public class BaseController
         PageDomain pageDomain = TableSupport.buildPageRequest();
         Integer pageNum = pageDomain.getPageNum();
         Integer pageSize = pageDomain.getPageSize();
+        String orderByColumn = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());
         if (StringUtils.isNotNull(pageNum) && StringUtils.isNotNull(pageSize))
         {
             String orderBy = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());
             PageHelper.startPage(pageNum, pageSize, orderBy);
+        } else if (StringUtils.isNotEmpty(orderByColumn)) {
+            PageHelper.orderBy(orderByColumn);
         }
     }
 

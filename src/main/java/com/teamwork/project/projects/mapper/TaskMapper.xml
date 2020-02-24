@@ -58,7 +58,7 @@
         AND stop_time = #{stopTime}
       </if>
       <if test="status != null">
-        AND status = #{status}
+        AND t.status = #{status}
       </if>
       <if test="createBy != null">
         AND create_by = #{createBy}
@@ -79,7 +79,6 @@
         AND t.project_id = #{projectId}
       </if>
     </where>
-    order by status asc
   </select>
   <select id="selectTaskRepeat" parameterType="com.teamwork.project.projects.domain.Task" resultMap="BaseResultMap">
     select

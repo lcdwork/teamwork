@@ -22,6 +22,10 @@ public class PageDomain
         {
             return "";
         }
+        if (StringUtils.isEmpty(isAsc))
+        {
+            return StringUtils.toUnderScoreCase(orderByColumn) + "  desc";
+        }
         return StringUtils.toUnderScoreCase(orderByColumn) + " " + isAsc;
     }
 
