@@ -33,13 +33,13 @@ public class Task extends BaseEntity {
     /**
     * 开始时间
     */
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+//    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date startTime;
 
     /**
     * 结束时间
     */
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+//    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date stopTime;
 
     /**
