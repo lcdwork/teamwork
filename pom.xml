@@ -218,6 +218,13 @@
                 </includes>
                 <filtering>false</filtering>
             </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>*</include>
+                    <include>**/*</include>
+                </includes>
+            </resource>
         </resources>
     </build>
 
