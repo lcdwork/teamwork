@@ -22,9 +22,9 @@ public class PageDomain
         {
             return "";
         }
-        if (StringUtils.isEmpty(isAsc))
+        if (StringUtils.isNotEmpty(orderByColumn) && StringUtils.isEmpty(isAsc))
         {
-            return StringUtils.toUnderScoreCase(orderByColumn) + "  desc";
+            return StringUtils.toUnderScoreCase(orderByColumn) + "  asc";
         }
         return StringUtils.toUnderScoreCase(orderByColumn) + " " + isAsc;
     }
