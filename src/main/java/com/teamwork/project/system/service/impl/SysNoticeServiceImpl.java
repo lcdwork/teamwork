@@ -1,11 +1,14 @@
 package com.teamwork.project.system.service.impl;
 
+import com.teamwork.project.projects.domain.SysUserNotice;
+import com.teamwork.project.projects.mapper.SysUserNoticeMapper;
 import com.teamwork.project.system.domain.SysNotice;
 import com.teamwork.project.system.mapper.SysNoticeMapper;
 import com.teamwork.project.system.service.ISysNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -16,6 +19,9 @@ public class SysNoticeServiceImpl implements ISysNoticeService
 {
     @Autowired
     private SysNoticeMapper noticeMapper;
+
+    @Resource
+    private SysUserNoticeMapper userNoticeMapper;
 
     /**
      * 查询公告信息
@@ -50,7 +56,20 @@ public class SysNoticeServiceImpl implements ISysNoticeService
     @Override
     public int insertNotice(SysNotice notice)
     {
-        return noticeMapper.insertNotice(notice);
+        int i = noticeMapper.insertNotice(notice);
+        insertUserNotice(notice);
+        return i;
+    }
+
+    private void insertUserNotice(SysNotice notice) {
+        if (notice.getUserList() != null && notice.getUserList().size() > 0) {
+            for (Long userId : notice.getUserList()) {
+                SysUserNotice s = new SysUserNotice();
+                s.setNoticeId(notice.getNoticeId());
+                s.setUserId(userId);
+                userNoticeMapper.insert(s);
+            }
+        }
     }
 
     /**
@@ -62,7 +81,10 @@ public class SysNoticeServiceImpl implements ISysNoticeService
     @Override
     public int updateNotice(SysNotice notice)
     {
-        return noticeMapper.updateNotice(notice);
+        userNoticeMapper.deleteByNoticeId(notice.getNoticeId());
+        int i = noticeMapper.updateNotice(notice);
+        insertUserNotice(notice);
+        return i;
     }
 
     /**

@@ -10,6 +10,7 @@ import com.teamwork.project.projects.domain.Project;
 import com.teamwork.project.projects.domain.Task;
 import com.teamwork.project.projects.service.ProjectService;
 import com.teamwork.project.projects.service.TaskService;
+import com.teamwork.project.system.domain.SysDept;
 import com.teamwork.project.system.domain.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,6 +36,16 @@ public class ProjectController extends BaseController {
         startPage();
         List<Project> list = projectService.selectProjectList(project);
         return getDataTable(list);
+    }
+
+    /**
+     * 获取项目任务下拉树列表
+     */
+    @GetMapping("/treeselect")
+    public Result treeselect(Project project)
+    {
+        List<Project> projects = projectService.selectProjectList(project);
+        return Result.success(projectService.buildProjectTreeSelect(projects));
     }
 
     @GetMapping("/projectUsers")

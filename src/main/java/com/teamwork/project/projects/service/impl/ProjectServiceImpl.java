@@ -1,21 +1,24 @@
 package com.teamwork.project.projects.service.impl;
 
 import com.teamwork.common.utils.SecurityUtils;
-import com.teamwork.project.projects.domain.ProjectInfoLog;
-import com.teamwork.project.projects.domain.SysUserProject;
-import com.teamwork.project.projects.domain.TaskInfoLog;
-import com.teamwork.project.projects.mapper.ProjectInfoLogMapper;
-import com.teamwork.project.projects.mapper.SysUserProjectMapper;
+import com.teamwork.framework.web.domain.TreeSelect;
+import com.teamwork.project.projects.domain.*;
+import com.teamwork.project.projects.mapper.*;
+import com.teamwork.project.system.domain.SysDept;
+import com.teamwork.project.system.domain.SysNotice;
 import com.teamwork.project.system.domain.SysUser;
+import com.teamwork.project.system.mapper.SysNoticeMapper;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
-import com.teamwork.project.projects.domain.Project;
-import com.teamwork.project.projects.mapper.ProjectMapper;
+
 import com.teamwork.project.projects.service.ProjectService;
 
+import java.security.Security;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectServiceImpl implements ProjectService{
@@ -27,7 +30,16 @@ public class ProjectServiceImpl implements ProjectService{
     private ProjectInfoLogMapper projectInfoLogMapper;
 
     @Resource
-    SysUserProjectMapper sysUserProjectMapper;
+    private SysUserProjectMapper sysUserProjectMapper;
+
+    @Resource
+    private SysUserNoticeMapper sysUserNoticeMapper;
+
+    @Resource
+    private SysNoticeMapper sysNoticeMapper;
+
+    @Resource
+    private TaskMapper taskMapper;
 
     @Override
     public List<Project> selectProjectList(Project project)
@@ -53,8 +65,9 @@ public class ProjectServiceImpl implements ProjectService{
         record.setCreateTime(new Date());
         int i = projectMapper.insert(record);
         projectInfoLogMapper.insert(insertProjectInfoLog(record.getProjectId(), 1));
-        sysUserProjectMapper.deleteByProjectId(record.getProjectId());
+//        sysUserProjectMapper.deleteByProjectId(record.getProjectId());
         if (record.getUserList() != null && record.getUserList().size() > 0) {
+            userNoticwList(record);
             List<SysUserProject> list = userProjectList(record);
             sysUserProjectMapper.insertList(list);
         }
@@ -77,10 +90,20 @@ public class ProjectServiceImpl implements ProjectService{
         record.setUpdateTime(new Date());
         int i = projectMapper.updateByPrimaryKeySelective(record);
         projectInfoLogMapper.insert(insertProjectInfoLog(record.getProjectId(), 2));
-        sysUserProjectMapper.deleteByProjectId(record.getProjectId());
         if (record.getUserList() != null && record.getUserList().size() > 0) {
-            List<SysUserProject> list = userProjectList(record);
-            sysUserProjectMapper.insertList(list);
+            List<SysUser> newUserList = record.getUserList();
+            List<Long> newUserIds = newUserList.stream().map(m -> m.getUserId()).collect(Collectors.toList());
+            SysUserProject sysUserProject = new SysUserProject();
+            sysUserProject.setProjectId(record.getProjectId());
+            List<SysUserProject> s = sysUserProjectMapper.queryAll(sysUserProject);
+            List<Long> userIds = s.stream().map(m -> m.getUserId()).collect(Collectors.toList());
+            // 如果项目人员发生变化，重新生成项目人员关系，以及消息通知
+            if (!(newUserIds.containsAll(userIds) && userIds.containsAll(newUserIds))) {
+                userNoticwList(record);
+                sysUserProjectMapper.deleteByProjectId(record.getProjectId());
+                List<SysUserProject> list = userProjectList(record);
+                sysUserProjectMapper.insertList(list);
+            }
         }
         return i;
     }
@@ -93,6 +116,12 @@ public class ProjectServiceImpl implements ProjectService{
     @Override
     public List<SysUser> selectProjectUsers(Long projectId) {
         return projectMapper.selectProjectUsers(projectId);
+    }
+
+    @Override
+    public List<TreeSelect> buildProjectTreeSelect(List<Project> projects) {
+        List<Project> projectTrees = buildProjectTree(projects);
+        return projectTrees.stream().map(TreeSelect::new).collect(Collectors.toList());
     }
 
     public ProjectInfoLog insertProjectInfoLog(Long projectId, int status) {
@@ -114,6 +143,62 @@ public class ProjectServiceImpl implements ProjectService{
             list.add(sysUserProject);
         });
         return list;
+    }
+
+    // 生成系统消息并分发给每个人
+    public void userNoticwList(Project project) {
+        List<SysUser> users = project.getUserList();
+        users.forEach(u -> {
+            SysNotice sysNotice = new SysNotice();
+            sysNotice.setNoticeTitle("项目邀请通知");
+            sysNotice.setNoticeContent(SecurityUtils.getUsername() + "邀请" + u.getUserName() + "加入" + project.getProjectName() + "项目");
+            sysNotice.setNoticeType("1");
+            sysNotice.setStatus("0");
+            sysNotice.setCreateBy(SecurityUtils.getUsername());
+            sysNotice.setCreateTime(new Date());
+            sysNoticeMapper.insertNotice(sysNotice);
+            SysUserNotice sysUserNotice = new SysUserNotice();
+            sysUserNotice.setUserId(u.getUserId());
+            sysUserNotice.setNoticeId(sysNotice.getNoticeId());
+            sysUserNoticeMapper.insert(sysUserNotice);
+            SysUserNotice sysUserNotice2 = new SysUserNotice();
+            sysUserNotice2.setUserId(SecurityUtils.getLoginUser().getUser().getUserId());
+            sysUserNotice2.setNoticeId(sysNotice.getNoticeId());
+            sysUserNoticeMapper.insert(sysUserNotice2);
+        });
+    }
+
+    /**
+     * 构建前端所需要树结构
+     *
+     * @param projects 项目列表
+     * @return 树结构列表
+     */
+    @Override
+    public List<Project> buildProjectTree(List<Project> projects) {
+        List<Project> returnList = new ArrayList<Project>();
+        for (Project project : projects)
+        {
+            returnList.add(project);
+            Task task = new Task();
+            task.setProjectId(project.getProjectId());
+            List<Task> tasks = taskMapper.selectTaskList(task);
+            project.setTaskList(tasks);
+//            if (tasks != null && tasks.size() > 0) {
+//                for (Task t : tasks) {
+//                    Project p = new Project();
+//                    p.setTaskId(t.getTaskId());
+//                    p.setTaskName(t.getTaskName());
+//                    returnList.add(p);
+//                }
+//            }
+        }
+
+        if (returnList.isEmpty())
+        {
+            returnList = projects;
+        }
+        return returnList;
     }
 
 }
