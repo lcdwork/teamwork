@@ -80,6 +80,53 @@
       </if>
     </where>
   </select>
+  <select id="selectTaskListByUser" parameterType="com.teamwork.project.projects.domain.Task" resultMap="BaseResultMap">
+    select
+    t.*, p.project_name
+    from task_info t
+    left join project_info p on t.project_id = p.project_id
+    <if test="searchValue != null">
+      INNER JOIN sys_user_task u ON t.task_id = u.task_id and u.status = #{searchValue}
+    </if>
+    <where>
+      <if test="taskId != null">
+        AND task_id = #{taskId}
+      </if>
+      <if test="taskName != null">
+        AND task_name like concat('%', #{taskName}, '%')
+      </if>
+      <if test="taskTag != null">
+        AND task_tag = #{taskTag}
+      </if>
+      <if test="startTime != null">
+        AND start_time = #{startTime}
+      </if>
+      <if test="stopTime != null">
+        AND stop_time = #{stopTime}
+      </if>
+      <if test="status != null">
+        AND t.status = #{status}
+      </if>
+      <if test="createBy != null">
+        AND create_by = #{createBy}
+      </if>
+      <if test="createTime != null">
+        AND create_time = #{createTime}
+      </if>
+      <if test="updateBy != null">
+        AND update_by = #{updateBy}
+      </if>
+      <if test="updateTime != null">
+        AND update_time = #{updateTime}
+      </if>
+      <if test="remark != null">
+        AND remark = #{remark}
+      </if>
+      <if test="projectId != null">
+        AND t.project_id = #{projectId}
+      </if>
+    </where>
+  </select>
   <select id="selectTaskRepeat" parameterType="com.teamwork.project.projects.domain.Task" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

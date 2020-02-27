@@ -22,6 +22,8 @@ public interface TaskService{
 
     List<Task> selectTaskList(Task task);
 
+    List<Task> selectTaskListByUser(Task task);
+
     List<Task> selectTaskRepeat(Task task);
 
     List<SysUser> selectTaskUsers(Long taskId);

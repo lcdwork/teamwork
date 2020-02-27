@@ -1,26 +1,16 @@
 package com.teamwork.project.projects.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.teamwork.framework.web.domain.BaseEntity;
 
-import java.io.Serializable;
-
-/**
- * (SysUserTask)实体类
- *
- * @author makejava
- * @since 2020-02-21 22:05:25
- */
-
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class SysUserTask implements Serializable {
+public class SysUserTask extends BaseEntity {
     private static final long serialVersionUID = -30447064077908622L;
-    
     private Long id;
-    
+
     private Long userId;
-    
+
     private Long taskId;
 
+    private Short status;
 
     public Long getId() {
         return id;
@@ -46,4 +36,11 @@ public class SysUserTask implements Serializable {
         this.taskId = taskId;
     }
 
+    public Short getStatus() {
+        return status;
+    }
+
+    public void setStatus(Short status) {
+        this.status = status;
+    }
 }

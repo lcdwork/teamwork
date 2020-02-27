@@ -82,6 +82,11 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
+    public List<Task> selectTaskListByUser(Task task) {
+        return taskMapper.selectTaskListByUser(task);
+    }
+
+    @Override
     public List<Task> selectTaskRepeat(Task task) {
         return taskMapper.selectTaskRepeat(task);
     }

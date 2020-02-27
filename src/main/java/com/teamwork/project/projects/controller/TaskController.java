@@ -33,6 +33,14 @@ public class TaskController extends BaseController {
         return getDataTable(list);
     }
 
+    @GetMapping("/listByUser")
+    public TableDataInfo listByUser(Task task)
+    {
+        startPage();
+        List<Task> list = taskService.selectTaskListByUser(task);
+        return getDataTable(list);
+    }
+
     @GetMapping("/taskUsers")
     public TableDataInfo selectTaskUsers(@PathVariable("taskId") Long taskId) {
         List<SysUser> list = taskService.selectTaskUsers(taskId);

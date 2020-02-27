@@ -1,11 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.teamwork.project.projects.mapper.SysUserTaskMapper">
+  <resultMap id="BaseResultMap" type="com.teamwork.project.projects.domain.SysUserTask">
+    <!--@mbg.generated-->
+    <!--@Table sys_user_task-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="task_id" jdbcType="BIGINT" property="taskId" />
+    <result column="status" jdbcType="SMALLINT" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, user_id, task_id, `status`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_task
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from sys_user_task
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.teamwork.project.projects.domain.SysUserTask" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into sys_user_task (user_id, task_id, `status`
+      )
+    values (#{userId,jdbcType=BIGINT}, #{taskId,jdbcType=BIGINT}, #{status,jdbcType=SMALLINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.teamwork.project.projects.domain.SysUserTask" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into sys_user_task
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="taskId != null">
+        task_id,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="taskId != null">
+        #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.teamwork.project.projects.domain.SysUserTask">
+    <!--@mbg.generated-->
+    update sys_user_task
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="taskId != null">
+        task_id = #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.teamwork.project.projects.domain.SysUserTask">
+    <!--@mbg.generated-->
+    update sys_user_task
+    set user_id = #{userId,jdbcType=BIGINT},
+      task_id = #{taskId,jdbcType=BIGINT},
+      `status` = #{status,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
 
-    <resultMap type="com.teamwork.project.projects.domain.SysUserTask" id="SysUserTaskMap">
-        <result property="id" column="id" jdbcType="INTEGER"/>
-        <result property="userId" column="user_id" jdbcType="INTEGER"/>
-        <result property="taskId" column="task_id" jdbcType="INTEGER"/>
+    <resultMap id="SysUserTaskMap" type="com.teamwork.project.projects.domain.SysUserTask">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="task_id" jdbcType="INTEGER" property="taskId" />
     </resultMap>
 
     <!--查询单个-->
@@ -51,7 +132,7 @@
     <insert id="insertList" keyColumn="id" keyProperty="id" parameterType="java.util.List" useGeneratedKeys="true">
         insert into sys_user_task(user_id, task_id)
         values
-        <foreach collection="list" separator="," item="item" index="index">
+        <foreach collection="list" index="index" item="item" separator=",">
             (#{item.userId}, #{item.taskId})
         </foreach>
     </insert>
