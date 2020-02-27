@@ -85,8 +85,17 @@
     t.*, p.project_name
     from task_info t
     left join project_info p on t.project_id = p.project_id
-    <if test="searchValue != null">
-      INNER JOIN sys_user_task u ON t.task_id = u.task_id and u.status = #{searchValue}
+    <if test="taskUserStatus != null and taskUserStatus == 0">
+      INNER JOIN sys_user_task u ON u.status != 1 and t.task_id = u.task_id
+      <if test="taskUserId != null">
+        and u.user_id = #{taskUserId}
+      </if>
+    </if>
+    <if test="taskUserStatus != null and taskUserStatus != 0">
+      INNER JOIN sys_user_task u ON t.task_id = u.task_id and u.status = #{taskUserStatus}
+      <if test="taskUserId != null">
+        and u.user_id = #{taskUserId}
+      </if>
     </if>
     <where>
       <if test="taskId != null">

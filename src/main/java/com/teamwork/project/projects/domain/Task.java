@@ -47,6 +47,10 @@ public class Task extends BaseEntity {
     */
     private Byte status;
 
+    private Long taskUserId;
+
+    private Short taskUserStatus;
+
     private List<SysUser> userList;
 
     private String projectName;
@@ -121,5 +125,21 @@ public class Task extends BaseEntity {
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
+    }
+
+    public Long getTaskUserId() {
+        return taskUserId;
+    }
+
+    public void setTaskUserId(Long taskUserId) {
+        this.taskUserId = taskUserId;
+    }
+
+    public Short getTaskUserStatus() {
+        return taskUserStatus;
+    }
+
+    public void setTaskUserStatus(Short taskUserStatus) {
+        this.taskUserStatus = taskUserStatus;
     }
 }

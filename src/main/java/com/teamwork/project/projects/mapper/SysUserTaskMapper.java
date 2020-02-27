@@ -15,6 +15,8 @@ public interface SysUserTaskMapper {
 
     int updateByPrimaryKey(SysUserTask record);
 
+    int updateStatus(SysUserTask record);
+
     /**
      * 通过ID查询单条数据
      *

@@ -6,7 +6,7 @@
     <!--@Table sys_user_task-->
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="task_id" jdbcType="BIGINT" property="taskId" />
+    <result column="task_id" jdbcType="INTEGER" property="taskId" />
     <result column="status" jdbcType="SMALLINT" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -15,7 +15,7 @@
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     <!--@mbg.generated-->
-    select 
+    select
     <include refid="Base_Column_List" />
     from sys_user_task
     where id = #{id,jdbcType=BIGINT}
@@ -29,7 +29,7 @@
     <!--@mbg.generated-->
     insert into sys_user_task (user_id, task_id, `status`
       )
-    values (#{userId,jdbcType=BIGINT}, #{taskId,jdbcType=BIGINT}, #{status,jdbcType=SMALLINT}
+    values (#{userId,jdbcType=BIGINT}, #{taskId,jdbcType=INTEGER}, #{status,jdbcType=SMALLINT}
       )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.teamwork.project.projects.domain.SysUserTask" useGeneratedKeys="true">
@@ -51,7 +51,7 @@
         #{userId,jdbcType=BIGINT},
       </if>
       <if test="taskId != null">
-        #{taskId,jdbcType=BIGINT},
+        #{taskId,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         #{status,jdbcType=SMALLINT},
@@ -66,7 +66,7 @@
         user_id = #{userId,jdbcType=BIGINT},
       </if>
       <if test="taskId != null">
-        task_id = #{taskId,jdbcType=BIGINT},
+        task_id = #{taskId,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         `status` = #{status,jdbcType=SMALLINT},
@@ -78,7 +78,7 @@
     <!--@mbg.generated-->
     update sys_user_task
     set user_id = #{userId,jdbcType=BIGINT},
-      task_id = #{taskId,jdbcType=BIGINT},
+      task_id = #{taskId,jdbcType=INTEGER},
       `status` = #{status,jdbcType=SMALLINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -143,6 +143,26 @@
             </if>
         </set>
         where id = #{id}
+    </update>
+
+    <update id="updateStatus">
+        update sys_user_task
+        <set>
+            <if test="status != null">
+                status = #{status},
+            </if>
+        </set>
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="taskId != null">
+                and task_id = #{taskId}
+            </if>
+        </where>
     </update>
 
     <!--通过主键删除-->
