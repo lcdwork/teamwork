@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 public class SysNoticeServiceImpl implements ISysNoticeService
 {
-    @Autowired
+    @Resource
     private SysNoticeMapper noticeMapper;
 
     @Resource
@@ -109,5 +109,11 @@ public class SysNoticeServiceImpl implements ISysNoticeService
     public int deleteNoticeByIds(Long noticeIds)
     {
         return noticeMapper.deleteNoticeByIds(noticeIds);
+    }
+
+    @Override
+    public List<SysNotice> selectNoticeByUserId(SysNotice notice) {
+        notice.setStatus("0");
+        return noticeMapper.selectNoticeByUserId(notice);
     }
 }
