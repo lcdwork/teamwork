@@ -99,7 +99,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="getListByTaskId" parameterType="com.teamwork.project.projects.domain.Task" resultMap="SysUserResult">
-		select u.user_id, dept_id, user_name, nick_name, email, avatar, phonenumber, sex, status
+		select u.user_id, dept_id, user_name, nick_name, email, avatar, phonenumber, sex, u.status
 		from sys_user u
 		left join sys_user_task ut on u.user_id = ut.user_id
 		where ut.task_id = #{taskId}
