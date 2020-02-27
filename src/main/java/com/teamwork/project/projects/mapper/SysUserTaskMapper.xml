@@ -123,12 +123,6 @@
         </where>
     </select>
 
-    <!--新增所有列-->
-    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into sys_user_task(user_id, task_id)
-        values (#{userId}, #{taskId})
-    </insert>
-
     <insert id="insertList" keyColumn="id" keyProperty="id" parameterType="java.util.List" useGeneratedKeys="true">
         insert into sys_user_task(user_id, task_id)
         values

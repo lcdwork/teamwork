@@ -5,6 +5,7 @@ import com.teamwork.project.projects.domain.*;
 import com.teamwork.project.projects.mapper.SysUserTaskMapper;
 import com.teamwork.project.projects.mapper.TaskInfoLogMapper;
 import com.teamwork.project.system.domain.SysUser;
+import com.teamwork.project.system.mapper.SysUserMapper;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import com.teamwork.project.projects.mapper.TaskMapper;
@@ -21,10 +22,13 @@ public class TaskServiceImpl implements TaskService{
     private TaskMapper taskMapper;
 
     @Resource
-    TaskInfoLogMapper taskInfoLogMapper;
+    private TaskInfoLogMapper taskInfoLogMapper;
 
     @Resource
-    SysUserTaskMapper sysUserTaskMapper;
+    private SysUserTaskMapper sysUserTaskMapper;
+
+    @Resource
+    private SysUserMapper userMapper;
 
     @Override
     public int deleteByPrimaryKey(Long taskId) {
@@ -79,7 +83,12 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public List<Task> selectTaskList(Task task) {
-        return taskMapper.selectTaskList(task);
+        List<Task> list = taskMapper.selectTaskList(task);
+        list.forEach(t -> {
+            List<SysUser> userList = userMapper.getListByTaskId(t);
+            t.setUserList(userList);
+        });
+        return list;
     }
 
     @Override

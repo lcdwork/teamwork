@@ -8,6 +8,7 @@ import com.teamwork.project.system.domain.SysDept;
 import com.teamwork.project.system.domain.SysNotice;
 import com.teamwork.project.system.domain.SysUser;
 import com.teamwork.project.system.mapper.SysNoticeMapper;
+import com.teamwork.project.system.mapper.SysUserMapper;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
@@ -41,10 +42,18 @@ public class ProjectServiceImpl implements ProjectService{
     @Resource
     private TaskMapper taskMapper;
 
+    @Resource
+    private SysUserMapper userMapper;
+
     @Override
     public List<Project> selectProjectList(Project project)
     {
-        return projectMapper.selectProjectList(project);
+        List<Project> list = projectMapper.selectProjectList(project);
+        list.forEach(p -> {
+            List<SysUser> userList = userMapper.getListByProjectId(p);
+            p.setUserList(userList);
+        });
+        return list;
     }
 
     @Override
