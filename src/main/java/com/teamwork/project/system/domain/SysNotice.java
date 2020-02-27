@@ -6,6 +6,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 /**
  * 通知公告表 sys_notice
@@ -28,6 +29,8 @@ public class SysNotice extends BaseEntity
 
     /** 公告状态（0正常 1关闭） */
     private String status;
+
+    private List<Long> userList;
 
     public Long getNoticeId()
     {
@@ -79,6 +82,14 @@ public class SysNotice extends BaseEntity
     public String getStatus()
     {
         return status;
+    }
+
+    public List<Long> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<Long> userList) {
+        this.userList = userList;
     }
 
     @Override

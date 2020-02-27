@@ -5,11 +5,9 @@ import com.teamwork.common.exception.CustomException;
 import com.teamwork.common.utils.SecurityUtils;
 import com.teamwork.common.utils.StringUtils;
 import com.teamwork.framework.aspectj.lang.annotation.DataScope;
-import com.teamwork.project.system.domain.SysPost;
-import com.teamwork.project.system.domain.SysRole;
-import com.teamwork.project.system.domain.SysUser;
-import com.teamwork.project.system.domain.SysUserPost;
-import com.teamwork.project.system.domain.SysUserRole;
+import com.teamwork.project.projects.domain.Project;
+import com.teamwork.project.projects.domain.Task;
+import com.teamwork.project.system.domain.*;
 import com.teamwork.project.system.mapper.SysPostMapper;
 import com.teamwork.project.system.mapper.SysRoleMapper;
 import com.teamwork.project.system.mapper.SysUserMapper;
@@ -449,6 +447,21 @@ public class SysUserServiceImpl implements ISysUserService
             successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
         }
         return successMsg.toString();
+    }
+
+    @Override
+    public List<SysUser> getListByProjectId(Project project) {
+        return userMapper.getListByProjectId(project);
+    }
+
+    @Override
+    public List<SysUser> getListByTaskId(Task task) {
+        return userMapper.getListByTaskId(task);
+    }
+
+    @Override
+    public List<SysUser> getListByNoticeId(SysNotice notice) {
+        return userMapper.getListByNoticeId(notice);
     }
 
 }

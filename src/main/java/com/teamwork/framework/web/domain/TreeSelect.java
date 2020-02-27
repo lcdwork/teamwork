@@ -1,6 +1,8 @@
 package com.teamwork.framework.web.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.teamwork.project.projects.domain.Project;
+import com.teamwork.project.projects.domain.Task;
 import com.teamwork.project.system.domain.SysDept;
 import com.teamwork.project.system.domain.SysMenu;
 
@@ -25,6 +27,10 @@ public class TreeSelect implements Serializable
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<TreeSelect> children;
 
+    private Long projectId;
+
+    private Long taskId;
+
     public TreeSelect()
     {
 
@@ -42,6 +48,22 @@ public class TreeSelect implements Serializable
         this.id = menu.getMenuId();
         this.label = menu.getMenuName();
         this.children = menu.getChildren().stream().map(TreeSelect::new).collect(Collectors.toList());
+    }
+
+    public TreeSelect(Project project) {
+        this.id = project.getProjectId();
+        this.label = project.getProjectName();
+        this.projectId = project.getProjectId();
+        if (project.getTaskList() != null && project.getTaskList().size() > 0) {
+            this.children = project.getTaskList().stream().map(TreeSelect::new).collect(Collectors.toList());
+        }
+
+    }
+
+    public TreeSelect(Task task) {
+        this.id = task.getTaskId();
+        this.label = task.getTaskName();
+        this.taskId = task.getTaskId();
     }
 
     public Long getId()
@@ -72,5 +94,21 @@ public class TreeSelect implements Serializable
     public void setChildren(List<TreeSelect> children)
     {
         this.children = children;
+    }
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
+    }
+
+    public Long getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(Long taskId) {
+        this.taskId = taskId;
     }
 }

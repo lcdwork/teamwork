@@ -36,6 +36,12 @@ public class Project extends BaseEntity {
 
     private List<SysUser> userList;
 
+    private List<Task> taskList;
+
+    private Long taskId;
+
+    private String taskName;
+
     public Long getProjectId() {
         return projectId;
     }
@@ -82,5 +88,29 @@ public class Project extends BaseEntity {
 
     public void setUserList(List<SysUser> userList) {
         this.userList = userList;
+    }
+
+    public List<Task> getTaskList() {
+        return taskList;
+    }
+
+    public void setTaskList(List<Task> taskList) {
+        this.taskList = taskList;
+    }
+
+    public Long getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(Long taskId) {
+        this.taskId = taskId;
+    }
+
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
     }
 }

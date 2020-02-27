@@ -12,6 +12,9 @@ import com.teamwork.framework.security.service.TokenService;
 import com.teamwork.framework.web.controller.BaseController;
 import com.teamwork.framework.web.domain.Result;
 import com.teamwork.framework.web.page.TableDataInfo;
+import com.teamwork.project.projects.domain.Project;
+import com.teamwork.project.projects.domain.Task;
+import com.teamwork.project.system.domain.SysNotice;
 import com.teamwork.project.system.domain.SysUser;
 import com.teamwork.project.system.service.ISysPostService;
 import com.teamwork.project.system.service.ISysRoleService;
@@ -59,6 +62,24 @@ public class SysUserController extends BaseController
     {
         startPage();
         List<SysUser> list = userService.selectUserList(user);
+        return getDataTable(list);
+    }
+
+    @GetMapping("getListByProjectId")
+    public TableDataInfo getListByProjectId(Project project) {
+        List<SysUser> list = userService.getListByProjectId(project);
+        return getDataTable(list);
+    }
+
+    @GetMapping("getListByTaskId")
+    public TableDataInfo getListByTaskId(Task task) {
+        List<SysUser> list = userService.getListByTaskId(task);
+        return getDataTable(list);
+    }
+
+    @GetMapping("getListByNoticeId")
+    public TableDataInfo getListByNoticeId(SysNotice notice) {
+        List<SysUser> list = userService.getListByNoticeId(notice);
         return getDataTable(list);
     }
 

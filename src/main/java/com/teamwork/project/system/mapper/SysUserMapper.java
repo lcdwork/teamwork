@@ -1,5 +1,8 @@
 package com.teamwork.project.system.mapper;
 
+import com.teamwork.project.projects.domain.Project;
+import com.teamwork.project.projects.domain.Task;
+import com.teamwork.project.system.domain.SysNotice;
 import com.teamwork.project.system.domain.SysUser;
 import org.apache.ibatis.annotations.Param;
 
@@ -107,4 +110,10 @@ public interface SysUserMapper
      * @return 结果
      */
     public SysUser checkEmailUnique(String email);
+
+    List<SysUser> getListByProjectId(Project project);
+
+    List<SysUser> getListByTaskId(Task task);
+
+    List<SysUser> getListByNoticeId(SysNotice notice);
 }

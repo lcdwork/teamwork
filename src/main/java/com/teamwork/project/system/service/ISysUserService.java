@@ -1,5 +1,8 @@
 package com.teamwork.project.system.service;
 
+import com.teamwork.project.projects.domain.Project;
+import com.teamwork.project.projects.domain.Task;
+import com.teamwork.project.system.domain.SysNotice;
 import com.teamwork.project.system.domain.SysUser;
 
 import java.util.List;
@@ -163,4 +166,10 @@ public interface ISysUserService
      * @return 结果
      */
     public String importUser(List<SysUser> userList, Boolean isUpdateSupport, String operName);
+
+    List<SysUser> getListByProjectId(Project project);
+
+    List<SysUser> getListByTaskId(Task task);
+
+    List<SysUser> getListByNoticeId(SysNotice notice);
 }

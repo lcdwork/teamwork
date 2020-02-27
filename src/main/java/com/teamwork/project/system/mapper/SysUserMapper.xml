@@ -91,6 +91,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where u.user_id = #{userId}
 	</select>
 
+	<select id="getListByProjectId" parameterType="com.teamwork.project.projects.domain.Project" resultMap="SysUserResult">
+		select u.user_id, dept_id, user_name, nick_name, email, avatar, phonenumber, sex, status
+		from sys_user u
+		left join sys_user_project up on u.user_id = up.user_id
+		where up.project_id = #{projectId}
+	</select>
+
+	<select id="getListByTaskId" parameterType="com.teamwork.project.projects.domain.Task" resultMap="SysUserResult">
+		select u.user_id, dept_id, user_name, nick_name, email, avatar, phonenumber, sex, status
+		from sys_user u
+		left join sys_user_task ut on u.user_id = ut.user_id
+		where ut.task_id = #{taskId}
+	</select>
+
+	<select id="getListByNoticeId" parameterType="com.teamwork.project.system.domain.SysNotice" resultMap="SysUserResult">
+		select u.user_id, dept_id, user_name, nick_name, email, avatar, phonenumber, sex, status
+		from sys_user u
+		left join sys_user_notice un on u.user_id = un.user_id
+		where un.notice_id = #{noticeId}
+	</select>
+
 	<select id="checkUserNameUnique" parameterType="String" resultType="int">
 		select count(1) from sys_user where user_name = #{userName}
 	</select>
