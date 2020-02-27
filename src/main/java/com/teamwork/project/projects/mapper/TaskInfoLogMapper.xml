@@ -18,8 +18,10 @@
     </sql>
     <select id="getTaskLog" parameterType="java.lang.Long" resultMap="TaskInfoLogMap">
         select
-        <include refid="Base_Column_List" />
-        from task_info_log
+        tl.id, tl.task_id, tl.user_id, tl.operateTime, tl.content, tl.status, tl.remark, t.task_name, u.user_name, u.nick_name
+        from task_info_log tl
+        left join task_info t on t.task_id = tl.task_id
+        left join sys_user u on u.user_id = tl.user_id
         where task_id = #{taskId,jdbcType=BIGINT}
     </select>
 

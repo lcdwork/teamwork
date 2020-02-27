@@ -32,6 +32,8 @@ public class SysNotice extends BaseEntity
 
     private List<Long> userList;
 
+    private Long userId;
+
     public Long getNoticeId()
     {
         return noticeId;
@@ -90,6 +92,14 @@ public class SysNotice extends BaseEntity
 
     public void setUserList(List<Long> userList) {
         this.userList = userList;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override

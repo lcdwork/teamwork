@@ -40,7 +40,8 @@ public class SysNoticeController extends BaseController
     public TableDataInfo list(SysNotice notice)
     {
         startPage();
-        List<SysNotice> list = noticeService.selectNoticeList(notice);
+        List<SysNotice> list = noticeService.selectNoticeByUserId(notice);
+//        List<SysNotice> list = noticeService.selectNoticeList(notice);
         return getDataTable(list);
     }
 
