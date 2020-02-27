@@ -37,6 +37,7 @@ public class TaskServiceImpl implements TaskService{
     public int insert(Task record) {
         record.setCreateBy(SecurityUtils.getUsername());
         record.setCreateTime(new Date());
+        record.setStatus((byte) 0);
         int i = taskMapper.insert(record);
         taskInfoLogMapper.insert(insertTaskInfoLog(record.getTaskId(), 1));
         sysUserTaskMapper.deleteByTaskId(record.getTaskId());
