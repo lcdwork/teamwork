@@ -96,6 +96,7 @@ public class SysNoticeServiceImpl implements ISysNoticeService
     @Override
     public int deleteNoticeById(Long noticeId)
     {
+        userNoticeMapper.deleteByNoticeId(noticeId);
         return noticeMapper.deleteNoticeById(noticeId);
     }
 
