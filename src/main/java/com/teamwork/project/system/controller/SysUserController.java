@@ -65,19 +65,25 @@ public class SysUserController extends BaseController
         return getDataTable(list);
     }
 
-    @GetMapping("getListByProjectId")
+    @GetMapping("/listUserByUserId")
+    public TableDataInfo listUserByUserId(SysUser user) {
+        List<SysUser> list = userService.listUserByUserId(user);
+        return getDataTable(list);
+    }
+
+    @GetMapping("/getListByProjectId")
     public TableDataInfo getListByProjectId(Project project) {
         List<SysUser> list = userService.getListByProjectId(project);
         return getDataTable(list);
     }
 
-    @GetMapping("getListByTaskId")
+    @GetMapping("/getListByTaskId")
     public TableDataInfo getListByTaskId(Task task) {
         List<SysUser> list = userService.getListByTaskId(task);
         return getDataTable(list);
     }
 
-    @GetMapping("getListByNoticeId")
+    @GetMapping("/getListByNoticeId")
     public TableDataInfo getListByNoticeId(SysNotice notice) {
         List<SysUser> list = userService.getListByNoticeId(notice);
         return getDataTable(list);

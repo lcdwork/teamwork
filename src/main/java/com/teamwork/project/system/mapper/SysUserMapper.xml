@@ -86,6 +86,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where u.user_name = #{userName}
 	</select>
 
+	<select id="selectUserListByDept" parameterType="Long" resultMap="SysUserResult">
+		<include refid="selectUserVo"/>
+		where u.dept_id = #{deptId}
+	</select>
+
 	<select id="selectUserById" parameterType="Long" resultMap="SysUserResult">
 		<include refid="selectUserVo"/>
 		where u.user_id = #{userId}

@@ -116,4 +116,6 @@ public interface SysUserMapper
     List<SysUser> getListByTaskId(Task task);
 
     List<SysUser> getListByNoticeId(SysNotice notice);
+
+    List<SysUser> selectUserListByDept(Long deptId);
 }

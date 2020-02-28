@@ -172,4 +172,6 @@ public interface ISysUserService
     List<SysUser> getListByTaskId(Task task);
 
     List<SysUser> getListByNoticeId(SysNotice notice);
+
+    List<SysUser> listUserByUserId(SysUser user);
 }

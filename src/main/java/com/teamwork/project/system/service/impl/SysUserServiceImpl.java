@@ -8,11 +8,7 @@ import com.teamwork.framework.aspectj.lang.annotation.DataScope;
 import com.teamwork.project.projects.domain.Project;
 import com.teamwork.project.projects.domain.Task;
 import com.teamwork.project.system.domain.*;
-import com.teamwork.project.system.mapper.SysPostMapper;
-import com.teamwork.project.system.mapper.SysRoleMapper;
-import com.teamwork.project.system.mapper.SysUserMapper;
-import com.teamwork.project.system.mapper.SysUserPostMapper;
-import com.teamwork.project.system.mapper.SysUserRoleMapper;
+import com.teamwork.project.system.mapper.*;
 import com.teamwork.project.system.service.ISysConfigService;
 import com.teamwork.project.system.service.ISysUserService;
 import org.slf4j.Logger;
@@ -21,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +46,9 @@ public class SysUserServiceImpl implements ISysUserService
 
     @Autowired
     private ISysConfigService configService;
+
+    @Resource
+    private SysDeptMapper deptMapper;
 
     /**
      * 根据条件分页查询用户列表
@@ -462,6 +462,18 @@ public class SysUserServiceImpl implements ISysUserService
     @Override
     public List<SysUser> getListByNoticeId(SysNotice notice) {
         return userMapper.getListByNoticeId(notice);
+    }
+
+    @Override
+    public List<SysUser> listUserByUserId(SysUser user) {
+        List<SysUser> userList = new ArrayList<>();
+        List<SysDept> list = deptMapper.selectChildrenDeptById(user.getDeptId());
+        for (SysDept dept : list) {
+            List<SysUser> users = userMapper.selectUserListByDept(dept.getDeptId());
+            userList.addAll(users);
+        }
+        userList.addAll(userMapper.selectUserListByDept(user.getDeptId()));
+        return userList;
     }
 
 }
