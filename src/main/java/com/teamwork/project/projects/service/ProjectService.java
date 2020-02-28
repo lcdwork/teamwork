@@ -30,4 +30,6 @@ public interface ProjectService{
     List<TreeSelect> buildProjectTreeSelect(List<Project> projects);
 
     List<Project> buildProjectTree(List<Project> projects);
+
+    List<Project> selectProjectListByUser(Project project);
 }

@@ -70,6 +70,48 @@
       </if>
     </where>
   </select>
+
+  <select id="selectProjectListByUser" parameterType="com.teamwork.project.projects.domain.Project" resultMap="BaseResultMap">
+    select p.project_id, project_name, start_date, end_date, create_by, create_time, update_by,
+    update_time, remark, status
+    from project_info p
+    left join sys_user_project up on p.project_id = up.project_id
+    <where>
+      <if test="projectId != null">
+        AND p.project_id = #{projectId}
+      </if>
+      <if test="projectName != null">
+        AND project_name like concat('%', #{projectName}, '%')
+      </if>
+      <if test="startDate != null">
+        AND start_date = #{startDate}
+      </if>
+      <if test="endDate != null">
+        AND end_date = #{endDate}
+      </if>
+      <if test="createBy != null">
+        AND create_by = #{createBy}
+      </if>
+      <if test="createTime != null">
+        AND create_time = #{createTime}
+      </if>
+      <if test="updateBy != null">
+        AND update_by = #{updateBy}
+      </if>
+      <if test="updateTime != null">
+        AND update_time = #{updateTime}
+      </if>
+      <if test="remark != null">
+        AND remark = #{remark}
+      </if>
+      <if test="status != null">
+        AND status = #{status}
+      </if>
+      <if test="userId != null">
+        AND up.user_id = #{userId}
+      </if>
+    </where>
+  </select>
   <select id="selectProjectRepeat" parameterType="com.teamwork.project.projects.domain.Project" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

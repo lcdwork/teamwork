@@ -38,7 +38,8 @@
   </select>
   <select id="selectTaskList" parameterType="com.teamwork.project.projects.domain.Task" resultMap="BaseResultMap">
     select
-    t.*, p.project_name
+    t.task_id, t.project_id, t.task_name, t.task_tag, t.start_time, t.stop_time, t.status,
+    t.create_by, t.create_time, t.update_by, t.update_time, t.remark, p.project_name
     from task_info t
     left join project_info p on t.project_id = p.project_id
     <where>
@@ -81,60 +82,114 @@
     </where>
   </select>
   <select id="selectTaskListByUser" parameterType="com.teamwork.project.projects.domain.Task" resultMap="BaseResultMap">
-    select
-    t.*, p.project_name,u.status as taskUserStatus
+    select t.task_id, t.project_id, t.task_name, t.task_tag, t.start_time, t.stop_time, t.status,
+        t.create_by, t.create_time, t.update_by, t.update_time, t.remark, p.project_name, sut.status as taskUserStatus
     from task_info t
-    left join project_info p on t.project_id = p.project_id
-    <if test="taskUserStatus == 0">
-      INNER JOIN sys_user_task u ON u.status != 1 and t.task_id = u.task_id
-      <if test="taskUserId != null">
-        and u.user_id = #{taskUserId}
-      </if>
-    </if>
-    <if test="taskUserStatus != 0">
-      INNER JOIN sys_user_task u ON t.task_id = u.task_id and u.status = #{taskUserStatus}
-      <if test="taskUserId != null">
-        and u.user_id = #{taskUserId}
-      </if>
-    </if>
-    <where>
-      <if test="taskId != null">
-        AND task_id = #{taskId}
-      </if>
-      <if test="taskName != null">
-        AND task_name like concat('%', #{taskName}, '%')
-      </if>
-      <if test="taskTag != null">
-        AND task_tag = #{taskTag}
-      </if>
-      <if test="startTime != null">
-        AND start_time = #{startTime}
-      </if>
-      <if test="stopTime != null">
-        AND stop_time = #{stopTime}
-      </if>
-      <if test="status != null">
-        AND t.status = #{status}
-      </if>
-      <if test="createBy != null">
-        AND create_by = #{createBy}
-      </if>
-      <if test="createTime != null">
-        AND create_time = #{createTime}
-      </if>
-      <if test="updateBy != null">
-        AND update_by = #{updateBy}
-      </if>
-      <if test="updateTime != null">
-        AND update_time = #{updateTime}
-      </if>
-      <if test="remark != null">
-        AND remark = #{remark}
-      </if>
-      <if test="projectId != null">
-        AND t.project_id = #{projectId}
-      </if>
-    </where>
+    left join sys_user_task sut on t.task_id = sut.task_id
+    left join project_info p on p.project_id = t.project_id
+        <where>
+          <if test="taskId != null">
+            AND t.task_id = #{taskId}
+          </if>
+          <if test="taskName != null">
+            AND t.task_name like concat('%', #{taskName}, '%')
+          </if>
+          <if test="taskTag != null">
+            AND t.task_tag = #{taskTag}
+          </if>
+          <if test="startTime != null">
+            AND t.start_time = #{startTime}
+          </if>
+          <if test="stopTime != null">
+            AND t.stop_time = #{stopTime}
+          </if>
+          <if test="status != null">
+            AND t.status = #{status}
+          </if>
+          <if test="createBy != null">
+            AND t.create_by = #{createBy}
+          </if>
+          <if test="createTime != null">
+            AND t.create_time = #{createTime}
+          </if>
+          <if test="updateBy != null">
+            AND t.update_by = #{updateBy}
+          </if>
+          <if test="updateTime != null">
+            AND t.update_time = #{updateTime}
+          </if>
+          <if test="remark != null">
+            AND t.remark = #{remark}
+          </if>
+          <if test="projectId != null">
+            AND t.project_id = #{projectId}
+          </if>
+          <if test="taskUserId != null">
+            AND sut.user_id = #{taskUserId}
+          </if>
+          <choose>
+            <when test="taskUserStatus == 0">
+              AND sut.status != 1
+            </when>
+            <otherwise>
+              AND sut.status = #{taskUserStatus}
+            </otherwise>
+          </choose>
+        </where>
+<!--    select-->
+<!--    t.*, p.project_name,u.status as taskUserStatus-->
+<!--    from task_info t-->
+<!--    left join project_info p on t.project_id = p.project_id-->
+<!--    <if test="taskUserStatus == 0">-->
+<!--      INNER JOIN sys_user_task u ON u.status != 1 and t.task_id = u.task_id-->
+<!--      <if test="taskUserId != null">-->
+<!--        and u.user_id = #{taskUserId}-->
+<!--      </if>-->
+<!--    </if>-->
+<!--    <if test="taskUserStatus != 0">-->
+<!--      INNER JOIN sys_user_task u ON t.task_id = u.task_id and u.status = #{taskUserStatus}-->
+<!--      <if test="taskUserId != null">-->
+<!--        and u.user_id = #{taskUserId}-->
+<!--      </if>-->
+<!--    </if>-->
+<!--    <where>-->
+<!--      <if test="taskId != null">-->
+<!--        AND task_id = #{taskId}-->
+<!--      </if>-->
+<!--      <if test="taskName != null">-->
+<!--        AND task_name like concat('%', #{taskName}, '%')-->
+<!--      </if>-->
+<!--      <if test="taskTag != null">-->
+<!--        AND task_tag = #{taskTag}-->
+<!--      </if>-->
+<!--      <if test="startTime != null">-->
+<!--        AND start_time = #{startTime}-->
+<!--      </if>-->
+<!--      <if test="stopTime != null">-->
+<!--        AND stop_time = #{stopTime}-->
+<!--      </if>-->
+<!--      <if test="status != null">-->
+<!--        AND t.status = #{status}-->
+<!--      </if>-->
+<!--      <if test="createBy != null">-->
+<!--        AND create_by = #{createBy}-->
+<!--      </if>-->
+<!--      <if test="createTime != null">-->
+<!--        AND create_time = #{createTime}-->
+<!--      </if>-->
+<!--      <if test="updateBy != null">-->
+<!--        AND update_by = #{updateBy}-->
+<!--      </if>-->
+<!--      <if test="updateTime != null">-->
+<!--        AND update_time = #{updateTime}-->
+<!--      </if>-->
+<!--      <if test="remark != null">-->
+<!--        AND remark = #{remark}-->
+<!--      </if>-->
+<!--      <if test="projectId != null">-->
+<!--        AND t.project_id = #{projectId}-->
+<!--      </if>-->
+<!--    </where>-->
   </select>
   <select id="selectTaskRepeat" parameterType="com.teamwork.project.projects.domain.Task" resultMap="BaseResultMap">
     select

@@ -24,4 +24,6 @@ public interface ProjectMapper {
     List<Project> selectProjectRepeat(Project project);
 
     List<SysUser> selectProjectUsers(Long projectId);
+
+    List<Project> selectProjectListByUser(Project project);
 }

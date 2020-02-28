@@ -42,6 +42,8 @@ public class Project extends BaseEntity {
 
     private String taskName;
 
+    public Long userId;
+
     public Long getProjectId() {
         return projectId;
     }
@@ -112,5 +114,13 @@ public class Project extends BaseEntity {
 
     public void setTaskName(String taskName) {
         this.taskName = taskName;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

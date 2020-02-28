@@ -38,6 +38,12 @@ public class ProjectController extends BaseController {
         return getDataTable(list);
     }
 
+    @GetMapping("/listProjectByUser")
+    public TableDataInfo selectProjectListByUser(Project project) {
+        List<Project> list = projectService.selectProjectListByUser(project);
+        return getDataTable(list);
+    }
+
     /**
      * 获取项目任务下拉树列表
      */
