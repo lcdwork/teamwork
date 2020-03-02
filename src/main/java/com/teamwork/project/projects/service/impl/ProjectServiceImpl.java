@@ -153,6 +153,7 @@ public class ProjectServiceImpl implements ProjectService{
             sysUserProject.setUserId(u.getUserId());
             list.add(sysUserProject);
         });
+        list.stream().distinct().collect(Collectors.toList());
         return list;
     }
 

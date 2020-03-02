@@ -14,6 +14,7 @@ import com.teamwork.project.projects.service.TaskService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskServiceImpl implements TaskService{
@@ -126,6 +127,7 @@ public class TaskServiceImpl implements TaskService{
             sysUserTask.setStatus((short) 1);
             list.add(sysUserTask);
         });
+        list.stream().distinct().collect(Collectors.toList());
         return list;
     }
 
