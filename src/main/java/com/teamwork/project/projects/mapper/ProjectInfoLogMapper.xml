@@ -6,7 +6,7 @@
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="projectId" column="project_id" jdbcType="INTEGER"/>
         <result property="userId" column="user_id" jdbcType="INTEGER"/>
-        <result property="operatetime" column="operate_time" jdbcType="TIMESTAMP"/>
+        <result property="operateTime" column="operate_time" jdbcType="TIMESTAMP"/>
         <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
         <result property="content" column="content" jdbcType="VARCHAR"/>
         <result property="status" column="status" jdbcType="OTHER"/>
@@ -56,8 +56,8 @@
             <if test="userId != null">
                 and user_id = #{userId}
             </if>
-            <if test="operatetime != null">
-                and operateTime = #{operatetime}
+            <if test="operateTime != null">
+                and operate_time = #{operateTime}
             </if>
             <if test="content != null and content != ''">
                 and content = #{content}
@@ -73,8 +73,8 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into project_info_log(project_id, user_id, operateTime, content, status, remark)
-        values (#{projectId}, #{userId}, #{operatetime}, #{content}, #{status}, #{remark})
+        insert into project_info_log(project_id, user_id, operate_time, content, status, remark)
+        values (#{projectId}, #{userId}, #{operateTime}, #{content}, #{status}, #{remark})
     </insert>
 
     <!--通过主键修改数据-->
@@ -87,8 +87,8 @@
             <if test="userId != null">
                 user_id = #{userId},
             </if>
-            <if test="operatetime != null">
-                operateTime = #{operatetime},
+            <if test="operateTime != null">
+                operate_time = #{operateTime},
             </if>
             <if test="content != null and content != ''">
                 content = #{content},

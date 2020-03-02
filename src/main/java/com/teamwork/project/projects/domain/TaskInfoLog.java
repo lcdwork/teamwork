@@ -24,7 +24,7 @@ public class TaskInfoLog implements Serializable {
     private Long userId;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date operatetime;
+    private Date operateTime;
 
     private String content;
     /**
@@ -69,12 +69,12 @@ public class TaskInfoLog implements Serializable {
         this.userId = userId;
     }
 
-    public Date getOperatetime() {
-        return operatetime;
+    public Date getOperateTime() {
+        return operateTime;
     }
 
-    public void setOperatetime(Date operatetime) {
-        this.operatetime = operatetime;
+    public void setOperateTime(Date operateTime) {
+        this.operateTime = operateTime;
     }
 
     public String getContent() {

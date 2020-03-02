@@ -133,7 +133,7 @@ public class ProjectServiceImpl implements ProjectService{
     public ProjectInfoLog insertProjectInfoLog(Long projectId, int status) {
         ProjectInfoLog t = new ProjectInfoLog();
         t.setProjectId(projectId);
-        t.setOperatetime(new Date());
+        t.setOperateTime(new Date());
         t.setUserId(SecurityUtils.getLoginUser().getUser().getUserId());
         t.setStatus((byte) status);
         return t;

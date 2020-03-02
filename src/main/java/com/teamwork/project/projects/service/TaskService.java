@@ -27,4 +27,6 @@ public interface TaskService{
     List<Task> selectTaskRepeat(Task task);
 
     List<SysUser> selectTaskUsers(Long taskId);
+
+    List<Task> selectTaskListByTime(Task task);
 }

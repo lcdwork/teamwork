@@ -104,10 +104,15 @@ public class TaskServiceImpl implements TaskService{
         return taskMapper.selectTaskUsers(taskId);
     }
 
+    @Override
+    public List<Task> selectTaskListByTime(Task task) {
+        return null;
+    }
+
     public TaskInfoLog insertTaskInfoLog(Long taskId, int status) {
         TaskInfoLog t = new TaskInfoLog();
         t.setTaskId(taskId);
-        t.setOperatetime(new Date());
+        t.setOperateTime(new Date());
         t.setUserId(SecurityUtils.getLoginUser().getUser().getUserId());
         t.setStatus((byte) status);
         return t;

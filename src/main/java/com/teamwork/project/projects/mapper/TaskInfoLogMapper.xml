@@ -15,11 +15,11 @@
 
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
-        id, task_id, user_id, operateTime, content, status, remark
+        id, task_id, user_id, operate_time, content, status, remark
     </sql>
     <select id="getTaskLog" parameterType="java.lang.Long" resultMap="TaskInfoLogMap">
         select
-        tl.id, tl.task_id, tl.user_id, tl.operateTime, tl.content, tl.status, tl.remark, t.task_name, u.user_name, u.nick_name
+        tl.id, tl.task_id, tl.user_id, tl.operate_time, tl.content, tl.status, tl.remark, t.task_name, u.user_name, u.nick_name
         from task_info_log tl
         left join task_info t on t.task_id = tl.task_id
         left join sys_user u on u.user_id = tl.user_id
@@ -29,7 +29,7 @@
     <!--查询单个-->
     <select id="queryById" resultMap="TaskInfoLogMap">
         select
-          id, task_id, user_id, operateTime, content, status, remark
+          id, task_id, user_id, operate_time, content, status, remark
         from task_info_log
         where id = #{id}
     </select>
@@ -37,7 +37,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="TaskInfoLogMap">
         select
-          id, task_id, user_id, operateTime, content, status, remark
+          id, task_id, user_id, operate_time, content, status, remark
         from task_info_log
         limit #{offset}, #{limit}
     </select>
@@ -45,7 +45,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TaskInfoLogMap">
         select
-          id, task_id, user_id, operateTime, content, status, remark
+          id, task_id, user_id, operate_time, content, status, remark
         from task_info_log
         <where>
             <if test="id != null">
@@ -57,8 +57,8 @@
             <if test="userId != null">
                 and user_id = #{userId}
             </if>
-            <if test="operatetime != null">
-                and operateTime = #{operatetime}
+            <if test="operateTime != null">
+                and operate_time = #{operateTime}
             </if>
             <if test="content != null and content != ''">
                 and content = #{content}
@@ -74,8 +74,8 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into task_info_log(task_id, user_id, operateTime, content, status, remark)
-        values (#{taskId}, #{userId}, #{operatetime}, #{content}, #{status}, #{remark})
+        insert into task_info_log(task_id, user_id, operate_time, content, status, remark)
+        values (#{taskId}, #{userId}, #{operateTime}, #{content}, #{status}, #{remark})
     </insert>
 
     <!--通过主键修改数据-->
@@ -88,8 +88,8 @@
             <if test="userId != null">
                 user_id = #{userId},
             </if>
-            <if test="operatetime != null">
-                operateTime = #{operatetime},
+            <if test="operateTime != null">
+                operate_time = #{operateTime},
             </if>
             <if test="content != null and content != ''">
                 content = #{content},
