@@ -124,10 +124,10 @@
     </select>
 
     <insert id="insertList" keyColumn="id" keyProperty="id" parameterType="java.util.List" useGeneratedKeys="true">
-        insert into sys_user_task(user_id, task_id)
+        insert into sys_user_task(user_id, task_id, status)
         values
         <foreach collection="list" index="index" item="item" separator=",">
-            (#{item.userId}, #{item.taskId})
+            (#{item.userId}, #{item.taskId}, #{item.status})
         </foreach>
     </insert>
 
