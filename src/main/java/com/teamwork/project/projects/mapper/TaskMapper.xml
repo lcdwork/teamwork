@@ -12,6 +12,7 @@
     <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
     <result column="stop_time" jdbcType="TIMESTAMP" property="stopTime" />
     <result column="status" jdbcType="SMALLINT" property="status" />
+    <result column="create_user_id" jdbcType="BIGINT" property="createUserId" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
@@ -21,7 +22,7 @@
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     task_id, project_id, task_name, task_tag, start_time, stop_time, `status`,
-    create_by, create_time, update_by, update_time, remark
+    create_user_id, create_by, create_time, update_by, update_time, remark
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -38,7 +39,7 @@
   </select>
   <select id="selectTaskList" parameterType="com.teamwork.project.projects.domain.Task" resultMap="BaseResultMap">
     select
-    t.task_id, t.project_id, t.task_name, t.task_tag, t.start_time, t.stop_time, t.status,
+    t.task_id, t.project_id, t.task_name, t.task_tag, t.start_time, t.stop_time, t.status, t.create_user_id,
     t.create_by, t.create_time, t.update_by, t.update_time, t.remark, p.project_name
     from task_info t
     left join project_info p on t.project_id = p.project_id
@@ -61,6 +62,9 @@
       <if test="status != null">
         AND t.status = #{status}
       </if>
+      <if test="createUserId != null">
+        AND t.create_user_id = #{createUserId}
+      </if>
       <if test="createBy != null">
         AND create_by = #{createBy}
       </if>
@@ -82,7 +86,7 @@
     </where>
   </select>
   <select id="selectTaskListByUser" parameterType="com.teamwork.project.projects.domain.Task" resultMap="BaseResultMap">
-    select t.task_id, t.project_id, t.task_name, t.task_tag, t.start_time, t.stop_time, t.status,
+    select t.task_id, t.project_id, t.task_name, t.task_tag, t.start_time, t.stop_time, t.status, t.create_user_id,
         t.create_by, t.create_time, t.update_by, t.update_time, t.remark, p.project_name, sut.status as taskUserStatus
     from task_info t
     left join sys_user_task sut on t.task_id = sut.task_id
@@ -105,6 +109,9 @@
           </if>
           <if test="status != null">
             AND t.status = #{status}
+          </if>
+          <if test="createUserId != null">
+            AND t.create_user_id = #{createUserId}
           </if>
           <if test="createBy != null">
             AND t.create_by = #{createBy}
@@ -216,12 +223,12 @@
     <!--@mbg.generated-->
     insert into task_info (project_id, task_name, task_tag,
       start_time, stop_time,
-      `status`, create_by, create_time,
+      `status`, create_user_id, create_by, create_time,
       update_by, update_time, remark
       )
     values (#{projectId,jdbcType=BIGINT}, #{taskName,jdbcType=VARCHAR}, #{taskTag,jdbcType=SMALLINT},
       #{startTime,jdbcType=TIMESTAMP}, #{stopTime,jdbcType=TIMESTAMP},
-      #{status,jdbcType=SMALLINT}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+      #{status,jdbcType=SMALLINT}, #{createUserId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
       #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
@@ -246,6 +253,9 @@
       </if>
       <if test="status != null">
         `status`,
+      </if>
+      <if test="createUserId != null">
+        AND create_user_id = #{createUserId}
       </if>
       <if test="createBy != null">
         create_by,
@@ -281,6 +291,9 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=BIGINT},
       </if>
       <if test="createBy != null">
         #{createBy,jdbcType=VARCHAR},
@@ -321,6 +334,9 @@
       <if test="status != null">
         `status` = #{status,jdbcType=SMALLINT},
       </if>
+      <if test="createUserId != null">
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
       <if test="createBy != null">
         create_by = #{createBy,jdbcType=VARCHAR},
       </if>
@@ -348,6 +364,7 @@
       start_time = #{startTime,jdbcType=TIMESTAMP},
       stop_time = #{stopTime,jdbcType=TIMESTAMP},
       `status` = #{status,jdbcType=SMALLINT},
+      createUserId = #{createUserId,jdbcType=BIGINT},
       create_by = #{createBy,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_by = #{updateBy,jdbcType=VARCHAR},

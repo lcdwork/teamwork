@@ -8,6 +8,7 @@
     <result column="project_name" jdbcType="VARCHAR" property="projectName" />
     <result column="start_date" jdbcType="DATE" property="startDate" />
     <result column="end_date" jdbcType="DATE" property="endDate" />
+    <result column="create_user_id" jdbcType="BIGINT" property="createUserId" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
@@ -17,7 +18,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    project_id, project_name, start_date, end_date, create_by, create_time, update_by,
+    project_id, project_name, start_date, end_date, create_user_id, create_by, create_time, update_by,
     update_time, remark, status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -50,6 +51,9 @@
       <if test="endDate != null">
         AND end_date = #{endDate}
       </if>
+      <if test="createUserId != null">
+        AND create_user_id = #{createUserId}
+      </if>
       <if test="createBy != null">
         AND create_by = #{createBy}
       </if>
@@ -72,7 +76,7 @@
   </select>
 
   <select id="selectProjectListByUser" parameterType="com.teamwork.project.projects.domain.Project" resultMap="BaseResultMap">
-    select p.project_id, project_name, start_date, end_date, create_by, create_time, update_by,
+    select p.project_id, project_name, start_date, end_date, create_user_id, create_by, create_time, update_by,
     update_time, remark, status
     from project_info p
     left join sys_user_project up on p.project_id = up.project_id
@@ -88,6 +92,9 @@
       </if>
       <if test="endDate != null">
         AND end_date = #{endDate}
+      </if>
+      <if test="createUserId != null">
+        AND create_user_id = #{createUserId}
       </if>
       <if test="createBy != null">
         AND create_by = #{createBy}
@@ -133,10 +140,10 @@
   <insert id="insert" keyColumn="project_id" keyProperty="projectId" parameterType="com.teamwork.project.projects.domain.Project" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into project_info (project_name, start_date, end_date,
-      create_by, create_time, update_by,
+    create_user_id, create_by, create_time, update_by,
       update_time, remark, status)
     values (#{projectName,jdbcType=VARCHAR}, #{startDate,jdbcType=DATE}, #{endDate,jdbcType=DATE},
-      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+    #{createUserId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
       #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT})
   </insert>
   <insert id="insertSelective" keyColumn="project_id" keyProperty="projectId" parameterType="com.teamwork.project.projects.domain.Project" useGeneratedKeys="true">
@@ -151,6 +158,9 @@
       </if>
       <if test="endDate != null">
         end_date,
+      </if>
+      <if test="createUserId != null">
+        AND create_user_id = #{createUserId}
       </if>
       <if test="createBy != null">
         create_by,
@@ -180,6 +190,9 @@
       </if>
       <if test="endDate != null">
         #{endDate,jdbcType=DATE},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=BIGINT},
       </if>
       <if test="createBy != null">
         #{createBy,jdbcType=VARCHAR},
@@ -214,6 +227,9 @@
       <if test="endDate != null">
         end_date = #{endDate,jdbcType=DATE},
       </if>
+      <if test="createUserId != null">
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
       <if test="createBy != null">
         create_by = #{createBy,jdbcType=VARCHAR},
       </if>
@@ -241,6 +257,7 @@
     set project_name = #{projectName,jdbcType=VARCHAR},
       start_date = #{startDate,jdbcType=DATE},
       end_date = #{endDate,jdbcType=DATE},
+    create_user_id = #{createUserId,jdbcType=BIGINT}
       create_by = #{createBy,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_by = #{updateBy,jdbcType=VARCHAR},

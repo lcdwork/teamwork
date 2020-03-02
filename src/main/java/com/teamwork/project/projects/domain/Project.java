@@ -34,6 +34,8 @@ public class Project extends BaseEntity {
 
     private Byte status;
 
+    private Long createUserId;
+
     private List<SysUser> userList;
 
     private List<Task> taskList;
@@ -82,6 +84,14 @@ public class Project extends BaseEntity {
 
     public void setStatus(Byte status) {
         this.status = status;
+    }
+
+    public Long getCreateUserId() {
+        return createUserId;
+    }
+
+    public void setCreateUserId(Long createUserId) {
+        this.createUserId = createUserId;
     }
 
     public List<SysUser> getUserList() {
