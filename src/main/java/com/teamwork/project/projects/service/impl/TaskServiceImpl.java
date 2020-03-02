@@ -123,7 +123,8 @@ public class TaskServiceImpl implements TaskService{
             sysUserTask.setStatus((short) 1);
             list.add(sysUserTask);
         });
-        return list;
+        List<SysUserTask> returnList = list.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(()->new TreeSet<>(Comparator.comparing(SysUserTask::getUserId))),ArrayList::new));
+        return returnList;
     }
 
 }
