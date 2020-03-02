@@ -15,10 +15,7 @@ import javax.annotation.Resource;
 import com.teamwork.project.projects.service.ProjectService;
 
 import java.security.Security;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -153,8 +150,8 @@ public class ProjectServiceImpl implements ProjectService{
             sysUserProject.setUserId(u.getUserId());
             list.add(sysUserProject);
         });
-        list.stream().distinct().collect(Collectors.toList());
-        return list;
+        List<SysUserProject> returnList = list.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(()->new TreeSet<>(Comparator.comparing(SysUserProject::getUserId))),ArrayList::new));
+        return returnList;
     }
 
     // 生成系统消息并分发给每个人

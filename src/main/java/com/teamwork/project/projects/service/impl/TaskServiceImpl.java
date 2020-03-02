@@ -11,9 +11,7 @@ import javax.annotation.Resource;
 import com.teamwork.project.projects.mapper.TaskMapper;
 import com.teamwork.project.projects.service.TaskService;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -127,8 +125,8 @@ public class TaskServiceImpl implements TaskService{
             sysUserTask.setStatus((short) 1);
             list.add(sysUserTask);
         });
-        list.stream().distinct().collect(Collectors.toList());
-        return list;
+        List<SysUserTask> returnList = list.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(()->new TreeSet<>(Comparator.comparing(SysUserTask::getUserId))),ArrayList::new));
+        return returnList;
     }
 
 }
