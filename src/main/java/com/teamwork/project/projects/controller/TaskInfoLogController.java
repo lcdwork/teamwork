@@ -21,7 +21,7 @@ public class TaskInfoLogController extends BaseController {
     @Autowired
     public TaskInfoLogService taskInfoLogService;
 
-    @GetMapping("getTaskLog")
+    @GetMapping("/getTaskLog/{taskId}")
     public TableDataInfo getTaskLog(@PathVariable("taskId") Long taskId) {
         List<TaskInfoLog> list = taskInfoLogService.getTaskLog(taskId);
         return getDataTable(list);

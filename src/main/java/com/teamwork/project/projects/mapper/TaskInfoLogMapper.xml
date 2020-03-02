@@ -22,7 +22,7 @@
         from task_info_log tl
         left join task_info t on t.task_id = tl.task_id
         left join sys_user u on u.user_id = tl.user_id
-        where task_id = #{taskId,jdbcType=BIGINT}
+        where tl.task_id = #{taskId,jdbcType=BIGINT}
     </select>
 
     <!--查询单个-->

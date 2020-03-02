@@ -1,5 +1,6 @@
 package com.teamwork.project.projects.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Date;
@@ -15,22 +16,33 @@ import java.io.Serializable;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TaskInfoLog implements Serializable {
     private static final long serialVersionUID = -55767164526430501L;
-    
+
     private Long id;
-    
+
     private Long taskId;
-    
+
     private Long userId;
-    
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date operatetime;
-    
+
     private String content;
     /**
     * 1新增 2修改 3删除
     */
     private Byte status;
-    
+
     private String remark;
+
+    private String nickName;
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
 
     public Long getId() {

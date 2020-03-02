@@ -78,7 +78,7 @@ public class ProjectInfoLogServiceImpl implements ProjectInfoLogService {
     }
 
     @Override
-    public List<ProjectInfoLog> getProjectLog(Long projectId) {
-        return this.projectInfoLogMapper.getProjectLog(projectId);
+    public List<ProjectInfoLog> getProjectLog(ProjectInfoLog projectInfoLog) {
+        return this.projectInfoLogMapper.getProjectLog(projectInfoLog);
     }
 }

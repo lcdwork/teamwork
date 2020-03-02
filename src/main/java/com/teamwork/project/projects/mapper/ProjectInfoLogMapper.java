@@ -62,5 +62,5 @@ public interface ProjectInfoLogMapper {
      */
     int deleteById(Long id);
 
-    List<ProjectInfoLog> getProjectLog(Long projectId);
+    List<ProjectInfoLog> getProjectLog(ProjectInfoLog projectInfoLog);
 }
