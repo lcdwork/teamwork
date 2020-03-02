@@ -14,7 +14,7 @@
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
-        id, project_id, user_id, operateTime, content, status, remark
+        id, project_id, user_id, operate_time, content, status, remark
     </sql>
     <select id="getProjectLog" parameterType="com.teamwork.project.projects.domain.ProjectInfoLog" resultMap="ProjectInfoLogMap">
         select
