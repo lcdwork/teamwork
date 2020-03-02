@@ -117,6 +117,8 @@ public class TaskServiceImpl implements TaskService{
     public List userTaskList(Task task) {
         List<SysUserTask> list = new ArrayList<>();
         List<SysUser> users = task.getUserList();
+        SysUser userSelf = userMapper.selectUserById(SecurityUtils.getLoginUser().getUser().getUserId());
+        users.add(userSelf);
         users.forEach(u -> {
             SysUserTask sysUserTask = new SysUserTask();
             sysUserTask.setTaskId(task.getTaskId());

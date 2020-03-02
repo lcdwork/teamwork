@@ -145,6 +145,8 @@ public class ProjectServiceImpl implements ProjectService{
     public List userProjectList(Project project) {
         List<SysUserProject> list = new ArrayList<>();
         List<SysUser> users = project.getUserList();
+        SysUser userSelf = userMapper.selectUserById(SecurityUtils.getLoginUser().getUser().getUserId());
+        users.add(userSelf);
         users.forEach(u -> {
             SysUserProject sysUserProject = new SysUserProject();
             sysUserProject.setProjectId(project.getProjectId());
