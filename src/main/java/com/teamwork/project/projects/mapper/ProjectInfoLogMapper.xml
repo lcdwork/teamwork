@@ -14,11 +14,11 @@
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
-        id, project_id, user_id, operateTime, content, status, remark
+        id, project_id, user_id, operate_time, content, status, remark
     </sql>
     <select id="getProjectLog" parameterType="com.teamwork.project.projects.domain.ProjectInfoLog" resultMap="ProjectInfoLogMap">
         select
-        pl.id, pl.project_id, pl.user_id, pl.operateTime, pl.content, pl.status, pl.remark, p.project_name, u.user_name, u.nick_name
+        pl.id, pl.project_id, pl.user_id, pl.operate_time, pl.content, pl.status, pl.remark, p.project_name, u.user_name, u.nick_name
         from project_info_log pl
         left join project_info p on p.project_id = pl.project_id
         left join sys_user u on u.user_id = pl.user_id
