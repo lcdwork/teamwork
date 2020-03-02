@@ -6,7 +6,7 @@
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="taskId" column="task_id" jdbcType="INTEGER"/>
         <result property="userId" column="user_id" jdbcType="INTEGER"/>
-        <result property="operatetime" column="operate_time" jdbcType="TIMESTAMP"/>
+        <result property="operateTime" column="operate_time" jdbcType="TIMESTAMP"/>
         <result property="content" column="content" jdbcType="VARCHAR"/>
         <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
         <result property="status" column="status" jdbcType="OTHER"/>
