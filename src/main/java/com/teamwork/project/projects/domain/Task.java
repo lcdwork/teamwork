@@ -57,6 +57,8 @@ public class Task extends BaseEntity {
 
     private String projectName;
 
+    private Date time;
+
     public Long getTaskId() {
         return taskId;
     }
@@ -151,5 +153,13 @@ public class Task extends BaseEntity {
 
     public void setTaskUserStatus(Short taskUserStatus) {
         this.taskUserStatus = taskUserStatus;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
     }
 }
