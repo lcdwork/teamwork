@@ -87,12 +87,13 @@
         <result column="id" jdbcType="INTEGER" property="id" />
         <result column="user_id" jdbcType="INTEGER" property="userId" />
         <result column="task_id" jdbcType="INTEGER" property="taskId" />
+        <result column="status" jdbcType="SMALLINT" property="status" />
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="SysUserTaskMap">
         select
-          id, user_id, task_id
+          id, user_id, task_id, status
         from sys_user_task
         where id = #{id}
     </select>
@@ -100,7 +101,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="SysUserTaskMap">
         select
-          id, user_id, task_id
+          id, user_id, task_id, status
         from sys_user_task
         limit #{offset}, #{limit}
     </select>
@@ -108,7 +109,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="SysUserTaskMap">
         select
-          id, user_id, task_id
+          id, user_id, task_id, status
         from sys_user_task
         <where>
             <if test="id != null">
@@ -119,6 +120,9 @@
             </if>
             <if test="taskId != null">
                 and task_id = #{taskId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
             </if>
         </where>
     </select>
@@ -140,6 +144,9 @@
             </if>
             <if test="taskId != null">
                 task_id = #{taskId},
+            </if>
+            <if test="status != null">
+                and status = #{status}
             </if>
         </set>
         where id = #{id}
