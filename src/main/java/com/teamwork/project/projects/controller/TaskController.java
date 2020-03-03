@@ -8,6 +8,7 @@ import com.teamwork.framework.web.domain.Result;
 import com.teamwork.framework.web.page.TableDataInfo;
 import com.teamwork.project.projects.domain.Project;
 import com.teamwork.project.projects.domain.Task;
+import com.teamwork.project.projects.domain.TaskList;
 import com.teamwork.project.projects.service.ProjectService;
 import com.teamwork.project.projects.service.TaskService;
 import com.teamwork.project.system.domain.SysUser;
@@ -44,7 +45,7 @@ public class TaskController extends BaseController {
     @GetMapping("/listByTime")
     public TableDataInfo listByTime(Task task)
     {
-        List<Task> list = taskService.selectTaskListByTime(task);
+        List<TaskList> list = taskService.selectTaskListByTime(task);
         return getDataTable(list);
     }
 
