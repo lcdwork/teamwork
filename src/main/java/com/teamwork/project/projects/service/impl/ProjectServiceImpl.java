@@ -59,18 +59,18 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public int deleteByPrimaryKey(Long projectId) {
-        projectInfoLogMapper.insert(insertProjectInfoLog(projectId, 3));
-        sysUserProjectMapper.deleteByProjectId(projectId);
-        return projectMapper.deleteByPrimaryKey(projectId);
+    public int deleteByPrimaryKey(Project project) {
+        sysUserProjectMapper.deleteByProjectId(project.getProjectId());
+        return projectMapper.deleteByPrimaryKey(project.getProjectId());
     }
 
     @Override
     public int insert(Project record) {
+        record.setCreateUserId(SecurityUtils.getLoginUser().getUser().getUserId());
         record.setCreateBy(SecurityUtils.getUsername());
         record.setCreateTime(new Date());
         int i = projectMapper.insert(record);
-        projectInfoLogMapper.insert(insertProjectInfoLog(record.getProjectId(), 1));
+        projectInfoLogMapper.insert(insertProjectInfoLog(record, 1));
 //        sysUserProjectMapper.deleteByProjectId(record.getProjectId());
         if (record.getUserList() != null && record.getUserList().size() > 0) {
             userNoticwList(record);
@@ -95,7 +95,10 @@ public class ProjectServiceImpl implements ProjectService{
         record.setUpdateBy(SecurityUtils.getUsername());
         record.setUpdateTime(new Date());
         int i = projectMapper.updateByPrimaryKeySelective(record);
-        projectInfoLogMapper.insert(insertProjectInfoLog(record.getProjectId(), 2));
+        projectInfoLogMapper.insert(insertProjectInfoLog(record, 2));
+        if (record.getStatus() == 2) {
+            projectInfoLogMapper.insert(insertProjectInfoLog(record, 3));
+        }
         if (record.getUserList() != null && record.getUserList().size() > 0) {
             List<SysUser> newUserList = record.getUserList();
             List<Long> newUserIds = newUserList.stream().map(m -> m.getUserId()).collect(Collectors.toList());
@@ -130,12 +133,21 @@ public class ProjectServiceImpl implements ProjectService{
         return projectTrees.stream().map(TreeSelect::new).collect(Collectors.toList());
     }
 
-    public ProjectInfoLog insertProjectInfoLog(Long projectId, int status) {
+    public ProjectInfoLog insertProjectInfoLog(Project project, int status) {
         ProjectInfoLog t = new ProjectInfoLog();
-        t.setProjectId(projectId);
+        t.setProjectId(project.getProjectId());
         t.setOperateTime(new Date());
         t.setUserId(SecurityUtils.getLoginUser().getUser().getUserId());
         t.setStatus((byte) status);
+        if (status == 1) {
+            t.setContent(SecurityUtils.getUsername() + "创建了" + project.getProjectName() + "项目");
+        }
+        if (status == 2) {
+            t.setContent(SecurityUtils.getUsername() + "编辑了" + project.getProjectName() + "项目");
+        }
+        if (status == 3) {
+            t.setContent(project.getProjectName() + "项目完成");
+        }
         return t;
     }
 

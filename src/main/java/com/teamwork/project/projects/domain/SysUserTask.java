@@ -10,7 +10,9 @@ public class SysUserTask extends BaseEntity {
 
     private Long taskId;
 
-    private Short status;
+    private Byte status;
+
+    private String taskName;
 
     public Long getId() {
         return id;
@@ -36,11 +38,19 @@ public class SysUserTask extends BaseEntity {
         this.taskId = taskId;
     }
 
-    public Short getStatus() {
+    public Byte getStatus() {
         return status;
     }
 
-    public void setStatus(Short status) {
+    public void setStatus(Byte status) {
         this.status = status;
+    }
+
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
     }
 }

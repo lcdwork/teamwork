@@ -93,16 +93,16 @@ public class ProjectController extends BaseController {
      */
     @PreAuthorize("@ss.hasPermi('system:project:remove')")
     @Log(title = "项目管理", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{projectId}")
-    public Result remove(@PathVariable("projectId") Long projectId)
+    @DeleteMapping
+    public Result remove(@Validated @RequestBody Project project)
     {
         Task task = new Task();
-        task.setProjectId(projectId);
+        task.setProjectId(project.getProjectId());
         List<Task> list = taskService.selectTaskList(task);
         if (list.size() > 0) {
             return Result.error("此项目下有任务，无法删除！");
         }
-        return toAjax(projectService.deleteByPrimaryKey(projectId));
+        return toAjax(projectService.deleteByPrimaryKey(project));
     }
 
 }

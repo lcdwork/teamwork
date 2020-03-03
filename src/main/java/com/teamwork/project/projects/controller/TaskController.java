@@ -87,9 +87,9 @@ public class TaskController extends BaseController {
      */
     @PreAuthorize("@ss.hasPermi('system:task:remove')")
     @Log(title = "任务管理", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{taskId}")
-    public Result remove(@PathVariable("taskId") Long taskId)
+    @DeleteMapping
+    public Result remove(@Validated @RequestBody Task task)
     {
-        return toAjax(taskService.deleteByPrimaryKey(taskId));
+        return toAjax(taskService.deleteByPrimaryKey(task));
     }
 }

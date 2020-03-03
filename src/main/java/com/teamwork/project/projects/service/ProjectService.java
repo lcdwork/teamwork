@@ -11,7 +11,7 @@ public interface ProjectService{
 
     List<Project> selectProjectRepeat(Project project);
 
-    int deleteByPrimaryKey(Long projectId);
+    int deleteByPrimaryKey(Project project);
 
     int insert(Project record);
 

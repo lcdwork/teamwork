@@ -8,7 +8,7 @@ import java.util.List;
 public interface TaskService{
 
 
-    int deleteByPrimaryKey(Long taskId);
+    int deleteByPrimaryKey(Task task);
 
     int insert(Task record);
 

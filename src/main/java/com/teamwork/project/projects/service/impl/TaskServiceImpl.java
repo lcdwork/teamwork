@@ -2,6 +2,7 @@ package com.teamwork.project.projects.service.impl;
 
 import com.teamwork.common.utils.SecurityUtils;
 import com.teamwork.project.projects.domain.*;
+import com.teamwork.project.projects.mapper.ProjectInfoLogMapper;
 import com.teamwork.project.projects.mapper.SysUserTaskMapper;
 import com.teamwork.project.projects.mapper.TaskInfoLogMapper;
 import com.teamwork.project.system.domain.SysUser;
@@ -24,24 +25,29 @@ public class TaskServiceImpl implements TaskService{
     private TaskInfoLogMapper taskInfoLogMapper;
 
     @Resource
+    private ProjectInfoLogMapper projectInfoLogMapper;
+
+    @Resource
     private SysUserTaskMapper sysUserTaskMapper;
 
     @Resource
     private SysUserMapper userMapper;
 
     @Override
-    public int deleteByPrimaryKey(Long taskId) {
-        taskInfoLogMapper.insert(insertTaskInfoLog(taskId, 3));
-        sysUserTaskMapper.deleteByTaskId(taskId);
-        return taskMapper.deleteByPrimaryKey(taskId);
+    public int deleteByPrimaryKey(Task task) {
+        projectInfoLogMapper.insert(insertProjectInfoLog(task, 5));
+        sysUserTaskMapper.deleteByTaskId(task.getTaskId());
+        return taskMapper.deleteByPrimaryKey(task.getTaskId());
     }
 
     @Override
     public int insert(Task record) {
         record.setCreateBy(SecurityUtils.getUsername());
         record.setCreateTime(new Date());
+        record.setCreateUserId(SecurityUtils.getLoginUser().getUser().getUserId());
         int i = taskMapper.insert(record);
-        taskInfoLogMapper.insert(insertTaskInfoLog(record.getTaskId(), 1));
+        taskInfoLogMapper.insert(insertTaskInfoLog(record, 1));
+        projectInfoLogMapper.insert(insertProjectInfoLog(record, 4));
         sysUserTaskMapper.deleteByTaskId(record.getTaskId());
         if (record.getUserList() != null &&record.getUserList().size() > 0) {
             List<SysUserTask> list = userTaskList(record);
@@ -62,7 +68,11 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public int updateByPrimaryKeySelective(Task record) {
-        taskInfoLogMapper.insert(insertTaskInfoLog(record.getTaskId(), 2));
+        taskInfoLogMapper.insert(insertTaskInfoLog(record, 2));
+        if (record.getStatus() == 2) {
+            taskInfoLogMapper.insert(insertTaskInfoLog(record, 3));
+            projectInfoLogMapper.insert(insertProjectInfoLog(record, 6));
+        }
         record.setUpdateBy(SecurityUtils.getUsername());
         record.setUpdateTime(new Date());
         int i = taskMapper.updateByPrimaryKeySelective(record);
@@ -109,12 +119,39 @@ public class TaskServiceImpl implements TaskService{
         return taskMapper.selectTaskListByTime(task);
     }
 
-    public TaskInfoLog insertTaskInfoLog(Long taskId, int status) {
+    public TaskInfoLog insertTaskInfoLog(Task task, int status) {
         TaskInfoLog t = new TaskInfoLog();
-        t.setTaskId(taskId);
+        t.setTaskId(task.getTaskId());
         t.setOperateTime(new Date());
         t.setUserId(SecurityUtils.getLoginUser().getUser().getUserId());
         t.setStatus((byte) status);
+        if (status == 1) {
+            t.setContent(SecurityUtils.getUsername() + "创建了" + task.getTaskName() + "任务");
+        }
+        if (status == 2) {
+            t.setContent(SecurityUtils.getUsername() + "编辑了" + task.getTaskName() + "任务");
+        }
+        if (status == 3) {
+            t.setContent(task.getTaskName() + "任务完成了");
+        }
+        return t;
+    }
+
+    public ProjectInfoLog insertProjectInfoLog(Task task, int status) {
+        ProjectInfoLog t = new ProjectInfoLog();
+        t.setProjectId(task.getProjectId());
+        t.setOperateTime(new Date());
+        t.setUserId(SecurityUtils.getLoginUser().getUser().getUserId());
+        t.setStatus((byte) status);
+        if (status == 4) {
+            t.setContent(SecurityUtils.getUsername() + "创建了" + task.getTaskName() + "任务");
+        }
+        if (status == 5) {
+            t.setContent(SecurityUtils.getUsername() + "删除了" + task.getTaskName() + "任务");
+        }
+        if (status == 6) {
+            t.setContent(task.getTaskName() + "任务完成");
+        }
         return t;
     }
 
@@ -125,7 +162,7 @@ public class TaskServiceImpl implements TaskService{
             SysUserTask sysUserTask = new SysUserTask();
             sysUserTask.setTaskId(task.getTaskId());
             sysUserTask.setUserId(u.getUserId());
-            sysUserTask.setStatus((short) 1);
+            sysUserTask.setStatus((byte) 1);
             list.add(sysUserTask);
         });
         List<SysUserTask> returnList = list.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(()->new TreeSet<>(Comparator.comparing(SysUserTask::getUserId))),ArrayList::new));

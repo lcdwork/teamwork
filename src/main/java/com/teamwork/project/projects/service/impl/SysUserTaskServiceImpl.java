@@ -1,15 +1,25 @@
 package com.teamwork.project.projects.service.impl;
 
+import com.teamwork.common.utils.SecurityUtils;
+import com.teamwork.project.projects.domain.Task;
+import com.teamwork.project.projects.domain.TaskInfoLog;
+import com.teamwork.project.projects.mapper.TaskInfoLogMapper;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import com.teamwork.project.projects.domain.SysUserTask;
 import com.teamwork.project.projects.mapper.SysUserTaskMapper;
 import com.teamwork.project.projects.service.SysUserTaskService;
+
+import java.util.Date;
+
 @Service
 public class SysUserTaskServiceImpl implements SysUserTaskService{
 
     @Resource
     private SysUserTaskMapper sysUserTaskMapper;
+
+    @Resource
+    private TaskInfoLogMapper taskInfoLogMapper;
 
     @Override
     public int deleteByPrimaryKey(Long id) {
@@ -43,6 +53,19 @@ public class SysUserTaskServiceImpl implements SysUserTaskService{
 
     @Override
     public int updateStatus(SysUserTask record) {
+        TaskInfoLog t = new TaskInfoLog();
+        t.setTaskId(record.getTaskId());
+        t.setOperateTime(new Date());
+        t.setUserId(SecurityUtils.getLoginUser().getUser().getUserId());
+        if (record.getStatus() == 2) {
+            t.setStatus((byte) 4);
+            t.setContent(SecurityUtils.getUsername() + "领取了" + record.getTaskName() + "任务");
+        }
+        if (record.getStatus() == 3) {
+            t.setStatus((byte) 5);
+            t.setContent(SecurityUtils.getUsername() + "提交了" + record.getTaskName() + "任务");
+        }
+        taskInfoLogMapper.insert(t);
         return sysUserTaskMapper.updateStatus(record);
     }
 
