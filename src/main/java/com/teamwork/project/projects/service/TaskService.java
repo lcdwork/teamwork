@@ -1,6 +1,7 @@
 package com.teamwork.project.projects.service;
 
 import com.teamwork.project.projects.domain.Task;
+import com.teamwork.project.projects.domain.TaskList;
 import com.teamwork.project.system.domain.SysUser;
 
 import java.util.List;
@@ -28,5 +29,5 @@ public interface TaskService{
 
     List<SysUser> selectTaskUsers(Long taskId);
 
-    List<Task> selectTaskListByTime(Task task);
+    List<TaskList> selectTaskListByTime(Task task);
 }

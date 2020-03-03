@@ -1,5 +1,6 @@
 package com.teamwork.project.projects.service.impl;
 
+import com.teamwork.common.utils.MonUtils;
 import com.teamwork.common.utils.SecurityUtils;
 import com.teamwork.project.projects.domain.*;
 import com.teamwork.project.projects.mapper.ProjectInfoLogMapper;
@@ -7,6 +8,7 @@ import com.teamwork.project.projects.mapper.SysUserTaskMapper;
 import com.teamwork.project.projects.mapper.TaskInfoLogMapper;
 import com.teamwork.project.system.domain.SysUser;
 import com.teamwork.project.system.mapper.SysUserMapper;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import com.teamwork.project.projects.mapper.TaskMapper;
@@ -115,8 +117,11 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public List<Task> selectTaskListByTime(Task task) {
-        return taskMapper.selectTaskListByTime(task);
+    public List<TaskList> selectTaskListByTime(Task task) {
+        String startDate = task.getStartDate();
+        String endDate = task.getEndDate();
+        List<TaskList> lists = new ArrayList<>();
+        return getTaskList(lists, startDate, endDate, task.getTaskUserId());
     }
 
     public TaskInfoLog insertTaskInfoLog(Task task, int status) {
@@ -167,6 +172,28 @@ public class TaskServiceImpl implements TaskService{
         });
         List<SysUserTask> returnList = list.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(()->new TreeSet<>(Comparator.comparing(SysUserTask::getUserId))),ArrayList::new));
         return returnList;
+    }
+
+    public List<TaskList> getTaskList(List<TaskList> lists, String startDate, String endDate, Long taskUserId) {
+        TaskList taskList = new TaskList();
+        taskList.setTime(startDate);
+        Task task = new Task();
+        task.setTime(startDate);
+        task.setTaskUserId(taskUserId);
+        taskList.setList(taskMapper.selectTaskListByTime(task));
+        lists.add(taskList);
+        String s = MonUtils.getNextDay(startDate);
+        if (!MonUtils.getNextDay(startDate).equals(endDate)) {
+            getTaskList(lists, MonUtils.getNextDay(startDate), endDate, taskUserId);
+        } else {
+            taskList.setTime(endDate);
+            Task t = new Task();
+            t.setTime(endDate);
+            t.setTaskUserId(taskUserId);
+            taskList.setList(taskMapper.selectTaskListByTime(t));
+            lists.add(taskList);
+        }
+        return lists;
     }
 
 }
