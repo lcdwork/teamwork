@@ -52,7 +52,7 @@
         AND task_tag = #{taskTag}
       </if>
       <if test="time != null">
-        AND start_time <![CDATA[<=]]> #{time} <![CDATA[>=]]> stop_time
+        AND start_time like concat(#{time}, '%') or stop_time like concat(#{time}, '%')
       </if>
       <if test="status != null">
         AND status = #{status}
@@ -80,6 +80,49 @@
       </if>
     </where>
   </select>
+<!--  <select id="selectTaskListByTime" parameterType="com.teamwork.project.projects.domain.Task" resultMap="BaseResultMap">-->
+<!--    select-->
+<!--    <include refid="Base_Column_List" />-->
+<!--    from task_info-->
+<!--    <where>-->
+<!--      <if test="taskId != null">-->
+<!--        AND task_id = #{taskId}-->
+<!--      </if>-->
+<!--      <if test="taskName != null">-->
+<!--        AND task_name like concat('%', #{taskName}, '%')-->
+<!--      </if>-->
+<!--      <if test="taskTag != null">-->
+<!--        AND task_tag = #{taskTag}-->
+<!--      </if>-->
+<!--      <if test="time != null">-->
+<!--        AND start_time <![CDATA[<=]]> #{time} <![CDATA[>=]]> stop_time-->
+<!--      </if>-->
+<!--      <if test="status != null">-->
+<!--        AND status = #{status}-->
+<!--      </if>-->
+<!--      <if test="createUserId != null">-->
+<!--        AND create_user_id = #{createUserId}-->
+<!--      </if>-->
+<!--      <if test="createBy != null">-->
+<!--        AND create_by = #{createBy}-->
+<!--      </if>-->
+<!--      <if test="createTime != null">-->
+<!--        AND create_time = #{createTime}-->
+<!--      </if>-->
+<!--      <if test="updateBy != null">-->
+<!--        AND update_by = #{updateBy}-->
+<!--      </if>-->
+<!--      <if test="updateTime != null">-->
+<!--        AND update_time = #{updateTime}-->
+<!--      </if>-->
+<!--      <if test="remark != null">-->
+<!--        AND remark = #{remark}-->
+<!--      </if>-->
+<!--      <if test="projectId != null">-->
+<!--        AND project_id = #{projectId}-->
+<!--      </if>-->
+<!--    </where>-->
+<!--  </select>-->
   <select id="selectTaskList" parameterType="com.teamwork.project.projects.domain.Task" resultMap="BaseResultMap">
     select
     t.task_id, t.project_id, t.task_name, t.task_tag, t.start_time, t.stop_time, t.status, t.create_user_id,

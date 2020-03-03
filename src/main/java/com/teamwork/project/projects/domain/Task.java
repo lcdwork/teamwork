@@ -57,7 +57,7 @@ public class Task extends BaseEntity {
 
     private String projectName;
 
-    private Date time;
+    private String time;
 
     public Long getTaskId() {
         return taskId;
@@ -155,11 +155,11 @@ public class Task extends BaseEntity {
         this.taskUserStatus = taskUserStatus;
     }
 
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
     }
 }
