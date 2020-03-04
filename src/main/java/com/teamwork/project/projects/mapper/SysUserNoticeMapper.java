@@ -63,4 +63,6 @@ public interface SysUserNoticeMapper {
     int deleteById(Long id);
 
     void deleteByNoticeId(Long noticeId);
+
+    void deleteByNoticeIds(List<Long> noticeIds);
 }

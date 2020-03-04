@@ -71,4 +71,10 @@
         delete from sys_user_notice where notice_id = #{noticeId}
     </delete>
 
+    <delete id="deleteByNoticeIds" parameterType="List">
+        delete from sys_user_notice where notice_id in
+        <foreach item="noticeId" collection="list" open="(" separator="," close=")">
+            #{noticeId}
+        </foreach>
+    </delete>
 </mapper>

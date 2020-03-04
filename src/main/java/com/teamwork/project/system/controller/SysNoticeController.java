@@ -26,7 +26,7 @@ import java.util.List;
  * 公告 信息操作处理
  */
 @RestController
-@RequestMapping("/system/notice")
+@RequestMapping("/notice")
 public class SysNoticeController extends BaseController
 {
     @Autowired
@@ -48,7 +48,7 @@ public class SysNoticeController extends BaseController
     /**
      * 根据通知公告编号获取详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:notice:query')")
+//    @PreAuthorize("@ss.hasPermi('system:notice:query')")
     @GetMapping(value = "/{noticeId}")
     public Result getInfo(@PathVariable Long noticeId)
     {
@@ -58,7 +58,7 @@ public class SysNoticeController extends BaseController
     /**
      * 新增通知公告
      */
-    @PreAuthorize("@ss.hasPermi('system:notice:add')")
+//    @PreAuthorize("@ss.hasPermi('system:notice:add')")
     @Log(title = "通知公告", businessType = BusinessType.INSERT)
     @PostMapping
     public Result add(@Validated @RequestBody SysNotice notice)
@@ -70,7 +70,7 @@ public class SysNoticeController extends BaseController
     /**
      * 修改通知公告
      */
-    @PreAuthorize("@ss.hasPermi('system:notice:edit')")
+//    @PreAuthorize("@ss.hasPermi('system:notice:edit')")
     @Log(title = "通知公告", businessType = BusinessType.UPDATE)
     @PutMapping
     public Result edit(@Validated @RequestBody SysNotice notice)
@@ -82,11 +82,22 @@ public class SysNoticeController extends BaseController
     /**
      * 删除通知公告
      */
-    @PreAuthorize("@ss.hasPermi('system:notice:remove')")
+//    @PreAuthorize("@ss.hasPermi('system:notice:remove')")
     @Log(title = "通知公告", businessType = BusinessType.DELETE)
     @DeleteMapping("/{noticeId}")
     public Result remove(@PathVariable Long noticeId)
     {
         return toAjax(noticeService.deleteNoticeById(noticeId));
+    }
+
+    /**
+     * 批量删除通知公告
+     */
+//    @PreAuthorize("@ss.hasPermi('system:notice:remove')")
+    @Log(title = "通知公告", businessType = BusinessType.DELETE)
+    @DeleteMapping("/removeBatch/{noticeIds}")
+    public Result removeBatch(@PathVariable List<Long> noticeIds)
+    {
+        return toAjax(noticeService.deleteNoticeByIds(noticeIds));
     }
 }
