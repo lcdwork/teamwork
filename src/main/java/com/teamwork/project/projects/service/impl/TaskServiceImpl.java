@@ -186,12 +186,13 @@ public class TaskServiceImpl implements TaskService{
         if (!MonUtils.getNextDay(startDate).equals(endDate)) {
             getTaskList(lists, MonUtils.getNextDay(startDate), endDate, taskUserId);
         } else {
-            taskList.setTime(endDate);
+            TaskList tasks = new TaskList();
+            tasks.setTime(endDate);
             Task t = new Task();
             t.setTime(endDate);
             t.setTaskUserId(taskUserId);
-            taskList.setList(taskMapper.selectTaskListByTime(t));
-            lists.add(taskList);
+            tasks.setList(taskMapper.selectTaskListByTime(t));
+            lists.add(tasks);
         }
         return lists;
     }
