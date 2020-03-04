@@ -121,7 +121,7 @@ public class TaskServiceImpl implements TaskService{
         String startDate = task.getStartDate();
         String endDate = task.getEndDate();
         List<TaskList> lists = new ArrayList<>();
-        return getTaskList(lists, startDate, endDate, task.getTaskUserId());
+        return getTaskList(lists, startDate, endDate, task.getTaskUserId(), task.getTaskUserStatus());
     }
 
     public TaskInfoLog insertTaskInfoLog(Task task, int status) {
@@ -174,23 +174,25 @@ public class TaskServiceImpl implements TaskService{
         return returnList;
     }
 
-    public List<TaskList> getTaskList(List<TaskList> lists, String startDate, String endDate, Long taskUserId) {
+    public List<TaskList> getTaskList(List<TaskList> lists, String startDate, String endDate, Long taskUserId, Short taskUserStatus) {
         TaskList taskList = new TaskList();
         taskList.setTime(startDate);
         Task task = new Task();
         task.setTime(startDate);
         task.setTaskUserId(taskUserId);
+        task.setTaskUserStatus(taskUserStatus);
         taskList.setList(taskMapper.selectTaskListByTime(task));
         lists.add(taskList);
         String s = MonUtils.getNextDay(startDate);
         if (!MonUtils.getNextDay(startDate).equals(endDate)) {
-            getTaskList(lists, MonUtils.getNextDay(startDate), endDate, taskUserId);
+            getTaskList(lists, MonUtils.getNextDay(startDate), endDate, taskUserId, taskUserStatus);
         } else {
             TaskList tasks = new TaskList();
             tasks.setTime(endDate);
             Task t = new Task();
             t.setTime(endDate);
             t.setTaskUserId(taskUserId);
+            t.setTaskUserStatus(taskUserStatus);
             tasks.setList(taskMapper.selectTaskListByTime(t));
             lists.add(tasks);
         }
