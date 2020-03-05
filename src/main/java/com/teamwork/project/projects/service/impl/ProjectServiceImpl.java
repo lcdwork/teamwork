@@ -1,6 +1,7 @@
 package com.teamwork.project.projects.service.impl;
 
 import com.teamwork.common.utils.SecurityUtils;
+import com.teamwork.framework.web.domain.GanttTree;
 import com.teamwork.framework.web.domain.TreeSelect;
 import com.teamwork.project.projects.domain.*;
 import com.teamwork.project.projects.mapper.*;
@@ -133,6 +134,12 @@ public class ProjectServiceImpl implements ProjectService{
         return projectTrees.stream().map(TreeSelect::new).collect(Collectors.toList());
     }
 
+    @Override
+    public List<GanttTree> buildProjectGanttTreeSelect(List<Project> projects) {
+        List<Project> projectTrees = buildProjectGanttTree(projects);
+        return projectTrees.stream().map(GanttTree::new).collect(Collectors.toList());
+    }
+
     public ProjectInfoLog insertProjectInfoLog(Project project, int status) {
         ProjectInfoLog t = new ProjectInfoLog();
         t.setProjectId(project.getProjectId());
@@ -213,6 +220,25 @@ public class ProjectServiceImpl implements ProjectService{
 //                    returnList.add(p);
 //                }
 //            }
+        }
+
+        if (returnList.isEmpty())
+        {
+            returnList = projects;
+        }
+        return returnList;
+    }
+
+    @Override
+    public List<Project> buildProjectGanttTree(List<Project> projects) {
+        List<Project> returnList = new ArrayList<Project>();
+        for (Project project : projects)
+        {
+            returnList.add(project);
+            Task task = new Task();
+            task.setProjectId(project.getProjectId());
+            List<Task> tasks = taskMapper.selectTaskList(task);
+            project.setTaskList(tasks);
         }
 
         if (returnList.isEmpty())

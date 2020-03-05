@@ -54,6 +54,16 @@ public class ProjectController extends BaseController {
         return Result.success(projectService.buildProjectTreeSelect(projects));
     }
 
+    /**
+     * 获取项目甘特图列表
+     */
+    @PostMapping("/ganttTree")
+    public Result ganttTree(@Validated @RequestBody Project project)
+    {
+        List<Project> projects = projectService.selectProjectList(project);
+        return Result.success(projectService.buildProjectGanttTreeSelect(projects));
+    }
+
     @GetMapping("/projectUsers")
     public TableDataInfo selectProjectUsers(@PathVariable("projectId") Long projectId) {
         List<SysUser> list = projectService.selectProjectUsers(projectId);

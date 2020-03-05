@@ -1,5 +1,6 @@
 package com.teamwork.project.projects.service;
 
+import com.teamwork.framework.web.domain.GanttTree;
 import com.teamwork.framework.web.domain.TreeSelect;
 import com.teamwork.project.projects.domain.Project;
 import com.teamwork.project.system.domain.SysUser;
@@ -30,6 +31,10 @@ public interface ProjectService{
     List<TreeSelect> buildProjectTreeSelect(List<Project> projects);
 
     List<Project> buildProjectTree(List<Project> projects);
+
+    List<GanttTree> buildProjectGanttTreeSelect(List<Project> projects);
+
+    List<Project> buildProjectGanttTree(List<Project> projects);
 
     List<Project> selectProjectListByUser(Project project);
 }
