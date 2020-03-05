@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="noticeType"     column="notice_type"     />
         <result property="noticeContent"  column="notice_content"  />
         <result property="status"         column="status"          />
+        <result property="createByUserId"       column="create_by_user_id"       />
         <result property="createBy"       column="create_by"       />
         <result property="createTime"     column="create_time"     />
         <result property="updateBy"       column="update_by"       />
@@ -18,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectNoticeVo">
-        select notice_id, notice_title, notice_type, notice_content, status, create_by, create_time, update_by, update_time, remark
+        select notice_id, notice_title, notice_type, notice_content, status, create_by_user_id, create_by, create_time, update_by, update_time, remark
 		from sys_notice
     </sql>
 
@@ -39,11 +40,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="createBy != null and createBy != ''">
 				AND create_by like concat('%', #{createBy}, '%')
 			</if>
+            <if test="createByUserId != null and createByUserId != ''">
+                AND create_by_user_id = #{createByUserId}
+            </if>
 		</where>
     </select>
 
     <select id="selectNoticeByUserId" parameterType="SysNotice" resultMap="SysNoticeResult">
-        select n.notice_id, n.notice_title, n.notice_type, n.notice_content, n.status, n.create_by, n.create_time, n.update_by, n.update_time, n.remark
+        select n.notice_id, n.notice_title, n.notice_type, n.notice_content, n.status, n.create_by_user_id, n.create_by, n.create_time, n.update_by, n.update_time, n.remark
         from sys_notice n
         left join sys_user_notice un on n.notice_id = un.notice_id
         <where>
@@ -64,6 +68,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             </if>
             <if test="createTime != null and createTime != ''">
                 AND create_time = #{createTime}
+            </if>
+            <if test="createByUserId != null and createByUserId != ''">
+                AND create_by_user_id = #{createByUserId}
             </if>
             <if test="createBy != null and createBy != ''">
                 AND create_by like concat('%', #{createBy}, '%')
@@ -87,6 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="noticeContent != null and noticeContent != '' ">notice_content, </if>
 			<if test="status != null and status != '' ">status, </if>
 			<if test="remark != null and remark != ''">remark,</if>
+        <if test="createByUserId != null and createByUserId != ''">create_by_user_id,</if>
  			<if test="createBy != null and createBy != ''">create_by,</if>
  			create_time
  		)values(
@@ -95,6 +103,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="noticeContent != null and noticeContent != ''">#{noticeContent}, </if>
 			<if test="status != null and status != ''">#{status}, </if>
 			<if test="remark != null and remark != ''">#{remark},</if>
+        <if test="createByUserId != null and createByUserId != ''">#{createByUserId},</if>
  			<if test="createBy != null and createBy != ''">#{createBy},</if>
  			sysdate()
 		)

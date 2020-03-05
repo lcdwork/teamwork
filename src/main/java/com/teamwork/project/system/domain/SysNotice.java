@@ -34,6 +34,8 @@ public class SysNotice extends BaseEntity
 
     private Long userId;
 
+    private Long createByUserId;
+
     public Long getNoticeId()
     {
         return noticeId;
@@ -102,6 +104,14 @@ public class SysNotice extends BaseEntity
         this.userId = userId;
     }
 
+    public Long getCreateByUserId() {
+        return createByUserId;
+    }
+
+    public void setCreateByUserId(Long createByUserId) {
+        this.createByUserId = createByUserId;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
@@ -110,6 +120,7 @@ public class SysNotice extends BaseEntity
             .append("noticeType", getNoticeType())
             .append("noticeContent", getNoticeContent())
             .append("status", getStatus())
+                .append("createByUserId", getCreateByUserId())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())
             .append("updateBy", getUpdateBy())

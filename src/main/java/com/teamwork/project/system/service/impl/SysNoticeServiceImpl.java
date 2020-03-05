@@ -1,5 +1,6 @@
 package com.teamwork.project.system.service.impl;
 
+import com.teamwork.common.utils.SecurityUtils;
 import com.teamwork.project.projects.domain.SysUserNotice;
 import com.teamwork.project.projects.mapper.SysUserNoticeMapper;
 import com.teamwork.project.system.domain.SysNotice;
@@ -56,6 +57,8 @@ public class SysNoticeServiceImpl implements ISysNoticeService
     @Override
     public int insertNotice(SysNotice notice)
     {
+        notice.setNoticeType("2");
+        notice.setCreateByUserId(SecurityUtils.getLoginUser().getUser().getUserId());
         int i = noticeMapper.insertNotice(notice);
         insertUserNotice(notice);
         return i;
@@ -115,6 +118,7 @@ public class SysNoticeServiceImpl implements ISysNoticeService
     @Override
     public List<SysNotice> selectNoticeByUserId(SysNotice notice) {
         notice.setStatus("0");
-        return noticeMapper.selectNoticeByUserId(notice);
+        List<SysNotice> list = noticeMapper.selectNoticeByUserId(notice);
+        return list;
     }
 }
