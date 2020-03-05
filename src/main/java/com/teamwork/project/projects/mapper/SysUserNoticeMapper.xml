@@ -6,12 +6,13 @@
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="userId" column="user_id" jdbcType="INTEGER"/>
         <result property="noticeId" column="notice_id" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="SMALLINT"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="SysUserNoticeMap">
         select
-          id, user_id, notice_id
+          id, user_id, notice_id, status
         from sys_user_notice
         where id = #{id}
     </select>
@@ -19,7 +20,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="SysUserNoticeMap">
         select
-          id, user_id, notice_id
+          id, user_id, notice_id, status
         from sys_user_notice
         limit #{offset}, #{limit}
     </select>
@@ -27,7 +28,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="SysUserNoticeMap">
         select
-          id, user_id, notice_id
+          id, user_id, notice_id, status
         from sys_user_notice
         <where>
             <if test="id != null">
@@ -39,13 +40,16 @@
             <if test="noticeId != null">
                 and notice_id = #{noticeId}
             </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into sys_user_notice(user_id, notice_id)
-        values (#{userId}, #{noticeId})
+        insert into sys_user_notice(user_id, notice_id, status)
+        values (#{userId}, #{noticeId}, #{status})
     </insert>
 
     <!--通过主键修改数据-->
@@ -58,8 +62,29 @@
             <if test="noticeId != null">
                 notice_id = #{noticeId},
             </if>
+            <if test="status != null">
+                status = #{status}
+            </if>
         </set>
         where id = #{id}
+    </update>
+
+    <!--通过userId和noticeId修改数据-->
+    <update id="updateRead">
+        update sys_user_notice
+        <set>
+            <if test="status != null">
+                status = #{status}
+            </if>
+        </set>
+        <where>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="noticeId != null">
+                and notice_id = #{noticeId}
+            </if>
+        </where>
     </update>
 
     <!--通过主键删除-->

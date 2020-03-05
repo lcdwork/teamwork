@@ -111,7 +111,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="getListByNoticeId" parameterType="com.teamwork.project.system.domain.SysNotice" resultMap="SysUserResult">
-		select u.user_id, dept_id, user_name, nick_name, email, avatar, phonenumber, sex, status
+		select u.user_id, u.dept_id, u.user_name, u.nick_name, u.email, u.avatar, u.phonenumber, u.sex, u.status
 		from sys_user u
 		left join sys_user_notice un on u.user_id = un.user_id
 		where un.notice_id = #{noticeId}

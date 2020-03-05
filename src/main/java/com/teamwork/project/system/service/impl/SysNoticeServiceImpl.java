@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 公告 服务层实现
@@ -66,12 +68,21 @@ public class SysNoticeServiceImpl implements ISysNoticeService
 
     private void insertUserNotice(SysNotice notice) {
         if (notice.getUserList() != null && notice.getUserList().size() > 0) {
-            for (Long userId : notice.getUserList()) {
+            List<Long> userIds = notice.getUserList();
+            userIds.add(SecurityUtils.getLoginUser().getUser().getUserId());
+            userIds = userIds.stream().distinct().collect(Collectors.toList());
+            for (Long userId : userIds) {
                 SysUserNotice s = new SysUserNotice();
                 s.setNoticeId(notice.getNoticeId());
                 s.setUserId(userId);
+                s.setStatus((byte) 0);
                 userNoticeMapper.insert(s);
             }
+            SysUserNotice un = new SysUserNotice();
+            un.setNoticeId(notice.getNoticeId());
+            un.setUserId(SecurityUtils.getLoginUser().getUser().getUserId());
+            un.setStatus((byte) 1);
+            userNoticeMapper.updateRead(un);
         }
     }
 
@@ -86,7 +97,17 @@ public class SysNoticeServiceImpl implements ISysNoticeService
     {
         userNoticeMapper.deleteByNoticeId(notice.getNoticeId());
         int i = noticeMapper.updateNotice(notice);
-        insertUserNotice(notice);
+        List<Long> userIds = notice.getUserList();
+        SysUserNotice userNotice = new SysUserNotice();
+        userNotice.setNoticeId(notice.getNoticeId());
+        List<SysUserNotice> userNoticeList = userNoticeMapper.queryAll(userNotice);
+        List<Long> list = new ArrayList<>();
+        userNoticeList.forEach(u -> {
+            list.add(u.getUserId());
+        });
+        if (!(userIds.containsAll(list) && list.containsAll(userIds))) {
+            insertUserNotice(notice);
+        }
         return i;
     }
 

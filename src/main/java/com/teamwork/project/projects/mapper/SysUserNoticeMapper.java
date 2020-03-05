@@ -55,6 +55,14 @@ public interface SysUserNoticeMapper {
     int update(SysUserNotice sysUserNotice);
 
     /**
+     * 通过userId和noticeId修改数据
+     *
+     * @param sysUserNotice 实例对象
+     * @return 影响行数
+     */
+    int updateRead(SysUserNotice sysUserNotice);
+
+    /**
      * 通过主键删除数据
      *
      * @param id 主键
