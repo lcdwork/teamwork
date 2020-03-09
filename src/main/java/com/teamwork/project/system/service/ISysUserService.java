@@ -1,5 +1,7 @@
 package com.teamwork.project.system.service;
 
+import com.teamwork.framework.web.domain.GanttTree;
+import com.teamwork.framework.web.domain.TreeSelect;
 import com.teamwork.project.projects.domain.Project;
 import com.teamwork.project.projects.domain.Task;
 import com.teamwork.project.system.domain.SysNotice;
@@ -174,4 +176,6 @@ public interface ISysUserService
     List<SysUser> getListByNoticeId(SysNotice notice);
 
     List<SysUser> listUserByUserId(SysUser user);
+
+    List<TreeSelect> buildUserGanttTreeSelect(List<SysUser> list);
 }

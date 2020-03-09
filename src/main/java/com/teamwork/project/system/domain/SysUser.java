@@ -1,11 +1,13 @@
 package com.teamwork.project.system.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.teamwork.framework.aspectj.lang.annotation.Excel;
 import com.teamwork.framework.aspectj.lang.annotation.Excel.ColumnType;
 import com.teamwork.framework.aspectj.lang.annotation.Excel.Type;
 import com.teamwork.framework.aspectj.lang.annotation.Excels;
 import com.teamwork.framework.web.domain.BaseEntity;
+import com.teamwork.project.projects.domain.Task;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -18,6 +20,7 @@ import java.util.List;
 /**
  * 用户对象 sys_user
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SysUser extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -89,6 +92,8 @@ public class SysUser extends BaseEntity
 
     /** 岗位组 */
     private Long[] postIds;
+
+    private List<Task> taskList;
 
     public SysUser()
     {
@@ -295,6 +300,14 @@ public class SysUser extends BaseEntity
     public void setPostIds(Long[] postIds)
     {
         this.postIds = postIds;
+    }
+
+    public List<Task> getTaskList() {
+        return taskList;
+    }
+
+    public void setTaskList(List<Task> taskList) {
+        this.taskList = taskList;
     }
 
     @Override

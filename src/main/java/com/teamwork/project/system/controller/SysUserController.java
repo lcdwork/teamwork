@@ -11,6 +11,7 @@ import com.teamwork.framework.security.LoginUser;
 import com.teamwork.framework.security.service.TokenService;
 import com.teamwork.framework.web.controller.BaseController;
 import com.teamwork.framework.web.domain.Result;
+import com.teamwork.framework.web.domain.TreeSelect;
 import com.teamwork.framework.web.page.TableDataInfo;
 import com.teamwork.project.projects.domain.Project;
 import com.teamwork.project.projects.domain.Task;
@@ -63,6 +64,17 @@ public class SysUserController extends BaseController
         startPage();
         List<SysUser> list = userService.selectUserList(user);
         return getDataTable(list);
+    }
+
+    /**
+     * 获取人员甘特图
+     */
+//    @PreAuthorize("@ss.hasPermi('system:user:ganttTree')")
+    @GetMapping("/ganttTree")
+    public Result ganttTree(SysUser user) {
+        List<SysUser> list = userService.listUserByUserId(user);
+        List<TreeSelect> tree = userService.buildUserGanttTreeSelect(list);
+        return Result.success(tree);
     }
 
     @GetMapping("/listUserByUserId")

@@ -1,12 +1,15 @@
 package com.teamwork.framework.web.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.teamwork.project.projects.domain.Project;
 import com.teamwork.project.projects.domain.Task;
 import com.teamwork.project.system.domain.SysDept;
 import com.teamwork.project.system.domain.SysMenu;
+import com.teamwork.project.system.domain.SysUser;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +33,12 @@ public class TreeSelect implements Serializable
     private Long projectId;
 
     private Long taskId;
+
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    private Date startDate;
+
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    private Date endDate;
 
     public TreeSelect()
     {
@@ -64,6 +73,16 @@ public class TreeSelect implements Serializable
         this.id = task.getTaskId();
         this.label = task.getTaskName();
         this.taskId = task.getTaskId();
+        this.startDate = task.getStartTime();
+        this.endDate = task.getStopTime();
+    }
+
+    public TreeSelect(SysUser user) {
+        this.id = user.getUserId();
+        this.label = user.getUserName();
+        if (user.getTaskList() != null && user.getTaskList().size() > 0) {
+            this.children = user.getTaskList().stream().map(TreeSelect::new).collect(Collectors.toList());
+        }
     }
 
     public Long getId()
@@ -110,5 +129,21 @@ public class TreeSelect implements Serializable
 
     public void setTaskId(Long taskId) {
         this.taskId = taskId;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }

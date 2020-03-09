@@ -230,13 +230,25 @@
             AND sut.user_id = #{taskUserId}
           </if>
           <choose>
-            <when test="taskUserStatus == 0">
-              AND sut.status != 1
+            <when test="taskUserStatus != null">
+            <choose>
+              <when test="taskUserStatus == 0">
+                AND sut.status != 1
+              </when>
+              <otherwise>
+                AND sut.status = #{taskUserStatus}
+              </otherwise>
+            </choose>
             </when>
-            <otherwise>
-              AND sut.status = #{taskUserStatus}
-            </otherwise>
           </choose>
+<!--          <choose>-->
+<!--            <when test="taskUserStatus == 0">-->
+<!--              AND sut.status != 1-->
+<!--            </when>-->
+<!--            <otherwise>-->
+<!--              AND sut.status = #{taskUserStatus}-->
+<!--            </otherwise>-->
+<!--          </choose>-->
         </where>
 <!--    select-->
 <!--    t.*, p.project_name,u.status as taskUserStatus-->

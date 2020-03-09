@@ -207,7 +207,6 @@ public class ProjectServiceImpl implements ProjectService{
         List<Project> returnList = new ArrayList<Project>();
         for (Project project : projects)
         {
-            returnList.add(project);
             Task task = new Task();
             task.setProjectId(project.getProjectId());
             List<Task> tasks = taskMapper.selectTaskList(task);
@@ -220,6 +219,7 @@ public class ProjectServiceImpl implements ProjectService{
 //                    returnList.add(p);
 //                }
 //            }
+            returnList.add(project);
         }
 
         if (returnList.isEmpty())
@@ -234,11 +234,11 @@ public class ProjectServiceImpl implements ProjectService{
         List<Project> returnList = new ArrayList<Project>();
         for (Project project : projects)
         {
-            returnList.add(project);
             Task task = new Task();
             task.setProjectId(project.getProjectId());
             List<Task> tasks = taskMapper.selectTaskList(task);
             project.setTaskList(tasks);
+            returnList.add(project);
         }
 
         if (returnList.isEmpty())

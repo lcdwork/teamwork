@@ -5,8 +5,11 @@ import com.teamwork.common.exception.CustomException;
 import com.teamwork.common.utils.SecurityUtils;
 import com.teamwork.common.utils.StringUtils;
 import com.teamwork.framework.aspectj.lang.annotation.DataScope;
+import com.teamwork.framework.web.domain.GanttTree;
+import com.teamwork.framework.web.domain.TreeSelect;
 import com.teamwork.project.projects.domain.Project;
 import com.teamwork.project.projects.domain.Task;
+import com.teamwork.project.projects.mapper.TaskMapper;
 import com.teamwork.project.system.domain.*;
 import com.teamwork.project.system.mapper.*;
 import com.teamwork.project.system.service.ISysConfigService;
@@ -20,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 用户 业务层处理
@@ -49,6 +53,9 @@ public class SysUserServiceImpl implements ISysUserService
 
     @Resource
     private SysDeptMapper deptMapper;
+
+    @Resource
+    private TaskMapper taskMapper;
 
     /**
      * 根据条件分页查询用户列表
@@ -474,6 +481,27 @@ public class SysUserServiceImpl implements ISysUserService
         }
         userList.addAll(userMapper.selectUserListByDept(user.getDeptId()));
         return userList;
+    }
+
+    @Override
+    public List<TreeSelect> buildUserGanttTreeSelect(List<SysUser> list) {
+        List<SysUser> userGanttTree = buildUserGanttTree(list);
+        return userGanttTree.stream().map(TreeSelect::new).collect(Collectors.toList());
+    }
+
+    public List<SysUser> buildUserGanttTree(List<SysUser> list) {
+        List<SysUser> returnList = new ArrayList<>();
+        for (SysUser user : list) {
+            Task t = new Task();
+            t.setTaskUserId(user.getUserId());
+            user.setTaskList(taskMapper.selectTaskListByUser(t));
+            returnList.add(user);
+        }
+        if (returnList.isEmpty())
+        {
+            returnList = list;
+        }
+        return returnList;
     }
 
 }
