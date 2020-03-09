@@ -250,7 +250,12 @@ public class ProjectServiceImpl implements ProjectService{
 
     @Override
     public List<Project> selectProjectListByUser(Project project) {
-        return projectMapper.selectProjectListByUser(project);
+        List<Project> list = projectMapper.selectProjectListByUser(project);
+        list.forEach(p -> {
+            List<SysUser> userList = userMapper.getListByProjectId(p);
+            p.setUserList(userList);
+        });
+        return list;
     }
 
 }

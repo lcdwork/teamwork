@@ -50,7 +50,7 @@ public class ProjectController extends BaseController {
     @GetMapping("/treeselect")
     public Result treeselect(Project project)
     {
-        List<Project> projects = projectService.selectProjectList(project);
+        List<Project> projects = projectService.selectProjectListByUser(project);
         return Result.success(projectService.buildProjectTreeSelect(projects));
     }
 
