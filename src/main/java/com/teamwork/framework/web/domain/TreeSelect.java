@@ -77,14 +77,6 @@ public class TreeSelect implements Serializable
         this.endDate = task.getStopTime();
     }
 
-    public TreeSelect(SysUser user) {
-        this.id = user.getUserId();
-        this.label = user.getUserName();
-        if (user.getTaskList() != null && user.getTaskList().size() > 0) {
-            this.children = user.getTaskList().stream().map(TreeSelect::new).collect(Collectors.toList());
-        }
-    }
-
     public Long getId()
     {
         return id;

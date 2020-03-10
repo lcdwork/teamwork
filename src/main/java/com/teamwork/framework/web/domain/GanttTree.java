@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.teamwork.project.projects.domain.Project;
 import com.teamwork.project.projects.domain.Task;
+import com.teamwork.project.system.domain.SysUser;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -22,10 +23,7 @@ public class GanttTree implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /** 节点ID */
-    private String id;
-
-    /** 父节点ID */
-    private String pid;
+    private Long id;
 
     /** 节点名称 */
     private String label;
@@ -45,7 +43,7 @@ public class GanttTree implements Serializable {
     }
 
     public GanttTree(Project project) {
-        this.id = project.getProjectId().toString();
+        this.id = project.getProjectId();
         this.label = project.getProjectName();
         this.startDate = project.getStartDate();
         this.endDate = project.getEndDate();
@@ -54,27 +52,26 @@ public class GanttTree implements Serializable {
         }
     }
     public GanttTree(Task task) {
-        this.id = task.getProjectId() + "-" + task.getTaskId();
-        this.pid = task.getProjectId().toString();
+        this.id = task.getTaskId();
         this.label = task.getTaskName();
         this.startDate = task.getStartTime();
         this.endDate = task.getStopTime();
     }
 
-    public String getId() {
+    public GanttTree(SysUser user) {
+        this.id = user.getUserId();
+        this.label = user.getUserName();
+        if (user.getTaskList() != null && user.getTaskList().size() > 0) {
+            this.children = user.getTaskList().stream().map(GanttTree::new).collect(Collectors.toList());
+        }
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getPid() {
-        return pid;
-    }
-
-    public void setPid(String pid) {
-        this.pid = pid;
     }
 
     public String getLabel() {

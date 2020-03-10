@@ -6,6 +6,7 @@ import com.teamwork.common.utils.SecurityUtils;
 import com.teamwork.common.utils.StringUtils;
 import com.teamwork.framework.aspectj.lang.annotation.DataScope;
 import com.teamwork.framework.web.domain.GanttTree;
+import com.teamwork.framework.web.domain.GanttTreeList;
 import com.teamwork.framework.web.domain.TreeSelect;
 import com.teamwork.project.projects.domain.Project;
 import com.teamwork.project.projects.domain.Task;
@@ -21,8 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -484,9 +484,22 @@ public class SysUserServiceImpl implements ISysUserService
     }
 
     @Override
-    public List<TreeSelect> buildUserGanttTreeSelect(List<SysUser> list) {
+    public GanttTreeList buildUserGanttTreeSelect(List<SysUser> list) {
         List<SysUser> userGanttTree = buildUserGanttTree(list);
-        return userGanttTree.stream().map(TreeSelect::new).collect(Collectors.toList());
+        List<GanttTree> treeSelect = userGanttTree.stream().map(GanttTree::new).collect(Collectors.toList());
+        List<GanttTree> l = new ArrayList<>();
+        for (GanttTree t : treeSelect) {
+            if (t.getChildren() != null) {
+                l.addAll(t.getChildren());
+            }
+        }
+        Optional<GanttTree> min = l.stream().filter(i->i.getStartDate()!=null).collect(Collectors.minBy(Comparator.comparing(i -> i.getStartDate())));
+        Optional<GanttTree> max = l.stream().filter(i->i.getEndDate()!=null).collect(Collectors.maxBy(Comparator.comparing(i -> i.getEndDate())));
+        GanttTreeList ganttTreeList = new GanttTreeList();
+        ganttTreeList.setStartDate(min.get().getStartDate());
+        ganttTreeList.setEndDate(max.get().getEndDate());
+        ganttTreeList.setList(treeSelect);
+        return ganttTreeList;
     }
 
     public List<SysUser> buildUserGanttTree(List<SysUser> list) {

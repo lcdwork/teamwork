@@ -4,6 +4,7 @@ import com.teamwork.common.utils.SecurityUtils;
 import com.teamwork.framework.aspectj.lang.annotation.Log;
 import com.teamwork.framework.aspectj.lang.enums.BusinessType;
 import com.teamwork.framework.web.controller.BaseController;
+import com.teamwork.framework.web.domain.GanttTreeList;
 import com.teamwork.framework.web.domain.Result;
 import com.teamwork.framework.web.page.TableDataInfo;
 import com.teamwork.project.projects.domain.Project;
@@ -12,6 +13,7 @@ import com.teamwork.project.projects.service.ProjectService;
 import com.teamwork.project.projects.service.TaskService;
 import com.teamwork.project.system.domain.SysDept;
 import com.teamwork.project.system.domain.SysUser;
+import com.teamwork.project.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -28,6 +30,9 @@ public class ProjectController extends BaseController {
 
     @Autowired
     public TaskService taskService;
+
+    @Autowired
+    private ISysUserService userService;
 
 
     @GetMapping("/list")
@@ -62,6 +67,17 @@ public class ProjectController extends BaseController {
     {
         List<Project> projects = projectService.selectProjectList(project);
         return Result.success(projectService.buildProjectGanttTreeSelect(projects));
+    }
+
+    /**
+     * 获取人员甘特图
+     */
+//    @PreAuthorize("@ss.hasPermi('system:user:ganttTree')")
+    @GetMapping("/userGanttTree")
+    public Result userGanttTree(SysUser user) {
+        List<SysUser> list = userService.listUserByUserId(user);
+        GanttTreeList tree = userService.buildUserGanttTreeSelect(list);
+        return Result.success(tree);
     }
 
     @GetMapping("/projectUsers")
