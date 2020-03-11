@@ -19,6 +19,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -75,7 +76,10 @@ public class ProjectController extends BaseController {
 //    @PreAuthorize("@ss.hasPermi('system:user:ganttTree')")
     @GetMapping("/userGanttTree")
     public Result userGanttTree(SysUser user) {
-        List<SysUser> list = userService.listUserByUserId(user);
+//        List<SysUser> list = userService.listUserByUserId(user);
+        List<SysUser> list = new ArrayList<>();
+        SysUser u = userService.selectUserById(user.getUserId());
+        list.add(u);
         GanttTreeList tree = userService.buildUserGanttTreeSelect(list);
         return Result.success(tree);
     }

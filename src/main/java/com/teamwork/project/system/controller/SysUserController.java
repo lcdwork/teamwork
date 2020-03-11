@@ -19,6 +19,7 @@ import com.teamwork.project.projects.domain.Project;
 import com.teamwork.project.projects.domain.Task;
 import com.teamwork.project.system.domain.SysNotice;
 import com.teamwork.project.system.domain.SysUser;
+import com.teamwork.project.system.domain.SysUserTeam;
 import com.teamwork.project.system.service.ISysPostService;
 import com.teamwork.project.system.service.ISysRoleService;
 import com.teamwork.project.system.service.ISysUserService;
@@ -68,6 +69,16 @@ public class SysUserController extends BaseController
         return getDataTable(list);
     }
 
+    @GetMapping("teamUserList")
+    public TableDataInfo teamUserList(SysUser user) {
+        startPage();
+        List<SysUserTeam> list = userService.teamUserList(user);
+        return getDataTable(list);
+    }
+
+    /**
+     * 获取部门及以下部门人员列表
+     */
     @GetMapping("/listUserByUserId")
     public TableDataInfo listUserByUserId(SysUser user) {
         List<SysUser> list = userService.listUserByUserId(user);

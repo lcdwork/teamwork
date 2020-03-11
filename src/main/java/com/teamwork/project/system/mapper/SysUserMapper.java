@@ -4,6 +4,7 @@ import com.teamwork.project.projects.domain.Project;
 import com.teamwork.project.projects.domain.Task;
 import com.teamwork.project.system.domain.SysNotice;
 import com.teamwork.project.system.domain.SysUser;
+import com.teamwork.project.system.domain.SysUserTeam;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -118,4 +119,6 @@ public interface SysUserMapper
     List<SysUser> getListByNoticeId(SysNotice notice);
 
     List<SysUser> selectUserListByDept(Long deptId);
+
+    List<SysUserTeam> teamUserList(SysUser user);
 }

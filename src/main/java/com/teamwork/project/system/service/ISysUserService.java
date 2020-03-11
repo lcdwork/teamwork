@@ -7,6 +7,7 @@ import com.teamwork.project.projects.domain.Project;
 import com.teamwork.project.projects.domain.Task;
 import com.teamwork.project.system.domain.SysNotice;
 import com.teamwork.project.system.domain.SysUser;
+import com.teamwork.project.system.domain.SysUserTeam;
 
 import java.util.List;
 
@@ -179,4 +180,6 @@ public interface ISysUserService
     List<SysUser> listUserByUserId(SysUser user);
 
     GanttTreeList buildUserGanttTreeSelect(List<SysUser> list);
+
+    List<SysUserTeam> teamUserList(SysUser user);
 }

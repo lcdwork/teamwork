@@ -502,6 +502,11 @@ public class SysUserServiceImpl implements ISysUserService
         return ganttTreeList;
     }
 
+    @Override
+    public List<SysUserTeam> teamUserList(SysUser user) {
+        return userMapper.teamUserList(user);
+    }
+
     public List<SysUser> buildUserGanttTree(List<SysUser> list) {
         List<SysUser> returnList = new ArrayList<>();
         for (SysUser user : list) {

@@ -81,6 +81,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${dataScope}
 	</select>
 
+	<select id="teamUserList" parameterType="SysUser" resultMap="SysUserResult">
+		select u.user_id, u.dept_id, u.nick_name, u.user_name, u.email, u.avatar, u.phonenumber, u.password, u.sex, u.status, u.del_flag, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark
+		from sys_user u
+		left join sys_user_team ut on u.user_id = ut.user_id
+		<where>
+			<if test="userId != null and userId != ''">
+				and ut.p_user_id = #{userId}
+			</if>
+		</where>
+	</select>
+
 	<select id="selectUserByUserName" parameterType="String" resultMap="SysUserResult">
 	    <include refid="selectUserVo"/>
 		where u.user_name = #{userName}

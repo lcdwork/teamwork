@@ -53,6 +53,8 @@ public class SysDept extends BaseEntity
     /** 子部门 */
     private List<SysDept> children = new ArrayList<SysDept>();
 
+    private Long userDeptId;
+
     public Long getDeptId()
     {
         return deptId;
@@ -177,6 +179,14 @@ public class SysDept extends BaseEntity
     public void setChildren(List<SysDept> children)
     {
         this.children = children;
+    }
+
+    public Long getUserDeptId() {
+        return userDeptId;
+    }
+
+    public void setUserDeptId(Long userDeptId) {
+        this.userDeptId = userDeptId;
     }
 
     @Override
