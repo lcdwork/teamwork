@@ -36,7 +36,7 @@ public class SysNotice extends BaseEntity
 
     private Long createByUserId;
 
-    private Byte readStatus;
+    private String readStatus;
 
     public Long getNoticeId()
     {
@@ -114,11 +114,11 @@ public class SysNotice extends BaseEntity
         this.createByUserId = createByUserId;
     }
 
-    public Byte getReadStatus() {
+    public String getReadStatus() {
         return readStatus;
     }
 
-    public void setReadStatus(Byte readStatus) {
+    public void setReadStatus(String readStatus) {
         this.readStatus = readStatus;
     }
 
@@ -136,7 +136,7 @@ public class SysNotice extends BaseEntity
             .append("updateBy", getUpdateBy())
             .append("updateTime", getUpdateTime())
             .append("remark", getRemark())
-//                .append("readStatus", getReadStatus())
+                .append("readStatus", getReadStatus())
             .toString();
     }
 }
