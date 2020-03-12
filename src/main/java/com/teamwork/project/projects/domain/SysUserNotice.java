@@ -17,7 +17,9 @@ public class SysUserNotice implements Serializable {
     
     private Long noticeId;
 
-    private Byte status;
+    private String status;
+
+    private String readStatus;
 
     public Long getId() {
         return id;
@@ -43,11 +45,19 @@ public class SysUserNotice implements Serializable {
         this.noticeId = noticeId;
     }
 
-    public Byte getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Byte status) {
+    public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getReadStatus() {
+        return readStatus;
+    }
+
+    public void setReadStatus(String readStatus) {
+        this.readStatus = readStatus;
     }
 }

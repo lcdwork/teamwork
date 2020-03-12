@@ -4,6 +4,7 @@ import com.teamwork.framework.web.controller.BaseController;
 import com.teamwork.framework.web.domain.Result;
 import com.teamwork.project.projects.domain.SysUserNotice;
 import com.teamwork.project.projects.service.SysUserNoticeService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -35,7 +36,7 @@ public class SysUserNoticeController extends BaseController {
     }
 
     @PutMapping
-    public Result updateRead(SysUserNotice userNotice) {
+    public Result updateRead(@Validated @RequestBody SysUserNotice userNotice) {
         return toAjax(userNoticeService.updateRead(userNotice));
     }
 

@@ -63,7 +63,6 @@ public class SysUserNoticeServiceImpl implements SysUserNoticeService {
      */
     @Override
     public int updateRead(SysUserNotice sysUserNotice) {
-        sysUserNotice.setStatus((byte) 1);
         return userNoticeMapper.updateRead(sysUserNotice);
     }
 
