@@ -30,4 +30,8 @@ public interface TaskService{
     List<SysUser> selectTaskUsers(Long taskId);
 
     List<TaskList> selectTaskListByTime(Task task);
+
+    int convertMemo(Task task);
+
+    List<Task> selectConvertRepeat(Task task);
 }

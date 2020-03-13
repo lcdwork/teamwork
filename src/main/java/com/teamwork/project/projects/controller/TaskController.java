@@ -74,6 +74,9 @@ public class TaskController extends BaseController {
         return Result.success(tree);
     }
 
+    /**
+     * 新增任务
+     */
     @PreAuthorize("@ss.hasPermi('system:task:add')")
     @Log(title = "任务管理", businessType = BusinessType.INSERT)
     @PostMapping()
@@ -87,7 +90,7 @@ public class TaskController extends BaseController {
     }
 
     /**
-     * 修改项目
+     * 修改任务
      */
     @PreAuthorize("@ss.hasPermi('system:project:edit')")
     @Log(title = "任务管理", businessType = BusinessType.UPDATE)
@@ -103,7 +106,7 @@ public class TaskController extends BaseController {
     }
 
     /**
-     * 删除项目
+     * 删除任务
      */
     @PreAuthorize("@ss.hasPermi('system:task:remove')")
     @Log(title = "任务管理", businessType = BusinessType.DELETE)
@@ -111,5 +114,18 @@ public class TaskController extends BaseController {
     public Result remove(@Validated @RequestBody Task task)
     {
         return toAjax(taskService.deleteByPrimaryKey(task));
+    }
+
+    /**
+     * 备忘录转待办任务
+     */
+    @Log(title = "任务管理", businessType = BusinessType.INSERT)
+    @PostMapping("/convertMemo")
+    public Result convertMemo(@Validated @RequestBody Task task) {
+        List<Task> list = taskService.selectConvertRepeat(task);
+        if (list.size() > 0) {
+            return Result.error("任务已经存在，新增失败！");
+        }
+        return toAjax(taskService.convertMemo(task));
     }
 }

@@ -63,6 +63,8 @@ public class Task extends BaseEntity {
 
     private String endDate;
 
+    private List<Memo> convertMemoList;
+
     public Long getTaskId() {
         return taskId;
     }
@@ -181,5 +183,13 @@ public class Task extends BaseEntity {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public List<Memo> getConvertMemoList() {
+        return convertMemoList;
+    }
+
+    public void setConvertMemoList(List<Memo> convertMemoList) {
+        this.convertMemoList = convertMemoList;
     }
 }

@@ -3,15 +3,13 @@ package com.teamwork.project.projects.service.impl;
 import com.teamwork.common.utils.MonUtils;
 import com.teamwork.common.utils.SecurityUtils;
 import com.teamwork.project.projects.domain.*;
-import com.teamwork.project.projects.mapper.ProjectInfoLogMapper;
-import com.teamwork.project.projects.mapper.SysUserTaskMapper;
-import com.teamwork.project.projects.mapper.TaskInfoLogMapper;
+import com.teamwork.project.projects.mapper.*;
 import com.teamwork.project.system.domain.SysUser;
 import com.teamwork.project.system.mapper.SysUserMapper;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
-import com.teamwork.project.projects.mapper.TaskMapper;
+
 import com.teamwork.project.projects.service.TaskService;
 
 import java.util.*;
@@ -35,6 +33,9 @@ public class TaskServiceImpl implements TaskService{
     @Resource
     private SysUserMapper userMapper;
 
+    @Resource
+    private MemoMapper memoMapper;
+
     @Override
     public int deleteByPrimaryKey(Task task) {
         projectInfoLogMapper.insert(insertProjectInfoLog(task, 5));
@@ -54,6 +55,38 @@ public class TaskServiceImpl implements TaskService{
         if (record.getUserList() != null &&record.getUserList().size() > 0) {
             List<SysUserTask> list = userTaskList(record);
             sysUserTaskMapper.insertList(list);
+        }
+        return i;
+    }
+
+    @Override
+    public int convertMemo(Task task) {
+        int i = 0;
+        if (task.getConvertMemoList().size() > 0) {
+            for (Memo memo : task.getConvertMemoList()) {
+                Task t = new Task();
+                t.setProjectId(task.getProjectId());
+                t.setStartTime(task.getStartTime());
+                t.setStopTime(task.getStopTime());
+                t.setTaskName(memo.getMemoTitle());
+                t.setRemark(memo.getMemoContent());
+                t.setTaskTag((short) 2);
+                t.setStatus((byte) 1);
+                t.setCreateBy(SecurityUtils.getUsername());
+                t.setCreateTime(new Date());
+                t.setCreateUserId(SecurityUtils.getLoginUser().getUser().getUserId());
+                taskMapper.insert(t);
+                i++;
+                taskInfoLogMapper.insert(insertTaskInfoLog(t, 1));
+                projectInfoLogMapper.insert(insertProjectInfoLog(t, 4));
+                if (task.getUserList() != null &&task.getUserList().size() > 0) {
+                    t.setUserList(task.getUserList());
+                    List<SysUserTask> list = userTaskList(t);
+                    sysUserTaskMapper.insertList(list);
+                }
+                memo.setStatus("1");
+                memoMapper.update(memo);
+            }
         }
         return i;
     }
@@ -109,6 +142,21 @@ public class TaskServiceImpl implements TaskService{
     @Override
     public List<Task> selectTaskRepeat(Task task) {
         return taskMapper.selectTaskRepeat(task);
+    }
+
+    @Override
+    public List<Task> selectConvertRepeat(Task task) {
+        List<Task> list = new ArrayList<>();
+        if (task.getConvertMemoList().size() > 0) {
+            for (Memo memo : task.getConvertMemoList()) {
+                Task t = new Task();
+                t.setProjectId(task.getProjectId());
+                t.setTaskName(memo.getMemoTitle());
+                List<Task> l = taskMapper.selectTaskRepeat(t);
+                list.addAll(l);
+            }
+        }
+        return list;
     }
 
     @Override
