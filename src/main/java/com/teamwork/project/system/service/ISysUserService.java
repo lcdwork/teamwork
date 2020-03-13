@@ -179,7 +179,7 @@ public interface ISysUserService
 
     List<SysUser> listUserByUserId(SysUser user);
 
-    GanttTreeList buildUserGanttTreeSelect(List<SysUser> list);
+    GanttTreeList buildUserGanttTreeSelect(List<SysUser> list, Task task);
 
     List<SysUserTeam> teamUserList(SysUser user);
 }

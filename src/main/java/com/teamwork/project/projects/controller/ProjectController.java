@@ -70,20 +70,6 @@ public class ProjectController extends BaseController {
         return Result.success(projectService.buildProjectGanttTreeSelect(projects));
     }
 
-    /**
-     * 获取人员甘特图
-     */
-//    @PreAuthorize("@ss.hasPermi('system:user:ganttTree')")
-    @GetMapping("/userGanttTree")
-    public Result userGanttTree(SysUser user) {
-//        List<SysUser> list = userService.listUserByUserId(user);
-        List<SysUser> list = new ArrayList<>();
-        SysUser u = userService.selectUserById(user.getUserId());
-        list.add(u);
-        GanttTreeList tree = userService.buildUserGanttTreeSelect(list);
-        return Result.success(tree);
-    }
-
     @GetMapping("/projectUsers")
     public TableDataInfo selectProjectUsers(@PathVariable("projectId") Long projectId) {
         List<SysUser> list = projectService.selectProjectUsers(projectId);

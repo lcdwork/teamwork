@@ -4,6 +4,7 @@ import com.teamwork.common.utils.SecurityUtils;
 import com.teamwork.framework.aspectj.lang.annotation.Log;
 import com.teamwork.framework.aspectj.lang.enums.BusinessType;
 import com.teamwork.framework.web.controller.BaseController;
+import com.teamwork.framework.web.domain.GanttTreeList;
 import com.teamwork.framework.web.domain.Result;
 import com.teamwork.framework.web.page.TableDataInfo;
 import com.teamwork.project.projects.domain.Project;
@@ -12,11 +13,13 @@ import com.teamwork.project.projects.domain.TaskList;
 import com.teamwork.project.projects.service.ProjectService;
 import com.teamwork.project.projects.service.TaskService;
 import com.teamwork.project.system.domain.SysUser;
+import com.teamwork.project.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,6 +28,9 @@ public class TaskController extends BaseController {
 
     @Autowired
     private TaskService taskService;
+
+    @Autowired
+    private ISysUserService userService;
 
     @GetMapping("/list")
     public TableDataInfo list(Task task)
@@ -53,6 +59,19 @@ public class TaskController extends BaseController {
     public TableDataInfo selectTaskUsers(@PathVariable("taskId") Long taskId) {
         List<SysUser> list = taskService.selectTaskUsers(taskId);
         return getDataTable(list);
+    }
+
+    /**
+     * 获取甘特图
+     */
+//    @PreAuthorize("@ss.hasPermi('system:user:ganttTree')")
+    @GetMapping("/ganttTree")
+    public Result userGanttTree(Task task) {
+        List<SysUser> list = new ArrayList<>();
+        SysUser u = userService.selectUserById(task.getTaskUserId());
+        list.add(u);
+        GanttTreeList tree = userService.buildUserGanttTreeSelect(list, task);
+        return Result.success(tree);
     }
 
     @PreAuthorize("@ss.hasPermi('system:task:add')")

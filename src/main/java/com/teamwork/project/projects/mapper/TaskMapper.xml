@@ -197,10 +197,10 @@
             AND t.task_tag = #{taskTag}
           </if>
           <if test="startTime != null">
-            AND t.start_time = #{startTime}
+            AND t.start_time &gt;= #{startTime}
           </if>
           <if test="stopTime != null">
-            AND t.stop_time = #{stopTime}
+            AND t.stop_time &lt;= #{stopTime}
           </if>
           <if test="status != null">
             AND t.status = #{status}

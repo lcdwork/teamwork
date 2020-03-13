@@ -484,8 +484,8 @@ public class SysUserServiceImpl implements ISysUserService
     }
 
     @Override
-    public GanttTreeList buildUserGanttTreeSelect(List<SysUser> list) {
-        List<SysUser> userGanttTree = buildUserGanttTree(list);
+    public GanttTreeList buildUserGanttTreeSelect(List<SysUser> list, Task task) {
+        List<SysUser> userGanttTree = buildUserGanttTree(list, task);
         List<GanttTree> treeSelect = userGanttTree.stream().map(GanttTree::new).collect(Collectors.toList());
         List<GanttTree> l = new ArrayList<>();
         for (GanttTree t : treeSelect) {
@@ -496,8 +496,13 @@ public class SysUserServiceImpl implements ISysUserService
         Optional<GanttTree> min = l.stream().filter(i->i.getStartDate()!=null).collect(Collectors.minBy(Comparator.comparing(i -> i.getStartDate())));
         Optional<GanttTree> max = l.stream().filter(i->i.getEndDate()!=null).collect(Collectors.maxBy(Comparator.comparing(i -> i.getEndDate())));
         GanttTreeList ganttTreeList = new GanttTreeList();
-        ganttTreeList.setStartDate(min.get().getStartDate());
-        ganttTreeList.setEndDate(max.get().getEndDate());
+        if(!min.isPresent() || !max.isPresent()) {
+            ganttTreeList.setStartDate(new Date());
+            ganttTreeList.setEndDate(new Date());
+        } else {
+            ganttTreeList.setStartDate(min.get().getStartDate());
+            ganttTreeList.setEndDate(max.get().getEndDate());
+        }
         ganttTreeList.setList(treeSelect);
         return ganttTreeList;
     }
@@ -507,12 +512,10 @@ public class SysUserServiceImpl implements ISysUserService
         return userMapper.teamUserList(user);
     }
 
-    public List<SysUser> buildUserGanttTree(List<SysUser> list) {
+    public List<SysUser> buildUserGanttTree(List<SysUser> list, Task task) {
         List<SysUser> returnList = new ArrayList<>();
         for (SysUser user : list) {
-            Task t = new Task();
-            t.setTaskUserId(user.getUserId());
-            user.setTaskList(taskMapper.selectTaskListByUser(t));
+            user.setTaskList(taskMapper.selectTaskListByUser(task));
             returnList.add(user);
         }
         if (returnList.isEmpty())
