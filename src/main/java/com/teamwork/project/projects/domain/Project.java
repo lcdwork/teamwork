@@ -46,6 +46,8 @@ public class Project extends BaseEntity {
 
     public Long userId;
 
+    private String orderByColumn;
+
     public Long getProjectId() {
         return projectId;
     }
@@ -132,5 +134,13 @@ public class Project extends BaseEntity {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getOrderByColumn() {
+        return orderByColumn;
+    }
+
+    public void setOrderByColumn(String orderByColumn) {
+        this.orderByColumn = orderByColumn;
     }
 }

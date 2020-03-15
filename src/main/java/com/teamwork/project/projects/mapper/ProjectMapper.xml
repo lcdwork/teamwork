@@ -118,6 +118,14 @@
         AND up.user_id = #{userId}
       </if>
     </where>
+    <choose>
+      <when test="orderByColumn == 'endDate'">
+        order by end_date
+      </when>
+      <otherwise>
+        order by start_date
+      </otherwise>
+    </choose>
   </select>
   <select id="selectProjectRepeat" parameterType="com.teamwork.project.projects.domain.Project" resultMap="BaseResultMap">
     select
