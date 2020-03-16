@@ -188,10 +188,12 @@ public class ProjectServiceImpl implements ProjectService{
             SysUserNotice sysUserNotice = new SysUserNotice();
             sysUserNotice.setUserId(u.getUserId());
             sysUserNotice.setNoticeId(sysNotice.getNoticeId());
+            sysUserNotice.setStatus("0");
             sysUserNoticeMapper.insert(sysUserNotice);
             SysUserNotice sysUserNotice2 = new SysUserNotice();
             sysUserNotice2.setUserId(SecurityUtils.getLoginUser().getUser().getUserId());
             sysUserNotice2.setNoticeId(sysNotice.getNoticeId());
+            sysUserNotice2.setStatus("1");
             sysUserNoticeMapper.insert(sysUserNotice2);
         });
     }

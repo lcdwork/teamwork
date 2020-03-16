@@ -73,12 +73,12 @@
     <update id="updateRead">
         update sys_user_notice
         <set>
-            <if test="readStatus != null">
-                status = #{readStatus}
+            <if test="status != null">
+                status = #{status}
             </if>
         </set>
         <where>
-            <if test="userId != null">
+            <if test="userId != null and userId != ''">
                 and user_id = #{userId}
             </if>
             <if test="noticeId != null">

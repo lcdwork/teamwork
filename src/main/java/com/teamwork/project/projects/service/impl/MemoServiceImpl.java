@@ -53,7 +53,7 @@ public class MemoServiceImpl implements MemoService {
      */
     @Override
     public int insert(Memo memo) {
-        memo.setCreateUserId(SecurityUtils.getLoginUser().getUser().getUserId());
+        memo.setCreateUserId(SecurityUtils.getLoginUser().getUser().getUserId().toString());
         memo.setCreateBy(SecurityUtils.getUsername());
         memo.setCreateTime(new Date());
         if (memo.getMemoTime() == null) {

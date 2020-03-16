@@ -51,10 +51,10 @@
                 and memo_time = #{memoTime}
             </if>
             <if test="memoContent != null and memoContent != ''">
-                and memo_content = #{memoContent}
+                and memo_content like concat('%', #{memoContent}, '%')
             </if>
             <if test="memoTitle != null and memoTitle != ''">
-                and memo_title = #{memoTitle}
+                and memo_title like concat('%', #{memoTitle}, '%')
             </if>
             <if test="status != null and status != ''">
                 and status = #{status}

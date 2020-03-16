@@ -65,6 +65,8 @@ public class Task extends BaseEntity {
 
     private List<Memo> convertMemoList;
 
+    private String orderByColumn;
+
     public Long getTaskId() {
         return taskId;
     }
@@ -191,5 +193,13 @@ public class Task extends BaseEntity {
 
     public void setConvertMemoList(List<Memo> convertMemoList) {
         this.convertMemoList = convertMemoList;
+    }
+
+    public String getOrderByColumn() {
+        return orderByColumn;
+    }
+
+    public void setOrderByColumn(String orderByColumn) {
+        this.orderByColumn = orderByColumn;
     }
 }

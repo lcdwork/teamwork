@@ -23,7 +23,7 @@ public class Memo implements Serializable {
     /**
     * 创建者id
     */
-    private Long createUserId;
+    private String createUserId;
     /**
     * 创建时间
     */
@@ -59,11 +59,11 @@ public class Memo implements Serializable {
         this.createBy = createBy;
     }
 
-    public Long getCreateUserId() {
+    public String getCreateUserId() {
         return createUserId;
     }
 
-    public void setCreateUserId(Long createUserId) {
+    public void setCreateUserId(String createUserId) {
         this.createUserId = createUserId;
     }
 

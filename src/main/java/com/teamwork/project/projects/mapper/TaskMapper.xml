@@ -178,6 +178,14 @@
       <if test="projectId != null">
         AND t.project_id = #{projectId}
       </if>
+      <choose>
+        <when test="orderByColumn == 'stopTime'">
+          order by stop_time
+        </when>
+        <otherwise>
+          order by start_time
+        </otherwise>
+      </choose>
     </where>
   </select>
   <select id="selectTaskListByUser" parameterType="com.teamwork.project.projects.domain.Task" resultMap="BaseResultMap">

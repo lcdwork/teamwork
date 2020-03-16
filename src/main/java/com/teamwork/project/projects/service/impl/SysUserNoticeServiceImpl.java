@@ -55,16 +55,16 @@ public class SysUserNoticeServiceImpl implements SysUserNoticeService {
         return sysUserNotice;
     }
 
-    /**
-     * 修改数据
-     *
-     * @param sysUserNotice 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public int updateRead(SysUserNotice sysUserNotice) {
-        return userNoticeMapper.updateRead(sysUserNotice);
-    }
+//    /**
+//     * 修改数据
+//     *
+//     * @param sysUserNotice 实例对象
+//     * @return 实例对象
+//     */
+//    @Override
+//    public int updateRead(SysUserNotice sysUserNotice) {
+//        return userNoticeMapper.updateRead(sysUserNotice);
+//    }
 
     /**
      * 通过主键删除数据
