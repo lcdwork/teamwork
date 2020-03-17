@@ -22,13 +22,13 @@ public class SysNotice extends BaseEntity
     private String noticeTitle;
 
     /** 公告类型（1通知 2公告） */
-    private String noticeType;
+    private Short noticeType;
 
     /** 公告内容 */
     private String noticeContent;
 
     /** 公告状态（0正常 1关闭） */
-    private String status;
+    private Short status;
 
     private List<Long> userList;
 
@@ -36,7 +36,7 @@ public class SysNotice extends BaseEntity
 
     private Long createByUserId;
 
-    private String readStatus;
+    private Short readStatus;
 
     public Long getNoticeId()
     {
@@ -60,12 +60,12 @@ public class SysNotice extends BaseEntity
         return noticeTitle;
     }
 
-    public void setNoticeType(String noticeType)
+    public void setNoticeType(Short noticeType)
     {
         this.noticeType = noticeType;
     }
 
-    public String getNoticeType()
+    public Short getNoticeType()
     {
         return noticeType;
     }
@@ -80,12 +80,12 @@ public class SysNotice extends BaseEntity
         return noticeContent;
     }
 
-    public void setStatus(String status)
+    public void setStatus(Short status)
     {
         this.status = status;
     }
 
-    public String getStatus()
+    public Short getStatus()
     {
         return status;
     }
@@ -114,11 +114,11 @@ public class SysNotice extends BaseEntity
         this.createByUserId = createByUserId;
     }
 
-    public String getReadStatus() {
+    public Short getReadStatus() {
         return readStatus;
     }
 
-    public void setReadStatus(String readStatus) {
+    public void setReadStatus(Short readStatus) {
         this.readStatus = readStatus;
     }
 

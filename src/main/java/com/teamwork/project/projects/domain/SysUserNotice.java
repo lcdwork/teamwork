@@ -10,16 +10,16 @@ import java.io.Serializable;
  */
 public class SysUserNotice implements Serializable {
     private static final long serialVersionUID = 970743379110256945L;
-    
+
     private Long id;
-    
+
     private Long userId;
-    
+
     private Long noticeId;
 
-    private String status;
+    private Short status;
 
-    private String readStatus;
+    private Short readStatus;
 
     public Long getId() {
         return id;
@@ -45,19 +45,19 @@ public class SysUserNotice implements Serializable {
         this.noticeId = noticeId;
     }
 
-    public String getStatus() {
+    public Short getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Short status) {
         this.status = status;
     }
 
-    public String getReadStatus() {
+    public Short getReadStatus() {
         return readStatus;
     }
 
-    public void setReadStatus(String readStatus) {
+    public void setReadStatus(Short readStatus) {
         this.readStatus = readStatus;
     }
 }

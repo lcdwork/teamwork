@@ -59,7 +59,7 @@ public class SysNoticeServiceImpl implements ISysNoticeService
     @Override
     public int insertNotice(SysNotice notice)
     {
-        notice.setNoticeType("2");
+        notice.setNoticeType((short) 2);
         notice.setCreateByUserId(SecurityUtils.getLoginUser().getUser().getUserId());
         int i = noticeMapper.insertNotice(notice);
         insertUserNotice(notice);
@@ -75,13 +75,13 @@ public class SysNoticeServiceImpl implements ISysNoticeService
                 SysUserNotice s = new SysUserNotice();
                 s.setNoticeId(notice.getNoticeId());
                 s.setUserId(userId);
-                s.setStatus("0");
+                s.setStatus((short) 0);
                 userNoticeMapper.insert(s);
             }
             SysUserNotice un = new SysUserNotice();
             un.setNoticeId(notice.getNoticeId());
             un.setUserId(SecurityUtils.getLoginUser().getUser().getUserId());
-            un.setStatus("1");
+            un.setStatus((short) 1);
             userNoticeMapper.updateRead(un);
         }
     }
@@ -130,6 +130,7 @@ public class SysNoticeServiceImpl implements ISysNoticeService
      * @param noticeIds 需要删除的公告ID
      * @return 结果
      */
+    @Override
     public int deleteNoticeByIds(List<Long> noticeIds)
     {
         userNoticeMapper.deleteByNoticeIds(noticeIds);
@@ -138,7 +139,7 @@ public class SysNoticeServiceImpl implements ISysNoticeService
 
     @Override
     public List<SysNotice> selectNoticeByUserId(SysNotice notice) {
-        notice.setStatus("0");
+        notice.setStatus((short) 0);
         List<SysNotice> list = noticeMapper.selectNoticeByUserId(notice);
         return list;
     }

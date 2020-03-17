@@ -180,20 +180,21 @@ public class ProjectServiceImpl implements ProjectService{
             SysNotice sysNotice = new SysNotice();
             sysNotice.setNoticeTitle("项目邀请通知");
             sysNotice.setNoticeContent(SecurityUtils.getUsername() + "邀请" + u.getUserName() + "加入" + project.getProjectName() + "项目");
-            sysNotice.setNoticeType("1");
-            sysNotice.setStatus("0");
+            sysNotice.setNoticeType((short) 1);
+            sysNotice.setStatus((short) 0);
+            sysNotice.setReadStatus((short) 0);
             sysNotice.setCreateBy(SecurityUtils.getUsername());
             sysNotice.setCreateTime(new Date());
             sysNoticeMapper.insertNotice(sysNotice);
             SysUserNotice sysUserNotice = new SysUserNotice();
             sysUserNotice.setUserId(u.getUserId());
             sysUserNotice.setNoticeId(sysNotice.getNoticeId());
-            sysUserNotice.setStatus("0");
+            sysUserNotice.setStatus((short) 0);
             sysUserNoticeMapper.insert(sysUserNotice);
             SysUserNotice sysUserNotice2 = new SysUserNotice();
             sysUserNotice2.setUserId(SecurityUtils.getLoginUser().getUser().getUserId());
             sysUserNotice2.setNoticeId(sysNotice.getNoticeId());
-            sysUserNotice2.setStatus("1");
+            sysUserNotice2.setStatus((short) 1);
             sysUserNoticeMapper.insert(sysUserNotice2);
         });
     }
