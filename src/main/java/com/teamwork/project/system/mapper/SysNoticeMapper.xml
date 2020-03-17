@@ -130,6 +130,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         delete from sys_notice where notice_id = #{noticeId}
     </delete>
 
+    <delete id="delete">
+        delete from sys_notice
+        <where>
+            <if test="noticeIds.size > 0">
+                and notice_id in
+                <foreach item="noticeId" collection="list" open="(" separator="," close=")">
+                    #{noticeId}
+                </foreach>
+            </if>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId}
+            </if>
+            <if test="readStatus != null">
+                and status = #{readStatus}
+            </if>
+        </where>
+    </delete>
+
     <delete id="deleteNoticeByIds" parameterType="List">
         delete from sys_notice where notice_id in
         <foreach item="noticeId" collection="list" open="(" separator="," close=")">

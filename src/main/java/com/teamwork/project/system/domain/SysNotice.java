@@ -38,6 +38,8 @@ public class SysNotice extends BaseEntity
 
     private Short readStatus;
 
+    private List<Long> noticeIds;
+
     public Long getNoticeId()
     {
         return noticeId;
@@ -53,7 +55,7 @@ public class SysNotice extends BaseEntity
         this.noticeTitle = noticeTitle;
     }
 
-    @NotBlank(message = "公告标题不能为空")
+//    @NotBlank(message = "公告标题不能为空")
     @Size(min = 0, max = 50, message = "公告标题不能超过50个字符")
     public String getNoticeTitle()
     {
@@ -112,6 +114,14 @@ public class SysNotice extends BaseEntity
 
     public void setCreateByUserId(Long createByUserId) {
         this.createByUserId = createByUserId;
+    }
+
+    public List<Long> getNoticeIds() {
+        return noticeIds;
+    }
+
+    public void setNoticeIds(List<Long> noticeIds) {
+        this.noticeIds = noticeIds;
     }
 
     public Short getReadStatus() {

@@ -1,6 +1,7 @@
 package com.teamwork.project.projects.mapper;
 
 import com.teamwork.project.projects.domain.SysUserNotice;
+import com.teamwork.project.system.domain.SysNotice;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
@@ -70,7 +71,9 @@ public interface SysUserNoticeMapper {
      */
     int deleteById(Long id);
 
-    void deleteByNoticeId(Long noticeId);
+    int deleteByNoticeId(Long noticeId);
 
-    void deleteByNoticeIds(List<Long> noticeIds);
+    int deleteByNoticeIds(List<Long> noticeIds);
+
+    int delete(SysNotice notice);
 }

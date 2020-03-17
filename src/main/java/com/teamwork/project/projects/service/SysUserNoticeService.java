@@ -37,13 +37,13 @@ public interface SysUserNoticeService {
      */
     SysUserNotice insert(SysUserNotice sysUserNotice);
 
-//    /**
-//     * 修改数据
-//     *
-//     * @param sysUserNotice 实例对象
-//     * @return 实例对象
-//     */
-//    int updateRead(SysUserNotice sysUserNotice);
+    /**
+     * 修改数据
+     *
+     * @param sysUserNotice 实例对象
+     * @return 实例对象
+     */
+    int updateRead(SysUserNotice sysUserNotice);
 
     /**
      * 通过主键删除数据

@@ -19,8 +19,6 @@ public class SysUserNotice implements Serializable {
 
     private Short status;
 
-    private Short readStatus;
-
     public Long getId() {
         return id;
     }
@@ -53,11 +51,4 @@ public class SysUserNotice implements Serializable {
         this.status = status;
     }
 
-    public Short getReadStatus() {
-        return readStatus;
-    }
-
-    public void setReadStatus(Short readStatus) {
-        this.readStatus = readStatus;
-    }
 }

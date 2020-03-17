@@ -58,4 +58,6 @@ public interface SysNoticeMapper
     public int deleteNoticeByIds(List<Long> noticeIds);
 
     List<SysNotice> selectNoticeByUserId(SysNotice notice);
+
+    int delete(SysNotice notice);
 }

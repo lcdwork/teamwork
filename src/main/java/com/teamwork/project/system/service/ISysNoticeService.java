@@ -49,13 +49,15 @@ public interface ISysNoticeService
      */
     public int deleteNoticeById(Long noticeId);
 
-    /**
-     * 批量删除公告信息
-     *
-     * @param noticeIds 需要删除的公告ID
-     * @return 结果
-     */
-    public int deleteNoticeByIds(List<Long> noticeIds);
+//    /**
+//     * 批量删除公告信息
+//     *
+//     * @param noticeIds 需要删除的公告ID
+//     * @return 结果
+//     */
+//    public int deleteNoticeByIds(List<Long> noticeIds);
 
     List<SysNotice> selectNoticeByUserId(SysNotice notice);
+
+    int remove(SysNotice notice);
 }

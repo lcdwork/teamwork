@@ -105,8 +105,10 @@ public class SysNoticeServiceImpl implements ISysNoticeService
         userNoticeList.forEach(u -> {
             list.add(u.getUserId());
         });
-        if (!(userIds.containsAll(list) && list.containsAll(userIds))) {
-            insertUserNotice(notice);
+        if (userIds.size() > 0) {
+            if (!(userIds.containsAll(list) && list.containsAll(userIds))) {
+                insertUserNotice(notice);
+            }
         }
         return i;
     }
@@ -127,14 +129,27 @@ public class SysNoticeServiceImpl implements ISysNoticeService
     /**
      * 批量删除公告信息
      *
-     * @param noticeIds 需要删除的公告ID
+     * @param notice 需要删除的公告ID
      * @return 结果
      */
     @Override
-    public int deleteNoticeByIds(List<Long> noticeIds)
+    public int remove(SysNotice notice)
     {
+        List<Long> noticeIds = new ArrayList<>();
+        if (notice.getNoticeIds().size() > 0) {
+            noticeIds = notice.getNoticeIds();
+        } else {
+            SysUserNotice un = new SysUserNotice();
+            un.setUserId(notice.getUserId());
+            un.setStatus(notice.getReadStatus());
+            List<SysUserNotice> list = userNoticeMapper.queryAll(un);
+            for (SysUserNotice sun : list) {
+                noticeIds.add(sun.getNoticeId());
+            }
+        }
+        int i = noticeMapper.deleteNoticeByIds(noticeIds);
         userNoticeMapper.deleteByNoticeIds(noticeIds);
-        return noticeMapper.deleteNoticeByIds(noticeIds);
+        return i;
     }
 
     @Override

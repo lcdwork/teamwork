@@ -35,9 +35,9 @@ public class SysUserNoticeController extends BaseController {
         return this.userNoticeService.queryById(id);
     }
 
-//    @PutMapping
-//    public Result updateRead(@Validated @RequestBody SysUserNotice userNotice) {
-//        return toAjax(userNoticeService.updateRead(userNotice));
-//    }
+    @PutMapping
+    public Result updateRead(@Validated @RequestBody SysUserNotice userNotice) {
+        return toAjax(userNoticeService.updateRead(userNotice));
+    }
 
 }
