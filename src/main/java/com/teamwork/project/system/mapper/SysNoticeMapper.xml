@@ -82,7 +82,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null and updateBy != ''">
                 AND n.update_by like concat('%', #{updateBy}, '%')
             </if>
-            <if test="readStatus != null and readStatus != ''">
+            <if test="readStatus != null and readStatus != -1">
                 AND un.status = #{readStatus}
             </if>
             <if test="userId != null and userId != ''">
