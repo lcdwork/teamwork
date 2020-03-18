@@ -135,8 +135,9 @@ public class SysNoticeServiceImpl implements ISysNoticeService
     @Override
     public int remove(SysNotice notice)
     {
+        int i = 0;
         List<Long> noticeIds = new ArrayList<>();
-        if (notice.getNoticeIds().size() > 0) {
+        if (notice.getNoticeIds() != null && notice.getNoticeIds().size() > 0) {
             noticeIds = notice.getNoticeIds();
         } else {
             SysUserNotice un = new SysUserNotice();
@@ -147,8 +148,10 @@ public class SysNoticeServiceImpl implements ISysNoticeService
                 noticeIds.add(sun.getNoticeId());
             }
         }
-        int i = noticeMapper.deleteNoticeByIds(noticeIds);
-        userNoticeMapper.deleteByNoticeIds(noticeIds);
+        if (noticeIds.size() > 0) {
+            i = noticeMapper.deleteNoticeByIds(noticeIds);
+            userNoticeMapper.deleteByNoticeIds(noticeIds);
+        }
         return i;
     }
 
