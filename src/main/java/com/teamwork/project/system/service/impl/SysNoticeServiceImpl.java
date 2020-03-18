@@ -157,7 +157,7 @@ public class SysNoticeServiceImpl implements ISysNoticeService
 
     @Override
     public List<SysNotice> selectNoticeByUserId(SysNotice notice) {
-        notice.setStatus((short) 0);
+//        notice.setStatus((short) 0);
         List<SysNotice> list = noticeMapper.selectNoticeByUserId(notice);
         return list;
     }

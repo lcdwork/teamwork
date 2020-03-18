@@ -181,7 +181,7 @@ public class ProjectServiceImpl implements ProjectService{
             sysNotice.setNoticeTitle("项目邀请通知");
             sysNotice.setNoticeContent(SecurityUtils.getUsername() + "邀请" + u.getUserName() + "加入" + project.getProjectName() + "项目");
             sysNotice.setNoticeType((short) 1);
-            sysNotice.setStatus((short) 0);
+//            sysNotice.setStatus((short) 0);
             sysNotice.setReadStatus((short) 0);
             sysNotice.setCreateBy(SecurityUtils.getUsername());
             sysNotice.setCreateTime(new Date());
