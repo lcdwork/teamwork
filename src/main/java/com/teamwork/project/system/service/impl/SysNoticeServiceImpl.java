@@ -81,7 +81,7 @@ public class SysNoticeServiceImpl implements ISysNoticeService
             SysUserNotice un = new SysUserNotice();
             un.setNoticeId(notice.getNoticeId());
             un.setUserId(SecurityUtils.getLoginUser().getUser().getUserId());
-            un.setStatus((short) 1);
+            un.setReadStatus((short) 1);
             userNoticeMapper.updateRead(un);
         }
     }
