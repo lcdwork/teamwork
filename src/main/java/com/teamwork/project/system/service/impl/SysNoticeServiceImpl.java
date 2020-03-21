@@ -1,12 +1,11 @@
 package com.teamwork.project.system.service.impl;
 
 import com.teamwork.common.utils.SecurityUtils;
-import com.teamwork.project.projects.domain.SysUserNotice;
-import com.teamwork.project.projects.mapper.SysUserNoticeMapper;
+import com.teamwork.project.team.domain.SysUserNotice;
+import com.teamwork.project.team.mapper.SysUserNoticeMapper;
 import com.teamwork.project.system.domain.SysNotice;
 import com.teamwork.project.system.mapper.SysNoticeMapper;
 import com.teamwork.project.system.service.ISysNoticeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

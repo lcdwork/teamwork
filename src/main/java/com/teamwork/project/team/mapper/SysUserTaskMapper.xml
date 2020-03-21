@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teamwork.project.team.mapper.SysUserTaskMapper">
+  <resultMap id="BaseResultMap" type="com.teamwork.project.team.domain.SysUserTask">
+    <!--@mbg.generated-->
+    <!--@Table sys_user_task-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="task_id" jdbcType="INTEGER" property="taskId" />
+    <result column="status" jdbcType="SMALLINT" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, user_id, task_id, `status`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select
+    <include refid="Base_Column_List" />
+    from sys_user_task
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from sys_user_task
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.teamwork.project.team.domain.SysUserTask" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into sys_user_task (user_id, task_id, `status`
+      )
+    values (#{userId,jdbcType=BIGINT}, #{taskId,jdbcType=INTEGER}, #{status,jdbcType=SMALLINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.teamwork.project.team.domain.SysUserTask" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into sys_user_task
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="taskId != null">
+        task_id,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="taskId != null">
+        #{taskId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.teamwork.project.team.domain.SysUserTask">
+    <!--@mbg.generated-->
+    update sys_user_task
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="taskId != null">
+        task_id = #{taskId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.teamwork.project.team.domain.SysUserTask">
+    <!--@mbg.generated-->
+    update sys_user_task
+    set user_id = #{userId,jdbcType=BIGINT},
+      task_id = #{taskId,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <resultMap id="SysUserTaskMap" type="com.teamwork.project.team.domain.SysUserTask">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="task_id" jdbcType="INTEGER" property="taskId" />
+        <result column="status" jdbcType="SMALLINT" property="status" />
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SysUserTaskMap">
+        select
+          id, user_id, task_id, status
+        from sys_user_task
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SysUserTaskMap">
+        select
+          id, user_id, task_id, status
+        from sys_user_task
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SysUserTaskMap">
+        select
+          id, user_id, task_id, status
+        from sys_user_task
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="taskId != null">
+                and task_id = #{taskId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertList" keyColumn="id" keyProperty="id" parameterType="java.util.List" useGeneratedKeys="true">
+        insert into sys_user_task(user_id, task_id, status)
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.userId}, #{item.taskId}, #{item.status})
+        </foreach>
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update sys_user_task
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="taskId != null">
+                task_id = #{taskId},
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="updateStatus">
+        update sys_user_task
+        <set>
+            <if test="status != null">
+                status = #{status},
+            </if>
+        </set>
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="taskId != null">
+                and task_id = #{taskId}
+            </if>
+        </where>
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from sys_user_task where id = #{id}
+    </delete>
+
+    <delete id="deleteByTaskId" parameterType="java.lang.Long">
+        delete from sys_user_task where task_id = #{taskId}
+    </delete>
+
+</mapper>

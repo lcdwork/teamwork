@@ -1,10 +1,8 @@
 package com.teamwork.project.system.service;
 
-import com.teamwork.framework.web.domain.GanttTree;
 import com.teamwork.framework.web.domain.GanttTreeList;
-import com.teamwork.framework.web.domain.TreeSelect;
-import com.teamwork.project.projects.domain.Project;
-import com.teamwork.project.projects.domain.Task;
+import com.teamwork.project.team.domain.Project;
+import com.teamwork.project.team.domain.Task;
 import com.teamwork.project.system.domain.SysNotice;
 import com.teamwork.project.system.domain.SysUser;
 import com.teamwork.project.system.domain.SysUserTeam;

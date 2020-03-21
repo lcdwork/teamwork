@@ -8,8 +8,16 @@ teamwork:
   copyrightYear: 2020
   # 实例演示开关
   demoEnabled: true
-  # 文件路径 示例（ Windows配置D:/lcd/uploadPath，Linux配置 /home/lcd/uploadPath）
-  profile: /Users/lcd/uploadPath
+
+  # MAC
+  #profile: /Users/lcd/uploadPath
+
+  # Windows
+#  profile: D:/lcd/uploadPath
+
+  # linux
+  profile: /home/lcd/uploadPath
+
   # 获取ip地址开关
   addressEnabled: true
 

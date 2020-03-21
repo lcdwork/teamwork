@@ -7,7 +7,7 @@ import com.teamwork.framework.aspectj.lang.annotation.Excel.ColumnType;
 import com.teamwork.framework.aspectj.lang.annotation.Excel.Type;
 import com.teamwork.framework.aspectj.lang.annotation.Excels;
 import com.teamwork.framework.web.domain.BaseEntity;
-import com.teamwork.project.projects.domain.Task;
+import com.teamwork.project.team.domain.Task;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 

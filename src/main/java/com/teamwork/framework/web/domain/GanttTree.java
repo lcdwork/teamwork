@@ -2,8 +2,8 @@ package com.teamwork.framework.web.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.teamwork.project.projects.domain.Project;
-import com.teamwork.project.projects.domain.Task;
+import com.teamwork.project.team.domain.Project;
+import com.teamwork.project.team.domain.Task;
 import com.teamwork.project.system.domain.SysUser;
 
 import java.io.Serializable;

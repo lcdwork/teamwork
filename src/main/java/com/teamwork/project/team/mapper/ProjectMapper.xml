@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teamwork.project.team.mapper.ProjectMapper">
+  <resultMap id="BaseResultMap" type="com.teamwork.project.team.domain.Project">
+    <!--@mbg.generated-->
+    <!--@Table project_info-->
+    <id column="project_id" jdbcType="BIGINT" property="projectId" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="start_date" jdbcType="DATE" property="startDate" />
+    <result column="end_date" jdbcType="DATE" property="endDate" />
+    <result column="create_user_id" jdbcType="BIGINT" property="createUserId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="status" jdbcType="SMALLINT" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    project_id, project_name, start_date, end_date, create_user_id, create_by, create_time, update_by,
+    update_time, remark, status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select
+    <include refid="Base_Column_List" />
+    from project_info
+    where project_id = #{projectId,jdbcType=BIGINT}
+  </select>
+  <select id="selectProjectUsers" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select su.user_id, su.dept_id, su.user_name, su.nick_name, su.user_type, su.email, su.phonenumber, su.sex, su.avatar
+    from sys_user_project sup
+    where project_id = #{projectId,jdbcType=BIGINT}
+    left join sys_user su on sup.user_id = su.user_id
+  </select>
+  <select id="selectProjectList" parameterType="com.teamwork.project.team.domain.Project" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from project_info
+    <where>
+      <if test="projectId != null">
+        AND project_id = #{projectId}
+      </if>
+      <if test="projectName != null">
+        AND project_name like concat('%', #{projectName}, '%')
+      </if>
+      <if test="startDate != null">
+        AND start_date = #{startDate}
+      </if>
+      <if test="endDate != null">
+        AND end_date = #{endDate}
+      </if>
+      <if test="createUserId != null">
+        AND create_user_id = #{createUserId}
+      </if>
+      <if test="createBy != null">
+        AND create_by = #{createBy}
+      </if>
+      <if test="createTime != null">
+        AND create_time = #{createTime}
+      </if>
+      <if test="updateBy != null">
+        AND update_by = #{updateBy}
+      </if>
+      <if test="updateTime != null">
+        AND update_time = #{updateTime}
+      </if>
+      <if test="remark != null">
+        AND remark = #{remark}
+      </if>
+      <if test="status != null">
+        AND status = #{status}
+      </if>
+    </where>
+  </select>
+
+  <select id="selectProjectListByUser" parameterType="com.teamwork.project.team.domain.Project" resultMap="BaseResultMap">
+    select p.project_id, project_name, start_date, end_date, create_user_id, create_by, create_time, update_by,
+    update_time, remark, status
+    from project_info p
+    left join sys_user_project up on p.project_id = up.project_id
+    <where>
+      <if test="projectId != null">
+        AND p.project_id = #{projectId}
+      </if>
+      <if test="projectName != null">
+        AND project_name like concat('%', #{projectName}, '%')
+      </if>
+      <if test="startDate != null">
+        AND start_date = #{startDate}
+      </if>
+      <if test="endDate != null">
+        AND end_date = #{endDate}
+      </if>
+      <if test="createUserId != null">
+        AND create_user_id = #{createUserId}
+      </if>
+      <if test="createBy != null">
+        AND create_by = #{createBy}
+      </if>
+      <if test="createTime != null">
+        AND create_time = #{createTime}
+      </if>
+      <if test="updateBy != null">
+        AND update_by = #{updateBy}
+      </if>
+      <if test="updateTime != null">
+        AND update_time = #{updateTime}
+      </if>
+      <if test="remark != null">
+        AND remark = #{remark}
+      </if>
+      <if test="status != null">
+        AND status = #{status}
+      </if>
+      <if test="userId != null">
+        AND up.user_id = #{userId}
+      </if>
+    </where>
+    <choose>
+      <when test="orderByColumn == 'endDate'">
+        order by end_date
+      </when>
+      <otherwise>
+        order by start_date
+      </otherwise>
+    </choose>
+  </select>
+  <select id="selectProjectRepeat" parameterType="com.teamwork.project.team.domain.Project" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from project_info
+    <where>
+      <if test="projectId != null">
+        AND project_id != #{projectId}
+      </if>
+      <if test="projectName != null">
+        AND project_name = #{projectName}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from project_info
+    where project_id = #{projectId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="project_id" keyProperty="projectId" parameterType="com.teamwork.project.team.domain.Project" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into project_info (project_name, start_date, end_date,
+    create_user_id, create_by, create_time, update_by,
+      update_time, remark, status)
+    values (#{projectName,jdbcType=VARCHAR}, #{startDate,jdbcType=DATE}, #{endDate,jdbcType=DATE},
+    #{createUserId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" keyColumn="project_id" keyProperty="projectId" parameterType="com.teamwork.project.team.domain.Project" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into project_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="projectName != null">
+        project_name,
+      </if>
+      <if test="startDate != null">
+        start_date,
+      </if>
+      <if test="endDate != null">
+        end_date,
+      </if>
+      <if test="createUserId != null">
+        AND create_user_id = #{createUserId}
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="projectName != null">
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null">
+        #{startDate,jdbcType=DATE},
+      </if>
+      <if test="endDate != null">
+        #{endDate,jdbcType=DATE},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.teamwork.project.team.domain.Project">
+    <!--@mbg.generated-->
+    update project_info
+    <set>
+      <if test="projectName != null">
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null">
+        start_date = #{startDate,jdbcType=DATE},
+      </if>
+      <if test="endDate != null">
+        end_date = #{endDate,jdbcType=DATE},
+      </if>
+      <if test="createUserId != null">
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where project_id = #{projectId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.teamwork.project.team.domain.Project">
+    <!--@mbg.generated-->
+    update project_info
+    set project_name = #{projectName,jdbcType=VARCHAR},
+      start_date = #{startDate,jdbcType=DATE},
+      end_date = #{endDate,jdbcType=DATE},
+    create_user_id = #{createUserId,jdbcType=BIGINT}
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=SMALLINT}
+    where project_id = #{projectId,jdbcType=BIGINT}
+  </update>
+</mapper>
