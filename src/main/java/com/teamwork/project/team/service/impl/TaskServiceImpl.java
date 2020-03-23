@@ -178,10 +178,10 @@ public class TaskServiceImpl implements TaskService{
         t.setUserId(SecurityUtils.getLoginUser().getUser().getUserId());
         t.setStatus((byte) status);
         if (status == 1) {
-            t.setContent(SecurityUtils.getUsername() + "创建了" + task.getTaskName() + "任务");
+            t.setContent(SecurityUtils.getLoginUser().getUser().getNickName() + "创建了" + task.getTaskName() + "任务");
         }
         if (status == 2) {
-            t.setContent(SecurityUtils.getUsername() + "编辑了" + task.getTaskName() + "任务");
+            t.setContent(SecurityUtils.getLoginUser().getUser().getNickName() + "编辑了" + task.getTaskName() + "任务");
         }
         if (status == 3) {
             t.setContent(task.getTaskName() + "任务完成了");
@@ -196,10 +196,10 @@ public class TaskServiceImpl implements TaskService{
         t.setUserId(SecurityUtils.getLoginUser().getUser().getUserId());
         t.setStatus((byte) status);
         if (status == 4) {
-            t.setContent(SecurityUtils.getUsername() + "创建了" + task.getTaskName() + "任务");
+            t.setContent(SecurityUtils.getLoginUser().getUser().getNickName() + "创建了" + task.getTaskName() + "任务");
         }
         if (status == 5) {
-            t.setContent(SecurityUtils.getUsername() + "删除了" + task.getTaskName() + "任务");
+            t.setContent(SecurityUtils.getLoginUser().getUser().getNickName() + "删除了" + task.getTaskName() + "任务");
         }
         if (status == 6) {
             t.setContent(task.getTaskName() + "任务完成");

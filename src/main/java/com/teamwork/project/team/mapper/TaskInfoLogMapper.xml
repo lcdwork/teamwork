@@ -8,7 +8,7 @@
         <result property="userId" column="user_id" jdbcType="INTEGER"/>
         <result property="operateTime" column="operate_time" jdbcType="TIMESTAMP"/>
         <result property="content" column="content" jdbcType="VARCHAR"/>
-        <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
         <result property="status" column="status" jdbcType="OTHER"/>
         <result property="remark" column="remark" jdbcType="VARCHAR"/>
     </resultMap>
@@ -19,7 +19,7 @@
     </sql>
     <select id="getTaskLog" parameterType="java.lang.Long" resultMap="TaskInfoLogMap">
         select
-        tl.id, tl.task_id, tl.user_id, tl.operate_time, tl.content, tl.status, tl.remark, t.task_name, u.user_name, u.nick_name
+        tl.id, tl.task_id, tl.user_id, tl.operate_time, tl.content, tl.status, tl.remark, t.task_name, u.user_name, u.user_name
         from task_info_log tl
         left join task_info t on t.task_id = tl.task_id
         left join sys_user u on u.user_id = tl.user_id

@@ -34,16 +34,15 @@ public class ProjectInfoLog implements Serializable {
 
     private String remark;
 
-    private String nickName;
+    private String userName;
 
-    public String getNickName() {
-        return nickName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
-
 
     public Long getId() {
         return id;

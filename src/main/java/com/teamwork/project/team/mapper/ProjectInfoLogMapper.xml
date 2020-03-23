@@ -7,7 +7,7 @@
         <result property="projectId" column="project_id" jdbcType="INTEGER"/>
         <result property="userId" column="user_id" jdbcType="INTEGER"/>
         <result property="operateTime" column="operate_time" jdbcType="TIMESTAMP"/>
-        <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
         <result property="content" column="content" jdbcType="VARCHAR"/>
         <result property="status" column="status" jdbcType="OTHER"/>
         <result property="remark" column="remark" jdbcType="VARCHAR"/>
@@ -18,7 +18,7 @@
     </sql>
     <select id="getProjectLog" parameterType="com.teamwork.project.team.domain.ProjectInfoLog" resultMap="ProjectInfoLogMap">
         select
-        pl.id, pl.project_id, pl.user_id, pl.operate_time, pl.content, pl.status, pl.remark, p.project_name, u.user_name, u.nick_name
+        pl.id, pl.project_id, pl.user_id, pl.operate_time, pl.content, pl.status, pl.remark, p.project_name, u.user_name, u.user_name
         from project_info_log pl
         left join project_info p on p.project_id = pl.project_id
         left join sys_user u on u.user_id = pl.user_id

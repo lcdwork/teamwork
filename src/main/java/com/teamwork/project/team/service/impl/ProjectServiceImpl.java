@@ -145,10 +145,10 @@ public class ProjectServiceImpl implements ProjectService{
         t.setUserId(SecurityUtils.getLoginUser().getUser().getUserId());
         t.setStatus((byte) status);
         if (status == 1) {
-            t.setContent(SecurityUtils.getUsername() + "创建了" + project.getProjectName() + "项目");
+            t.setContent(SecurityUtils.getLoginUser().getUser().getNickName() + "创建了" + project.getProjectName() + "项目");
         }
         if (status == 2) {
-            t.setContent(SecurityUtils.getUsername() + "编辑了" + project.getProjectName() + "项目");
+            t.setContent(SecurityUtils.getLoginUser().getUser().getNickName() + "编辑了" + project.getProjectName() + "项目");
         }
         if (status == 3) {
             t.setContent(project.getProjectName() + "项目完成");
