@@ -15,7 +15,7 @@ import java.io.Serializable;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Memo implements Serializable {
     private static final long serialVersionUID = -97852303138848321L;
-    
+
     private Long memoId;
     /**
     * 创建人
@@ -44,7 +44,7 @@ public class Memo implements Serializable {
     */
     private String memoTitle;
 
-    private String status;
+    private Short status;
 
     public Long getMemoId() {
         return memoId;
@@ -102,11 +102,11 @@ public class Memo implements Serializable {
         this.memoTitle = memoTitle;
     }
 
-    public String getStatus() {
+    public Short getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Short status) {
         this.status = status;
     }
 }

@@ -83,7 +83,7 @@ public class TaskServiceImpl implements TaskService{
                     List<SysUserTask> list = userTaskList(t);
                     sysUserTaskMapper.insertList(list);
                 }
-                memo.setStatus("1");
+                memo.setStatus((short) 1);
                 memoMapper.update(memo);
             }
         }

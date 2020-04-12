@@ -43,7 +43,7 @@ public class MemoController extends BaseController {
     public TableDataInfo list(Memo memo)
     {
         startPage();
-        memo.setStatus("0");
+        memo.setStatus((short) 0);
         List<Memo> list = memoService.queryAll(memo);
         return getDataTable(list);
     }
@@ -54,7 +54,7 @@ public class MemoController extends BaseController {
     @Log(title = "备忘录管理", businessType = BusinessType.INSERT)
     @PostMapping()
     public Result add(@Validated @RequestBody Memo memo) {
-        memo.setStatus("0");
+        memo.setStatus((short) 0);
         return toAjax(memoService.insert(memo));
     }
 
